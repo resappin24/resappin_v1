@@ -36,37 +36,69 @@
             });
         </script>
     @endif
-    <div class="bg">
-        <img src="https://www.rumahmesin.com/wp-content/uploads/2020/12/seblakkering.jpg?x44724" alt="" style="width:180%; height: 150%">
+    <style>
+        .texture-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{{ asset('desain/img/bg-2.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            /* filter: blur(3px); */
+            opacity: 0.8;
+          
+        }
+
+        .title{
+            position: fixed;
+            margin-top: 20px;
+            width: 350px;
+            height: 350px;
+            background-image: url('{{ asset('desain/img/admin-login.png') }}');
+            background-size: cover;
+            background-position: center;
+            /* filter: blur(3px); */
+            
+          
+        }
+
+
+    </style>
+    <div class="texture-bg">
     </div>
-    <div class="judul">
-        <h1 style="text-align: center; ">Login Apps Penjualan Kerupuk</h1>
+    
+    <!-- <div class="judul mt-5">
+        <h1 style="text-align: center; ">Admin Dashboard</h1>
     </div>
+    <div class="subjudul mt-3 mb-4">
+        <h2 style="text-align: center; ">Login</h2>
+    </div> -->
     <div class="login-page">
-        <div class="letakImg">
-            <img src="{{ asset('desain') }}/img/1.jpg" class="kerupuk1" alt="kerupuk">
-            <img src="{{ asset('desain') }}/img/2.jpg" class="kerupuk2" alt="kerupuk">
-            <img src="{{ asset('desain') }}/img/3.jpg" class="kerupuk3" alt="kerupuk">
-            <img src="{{ asset('desain') }}/img/4.jpg" class="kerupuk4" alt="kerupuk">
-        </div>
-        <div class="form mt-3">
-            <form action="/" method="post" class="login-form">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        @foreach ($errors->all() as $error)
-                            <p>{{ $error }}</p>
-                        @endforeach
-                    </div>
-                @endif
-                @csrf
-                <input type="text" name="username" placeholder="Username" />
-                <input type="password" name="password" placeholder="Password" />
-                <button>login</button>
-            </form>
-            <div class="regis">
-                <p class="regis-text"><a href="/register">Register</a>, Jika belum memiliki account</p>
+    <div class="title">
+        <div class="login-form">
+            <div class="form">
+                <form action="/" method="post">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
+                    @csrf
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="password" name="password" placeholder="Password" />
+                    <button>login</button>
+                </form>
+                <div class="regis">
+                    <p class="regis-text"><a href="/register">Register</a>, Jika belum memiliki account</p>
+                </div>
             </div>
-        </div>
+    </div>
+    </div>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

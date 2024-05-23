@@ -27,7 +27,7 @@ class AdminController extends Controller
     public function kerupuk($order = 'asc')
     {
        // $kerupuk = Kerupuk::orderBy('nama_barang', $order)->get();
-       $kerupuk = DB::table('kerupuk')
+       $kerupuk = DB::table('master_barang')
         ->where('created_user_id',Auth::user()->id)
         ->orderBy('nama_barang', 'asc')
         ->get();
