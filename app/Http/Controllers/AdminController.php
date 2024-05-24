@@ -16,6 +16,8 @@ class AdminController extends Controller
         $data = Transaksi::get();
 
         return view('admin.dashboar', compact('data'));
+        //$data = Transaksi::get();
+       // return response()->json($data);
     }
 
     public function history($order = 'desc')

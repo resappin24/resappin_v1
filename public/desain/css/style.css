@@ -181,6 +181,7 @@ body {
 .my-container {
     transition: 0.4s;
     margin-left: 55px;
+    height: 100%;
 }
 
 .active-nav {
@@ -204,9 +205,6 @@ body {
     padding: 2px 20px;
 }
 
-.my-container{
-    /* background-image: url( {{ url('images/php_mysql.jpg') }} );
-    /* (url('{{asset("desain/img/bg-login.jpg") }}')); */
-
-    height: 100%;
+.detail-dashboard {
+    height: 400px;
 }
