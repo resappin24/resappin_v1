@@ -36,6 +36,7 @@ a {
     position: fixed;
     z-index: -1;
     margin-top: 45px;
+    margin-left:10px;
     background: #FFFFFF;
     max-width: 360px;
     margin: 300 auto 100px;
@@ -201,4 +202,11 @@ body {
 .my-container input {
     border-radius: 2rem;
     padding: 2px 20px;
+}
+
+.my-container{
+    /* background-image: url( {{ url('images/php_mysql.jpg') }} );
+    /* (url('{{asset("desain/img/bg-login.jpg") }}')); */
+
+    height: 100%;
 }

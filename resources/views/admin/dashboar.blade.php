@@ -1,6 +1,7 @@
 @extends('layout.master')
 
 @section('konten')
+
     <div class="row m-1">
         <div class="card col-md-7 m-1">
             <div class="card-header text-center bg-light">

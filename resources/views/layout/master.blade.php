@@ -14,7 +14,23 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
-    <div class="side-navbar d-flex justify-content-between flex-wrap flex-column" style="z-index: 1" id="sidebar">
+<style>
+        .texture-bg2 {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{{ asset('desain/img/bg-2.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            /* z-index: 0; */
+            /* background-color:blue; */
+            /* filter: blur(3px); */
+        }
+</style>
+
+    <div class="side-navbar d-flex justify-content-between flex-wrap flex-column" style="z-index: 2" id="sidebar">
         <ul class="nav flex-column text-white w-100">
             <center>
                 <img src="{{ asset('desain/img/logo.png') }}" alt="logo" width="200px" style="margin-top:-50px ; margin-bottom:-50px ;" >
@@ -104,7 +120,10 @@
             </a>
         </ul>
     </div>
-    <div class="p-1 my-container ">
+    <div class="p-1 my-container">
+        <div class="texture-bg2">
+            <!-- <img src="{{url(asset('desain/img/bg-2.jpg'))}}" height="800px" style="z-index: 0"> -->
+        <div>
         <nav class="navbar top-navbar navbar-light bg-light px-5">
             <a class="btn border-0" id="menu-btn"><i class="bx bx-menu"></i></a>
         </nav>
@@ -133,7 +152,9 @@
                 </script>
             @endif
         @yield('konten')
+      
     </div>
+             
 </body>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
