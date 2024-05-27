@@ -49,5 +49,7 @@ Route::middleware(['auth'])->group(
         Route::put('/update_transaksi', [TransaksiController::class, 'update_transaksi']);
 
         Route::get('/vendor', [AdminController::class, 'vendor']);
+        Route::post('/store_vendor', [AdminController::class, 'addVendor']);
+        
     }
 );

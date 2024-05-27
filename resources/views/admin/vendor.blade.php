@@ -13,7 +13,6 @@
         .bg-content {
             width: 100%;
             height: 450px;
-            background-color: #03b1fc;
         }
         .bg-table {
             width: 100%;
@@ -34,11 +33,11 @@
         <div class="card col-md-12 mt-1">
             <div class="card-header bg-light">
                 <div class="row  bg-header">
-                    <div class="col-md-6 text-start mt-4">
-                        <h4>MASTER VENDOR</h4>
+                    <div class="col-md-6 text-start mt-4 mb-3">
+                        <h3>MASTER VENDOR / SUPPLIER</h3>
                     </div>
                     <div class="col-md-6 text-end  mt-4">
-                        <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#kerupukModal">
+                        <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#vendorModal">
                             <!-- <iconify-icon icon="mdi:add-box"></iconify-icon> -->
                             <!-- <iconify-icon icon="subway:add-1"></iconify-icon> -->
                             <!-- <iconify-icon icon="carbon:add-alt"></iconify-icon> -->
@@ -277,36 +276,46 @@
 </div>
 
 {{-- Modal Add Vendor --}}
-<div class="modal fade" id="kerupukModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="vendorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add New Vendor</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ url('/store_kerupuk') }}" method="post" enctype="multipart/form-data">
-                @csrf
+            <form action="{{ url('/store_vendor') }}" method="post" enctype="multipart/form-data">
+            @csrf
                 <div class="modal-body">
                 <div class="mb-3">
-                        <label class="col-form-label">Kode Vendor:</label>
-                        <input type="text" class="form-control" id="kode-vendor" name="kode_vendor">
+                 <label class="col-form-label">Kode Vendor(</label><span class="required">*</span>)
+                    <div class="input-group {{ $errors->has('kode_vendor') ? '' : 'mb-3' }}">
+                         
+                        <input type="text" name="kode_vendor" class="form-control custom-input" placeholder="" aria-label="" aria-describedby="basic-addon1" value="{{ old('name') }}">
+                    </div>
+                    @if ($errors->has('kode_vendor'))
+                        <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('kode_vendor') }}</div>
+                    @endif
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label">Nama Vendor:</label>
-                        <input type="text" class="form-control" id="nama-vendor" name="nama_vendor">
+                    <label class="col-form-label">Nama Vendor(</label><span class="required">*</span>)
+                    <div class="input-group {{ $errors->has('nama_vendor') ? '' : 'mb-3' }}">
+                        <input type="text" name="nama_vendor" class="form-control custom-input" placeholder="" aria-label="Email" aria-describedby="basic-addon2" value="{{ old('email') }}">
+                    </div>
+                    @if ($errors->has('nama_vendor'))
+                        <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('nama_vendor') }}</div>
+                    @endif
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Alamat:</label>
                         <div class="input-group mb-3">
-                            <input type="number" id="harga_beli" class="form-control" aria-describedby="basic-addon1" name="harga_beli"
-                            >
+                            <input type="text" id="alamat" class="form-control" aria-describedby="basic-addon1" name="harga_beli">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">No. Telp:</label>
                         <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">+62 </span>
-                            <input type="number" id="keuntungan" class="form-control" aria-describedby="basic-addon1">
+                            <input type="number" id="no_telp" class="form-control" aria-describedby="basic-addon1">
                         </div>
                     </div>
                    
@@ -320,7 +329,7 @@
     </div>
 </div>
 
-{{-- Modal Edit Kerupuk  --}}
+{{-- Modal Edit Vendor  --}}
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

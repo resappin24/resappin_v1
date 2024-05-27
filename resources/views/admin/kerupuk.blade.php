@@ -261,13 +261,6 @@
             </div>
             <form action="{{ url('/store_kerupuk') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                <div class="input-group {{ $errors->has('name') ? '' : 'mb-3' }}">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="name" class="form-control custom-input" placeholder="Full Name" aria-label="Full Name" aria-describedby="basic-addon1" value="{{ old('name') }}">
-                    </div>
-                    @if ($errors->has('name'))
-                        <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('name') }}</div>
-                    @endif
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="col-form-label">Nama Barang:</label>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Kerupuk;
 use App\Models\Transaksi;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -69,6 +70,8 @@ class AdminController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         
+        // tambah validasi 'where user_id = ... ' 
+
         // $request->validate([
         //     'nama_barang' => 'required|unique:master_barang,nama_barang',
         //     'harga_beli' => 'required|numeric',
@@ -125,50 +128,41 @@ class AdminController extends Controller
 
     public function addVendor(Request $request)
     {
-        $request->validate([
-            'nama_barang' => 'required|unique:master_vendor,nama_barang',
-            'harga_beli' => 'required|numeric',
-            'harga_jual' => 'required|numeric',
-            'stok' => 'required|integer',
-            'gambar_barang' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        $validator = Validator::make($request->all(), [
+            'kode_vendor' => 'required|unique:master_vendor',
+            'nama_vendor' => 'required|unique:master_vendor'
         ], [
-            'nama_barang.required' => 'Nama barang wajib diisi.',
-            'nama_barang.unique' => 'Nama barang sudah ada.',
-            'harga_beli.required' => 'Harga beli wajib diisi.',
-            'harga_beli.numeric' => 'Isilah harga beli dengan angka.',
-            'harga_jual.required' => 'Harga jual wajib diisi.',
-            'harga_jual.numeric' => 'Isilah harga jual dengan angka.',
-            'stok.required' => 'Stok wajib diisi.',
-            'stok.integer' => 'Masukkan angka stok yang benar.',
-            'gambar_barang.image' => 'Masukkan gambar.',
-            'gambar_barang.mimes' => 'Gambar harus berupa file bertipe: jpeg, png, jpg, gif.',
-            'gambar_barang.max' => 'Gambar_barang tidak boleh lebih besar dari 2048 kb.',
-        ]);
-
-        // Validation passed
-        $kerupuk = Kerupuk::create([
-            'nama_barang' => $request->nama_barang,
-            'harga_beli' => $request->harga_beli,
-            'harga_jual' => $request->harga_jual,
-            'stok' => $request->stok,
-            'gambar_barang' => $imgName,
-            'created_at' => date('Y-m-d H:i:s'),
-            'created_user_id' => Auth::user()->id,
+            'kode_vendor.required' => 'Kode vendor tidak boleh kosong',
+            'nama_vendor.required' => 'Nama vendor tidak boleh kosong',
+            'kode_vendor.unique' => 'Kode vendor sudah terdaftar',
+            'nama_vendor.unique' => 'Nama vendor sudah terdaftar',
             
         ]);
-       // error_log('Auth user()->id : '.Auth::user()->id );
 
-        if ($kerupuk->wasRecentlyCreated) {
-            Activity::create([
-                'activity' => $request->activity,
-                'name_user' => Auth::user()->name,
-                'nama_barang' => $request->nama_barang,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
-            return redirect()->back()->with('success', 'Add kerupuk success.');
-        } else {
-            return redirect()->back()->withErrors(['errors' => 'Gagal menambahkan data.'])->withInput();
+        if ($validator->fails()) {
+           return back()->withErrors($validator)->withInput();
         }
+
+        if (Vendor::where('kode_vendor', $request->kode)->exists()) {
+            $validator->errors()->add('kode_vendor', 'Kode vendor sudah terdaftar');
+           // return back()->withErrors($validator)->withInput();
+        }
+
+        $vendor = Vendor::create([
+            'nama_vendor' => $request->nama_vendor,
+            'kode_vendor' => $request->kode_vendor,
+            'alamat' => $request->alamat,
+            'no_telp' => $request->no_telp,
+            'created_date' => now(),
+            'created_by' => Auth::user()->id,
+            
+        ]);
+
+        $request->session()->flash('success', 'Add New Master Vendor Success');
+
+        // dd(session()->all());
+        return redirect('/vendor');
+
     }
 
     public function update(Request $request)

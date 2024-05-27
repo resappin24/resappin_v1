@@ -267,3 +267,11 @@ body {
     color: red;
     text-align: center;
 }
+
+.detail-btn {
+    margin-left: 520px;
+}
+
+.required {
+    color: red;
+}

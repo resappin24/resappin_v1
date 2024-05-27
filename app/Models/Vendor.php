@@ -18,4 +18,6 @@ class Vendor extends Model
         'created_date',
         'created_by'
     ];
+
+    public $timestamps = false;
 }
