@@ -8,6 +8,7 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -27,7 +28,7 @@ class AdminController extends Controller
     public function kerupuk($order = 'asc')
     {
        // $kerupuk = Kerupuk::orderBy('nama_barang', $order)->get();
-       $kerupuk = DB::table('kerupuk')
+       $kerupuk = DB::table('master_barang')
         ->where('created_user_id',Auth::user()->id)
         ->orderBy('nama_barang', 'asc')
         ->get();
@@ -42,25 +43,49 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_barang' => 'required|unique:kerupuk,nama_barang',
-            'harga_beli' => 'required|numeric',
-            'harga_jual' => 'required|numeric',
-            'stok' => 'required|integer',
-            'gambar_barang' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        $validator = Validator::make($request->all(), [
+            'nama_barang' => 'required|unique:master_barang,nama_barang',
+            'username' => 'required|min:7|max:255|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|max:255|min:8',
+            'token' => 'required|max:255',
+            'phone' => 'nullable|numeric|min:10'
         ], [
-            'nama_barang.required' => 'Nama barang wajib diisi.',
+            'nama_barang.required' => 'Nama barang tidak boleh kosong',
             'nama_barang.unique' => 'Nama barang sudah ada.',
-            'harga_beli.required' => 'Harga beli wajib diisi.',
-            'harga_beli.numeric' => 'Isilah harga beli dengan angka.',
-            'harga_jual.required' => 'Harga jual wajib diisi.',
-            'harga_jual.numeric' => 'Isilah harga jual dengan angka.',
-            'stok.required' => 'Stok wajib diisi.',
-            'stok.integer' => 'Masukkan angka stok yang benar.',
-            'gambar_barang.image' => 'Masukkan gambar.',
-            'gambar_barang.mimes' => 'Gambar harus berupa file bertipe: jpeg, png, jpg, gif.',
-            'gambar_barang.max' => 'Gambar_barang tidak boleh lebih besar dari 2048 kb.',
+            'username.required' => 'Username tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Format email tidak valid',
+            'password.required' => 'Password tidak boleh kosong',
+            'username.unique' => 'Username sudah digunakan',
+            'email.unique' => 'Email sudah digunakan',
+            'token.unique' => 'Token wajib diisi',
+            'phone.numeric' => 'Nomor telepon harus berupa angka'
         ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        
+        // $request->validate([
+        //     'nama_barang' => 'required|unique:master_barang,nama_barang',
+        //     'harga_beli' => 'required|numeric',
+        //     'harga_jual' => 'required|numeric',
+        //     'stok' => 'required|integer',
+        //     'gambar_barang' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        // ], [
+        //     'nama_barang.required' => 'Nama barang wajib diisi.',
+        //     'nama_barang.unique' => 'Nama barang sudah ada.',
+        //     'harga_beli.required' => 'Harga beli wajib diisi.',
+        //     'harga_beli.numeric' => 'Isilah harga beli dengan angka.',
+        //     'harga_jual.required' => 'Harga jual wajib diisi.',
+        //     'harga_jual.numeric' => 'Isilah harga jual dengan angka.',
+        //     'stok.required' => 'Stok wajib diisi.',
+        //     'stok.integer' => 'Masukkan angka stok yang benar.',
+        //     'gambar_barang.image' => 'Masukkan gambar.',
+        //     'gambar_barang.mimes' => 'Gambar harus berupa file bertipe: jpeg, png, jpg, gif.',
+        //     'gambar_barang.max' => 'Gambar_barang tidak boleh lebih besar dari 2048 kb.',
+        // ]);
 
         // Validation passed
         $imgName = $request->hasFile('gambar_barang')
@@ -82,6 +107,54 @@ class AdminController extends Controller
             
         ]);
         error_log('Auth user()->id : '.Auth::user()->id );
+
+        if ($kerupuk->wasRecentlyCreated) {
+            Activity::create([
+                'activity' => $request->activity,
+                'name_user' => Auth::user()->name,
+                'nama_barang' => $request->nama_barang,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            return redirect()->back()->with('success', 'Add kerupuk success.');
+        } else {
+            return redirect()->back()->withErrors(['errors' => 'Gagal menambahkan data.'])->withInput();
+        }
+    }
+
+    public function addVendor(Request $request)
+    {
+        $request->validate([
+            'nama_barang' => 'required|unique:master_vendor,nama_barang',
+            'harga_beli' => 'required|numeric',
+            'harga_jual' => 'required|numeric',
+            'stok' => 'required|integer',
+            'gambar_barang' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'nama_barang.required' => 'Nama barang wajib diisi.',
+            'nama_barang.unique' => 'Nama barang sudah ada.',
+            'harga_beli.required' => 'Harga beli wajib diisi.',
+            'harga_beli.numeric' => 'Isilah harga beli dengan angka.',
+            'harga_jual.required' => 'Harga jual wajib diisi.',
+            'harga_jual.numeric' => 'Isilah harga jual dengan angka.',
+            'stok.required' => 'Stok wajib diisi.',
+            'stok.integer' => 'Masukkan angka stok yang benar.',
+            'gambar_barang.image' => 'Masukkan gambar.',
+            'gambar_barang.mimes' => 'Gambar harus berupa file bertipe: jpeg, png, jpg, gif.',
+            'gambar_barang.max' => 'Gambar_barang tidak boleh lebih besar dari 2048 kb.',
+        ]);
+
+        // Validation passed
+        $kerupuk = Kerupuk::create([
+            'nama_barang' => $request->nama_barang,
+            'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
+            'stok' => $request->stok,
+            'gambar_barang' => $imgName,
+            'created_at' => date('Y-m-d H:i:s'),
+            'created_user_id' => Auth::user()->id,
+            
+        ]);
+       // error_log('Auth user()->id : '.Auth::user()->id );
 
         if ($kerupuk->wasRecentlyCreated) {
             Activity::create([

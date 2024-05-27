@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Apps Penjualan Kerupuk</title>
+    <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
@@ -30,7 +30,7 @@
             <a href="{{ url('/kerupuk') }}" class="nav-link text-white">
                 <li>
                     <iconify-icon icon="fluent:list-bar-20-filled"></iconify-icon>
-                    <span class="mx-2">Kerupuk</span>
+                    <span class="mx-2">Master Barang</span>
                 </li>
             </a>
             <a href="{{ url('/transaksi') }}"
