@@ -28,13 +28,19 @@ a {
     margin-right:2px ;
 }
 
+.login-form {
+    margin-top: 300px;
+}
+
 .form {
-    position: relative;
-    z-index: 1;
+    position: fixed;
+    z-index: -1;
+    margin-top: 45px;
+    margin-left:10px;
     background: #FFFFFF;
     max-width: 360px;
-    margin: 0 auto 100px;
-    padding: 45px;
+    margin: 300 auto 100px;
+    padding: 25px;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
@@ -117,6 +123,15 @@ a {
 .judul {
     text-align: center; 
     margin:auto;
+    color:rgb(48, 115, 241);
+    font-family: fantasy;
+}
+
+.subjudul {
+    text-align: center; 
+    margin:auto;
+    color:azure;
+    font-family: system-ui;
 }
 
 .container .info span {
@@ -153,19 +168,20 @@ body {
     height: 100%;
     position: fixed;
     margin-left: -300px;
-    background-color: #5b5dd8;
+    background-color: #5759dd;
     transition: 0.5s;
 }
 
 .nav-link:active,
 .nav-link:focus,
 .nav-link:hover {
-    background-color: #ffffff26;
+    background-color: #e0dcf0d7;
 }
 
 .my-container {
     transition: 0.4s;
     margin-left: 55px;
+    height: 100%;
 }
 
 .active-nav {
@@ -187,4 +203,8 @@ body {
 .my-container input {
     border-radius: 2rem;
     padding: 2px 20px;
+}
+
+.detail-dashboard {
+    height: 400px;
 }
