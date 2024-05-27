@@ -15,6 +15,7 @@ class EmailVerification extends Mailable
     public function __construct($user)
     {
         $this->user = $user;
+       // $this->verification_token = $token;
     }
 
     public function build()

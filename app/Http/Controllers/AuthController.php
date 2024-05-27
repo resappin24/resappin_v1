@@ -96,13 +96,17 @@ class AuthController extends Controller
             'password.required' => 'Password tidak boleh kosong',
         ]);
 
+        //generate token
+        $token = strtoupper(bin2hex(random_bytes(5)));
+
         // Create a new instance of the User model
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'created_at' => date('Y-m-d H:i:s')
+            'created_at' => date('Y-m-d H:i:s'),
+            'verification_token' => $token
         ]);
 
         if ($user) {
