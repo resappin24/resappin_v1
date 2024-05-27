@@ -27,21 +27,37 @@
             });
         </script>
     @endif
-    <div class="bg">
-        <img src="https://www.rumahmesin.com/wp-content/uploads/2020/12/seblakkering.jpg?x44724" alt="" style="width:180%; height: 150%">
+<style>
+    .texture-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{{ asset('desain/img/bg-2.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            /* filter: blur(3px); */
+            opacity: 0.8;
+          
+        }
+    </style>
+
+<div class="texture-bg">
     </div>
-    <div class="judul">
-        <h1 style="text-align: center; ">Register Apps Penjualan Kerupuk</h1>
+    <div class="judul mt-5">
+        <h1 style="text-align: center; ">REGISTER RESAPPIN</h1>
     </div>
     <div class="login-page">
-        <div class="letakImg">
+        <!-- <div class="letakImg">
             <img src="{{ asset('desain') }}/img/1.jpg" class="kerupuk1" alt="kerupuk">
             <img src="{{ asset('desain') }}/img/2.jpg" class="kerupuk2" alt="kerupuk">
             <img src="{{ asset('desain') }}/img/3.jpg" class="kerupuk3" alt="kerupuk">
             <img src="{{ asset('desain') }}/img/4.jpg" class="kerupuk4" alt="kerupuk">
-        </div>
-        <div class="form mt-3">
-            <form action="#" class="login-form">
+        </div> -->
+        <div class="form-reg">
+            <form action="/register" method="post">
                 @csrf
                 <input type="text" name="name" placeholder="Name" />
                 <input type="text" name="username" placeholder="Username" />
