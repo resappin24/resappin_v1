@@ -55,7 +55,6 @@ class AdminController extends Controller
             'phone' => 'nullable|numeric|min:10'
         ], [
             'nama_barang.required' => 'Nama barang tidak boleh kosong',
-            'nama_barang.unique' => 'Nama barang sudah ada.',
             'username.required' => 'Username tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'email.email' => 'Format email tidak valid',
@@ -70,7 +69,7 @@ class AdminController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         
-        // tambah validasi 'where user_id = ... ' 
+        // tambah validasi 'where nama_barang = ... and user_id = ... ' 
 
         // $request->validate([
         //     'nama_barang' => 'required|unique:master_barang,nama_barang',
@@ -134,8 +133,6 @@ class AdminController extends Controller
         ], [
             'kode_vendor.required' => 'Kode vendor tidak boleh kosong',
             'nama_vendor.required' => 'Nama vendor tidak boleh kosong',
-            'kode_vendor.unique' => 'Kode vendor sudah terdaftar',
-            'nama_vendor.unique' => 'Nama vendor sudah terdaftar',
             
         ]);
 
@@ -144,6 +141,7 @@ class AdminController extends Controller
         }
 
         if (Vendor::where('kode_vendor', $request->kode)->exists()) {
+            // tambah validasi 'and user_id = Auth->id 
             $validator->errors()->add('kode_vendor', 'Kode vendor sudah terdaftar');
            // return back()->withErrors($validator)->withInput();
         }
@@ -152,15 +150,27 @@ class AdminController extends Controller
             'nama_vendor' => $request->nama_vendor,
             'kode_vendor' => $request->kode_vendor,
             'alamat' => $request->alamat,
-            'no_telp' => $request->no_telp,
+            'no_telp' => '62'.$request->no_telp,
             'created_date' => now(),
             'created_by' => Auth::user()->id,
             
         ]);
 
+        //insert ke log activity
+        if ($vendor->wasRecentlyCreated) {
+            Activity::create([
+                'activity' => 'Add Master Vendor',
+                'name_user' => Auth::user()->name,
+                'nama_barang' => $request->nama_vendor,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            return redirect()->back()->with('success', 'Add vendor success.');
+        } else {
+            return redirect()->back()->withErrors(['errors' => 'Gagal menambahkan data.'])->withInput();
+        }
+
         $request->session()->flash('success', 'Add New Master Vendor Success');
 
-        // dd(session()->all());
         return redirect('/vendor');
 
     }
@@ -248,7 +258,7 @@ class AdminController extends Controller
         $kerupuk = Kerupuk::find($request->id);
 
         if (!$kerupuk) {
-            return redirect()->back()->with('error', 'Kerupuk tidak ada.');
+            return redirect()->back()->with('error', 'Kerupuk tidak ditemukan.');
         }
 
         $imagePath = public_path('gambar_barang/' . $kerupuk->gambar_barang);
@@ -272,4 +282,28 @@ class AdminController extends Controller
             return redirect()->back()->withErrors(['errors' => 'Stok kerupuk masih tersedia.'])->withInput();
         }
     }
+
+    public function deleteVendor(Request $request)
+    {
+        $vendor = Vendor::find($request->id);
+
+        if (!$vendor) {
+            return redirect()->back()->with('error', 'Vendor tidak ditemukan.');
+        } else {
+            $vendor->delete();
+            
+            // insert list activity
+            Activity::insert([
+                'activity' => 'Delete Master Vendor',
+                'name_user' => Auth::user()->name,
+                'nama_barang' => $vendor->nama_vendor,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            return redirect()->back()->with('success', 'Delete Vendor berhasil.');
+        }
+
+      
+    }
+
 }

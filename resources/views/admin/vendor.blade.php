@@ -12,7 +12,8 @@
         }
         .bg-content {
             width: 100%;
-            height: 450px;
+            height: auto;
+            background-color: lightblue;
         }
         .bg-table {
             width: 100%;
@@ -27,14 +28,18 @@
             width: 105px;
         }
 
+        .title-menu {
+            color: blue;
+        }
+
 
 </style>
     <div class="row m-1">
-        <div class="card col-md-12 mt-1">
-            <div class="card-header bg-light">
+        <div class="card col-md-12 mt-1 bg-content">
+            <div class="card-header bg-content">
                 <div class="row  bg-header">
                     <div class="col-md-6 text-start mt-4 mb-3">
-                        <h3>MASTER VENDOR / SUPPLIER</h3>
+                        <h3 class="title-menu"><b>MASTER VENDOR / SUPPLIER</b></h3>
                     </div>
                     <div class="col-md-6 text-end  mt-4">
                         <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#vendorModal">
@@ -70,7 +75,7 @@
                                         data-bs-target="#editModal" data-id="{{ $item->vendor_id }}"
                                         data-nama="{{ $item->nama_vendor }}" data-harga-beli="{{ $item->kode_vendor }}"
                                         data-harga-jual="{{ $item->alamat }}" data-stok="{{ $item->no_telp }}"
-                                        >
+                                        disabled="true">
                                         <iconify-icon icon="mingcute:edit-4-line"></iconify-icon>
                                     </button>
 
@@ -251,17 +256,17 @@
         $(document).on('click', '#confirmDelete', function() {
             var id = $(this).data('id');
             
-            window.location.href = "{{ url('/kerupuk/delete') }}/" + id;
+            window.location.href = "{{ url('/vendor/delete') }}/" + id;
         });
     });
 </script>
 
-{{-- Modal Delete Kerupuk --}}
+{{-- Modal Delete Vendor --}}
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Barang</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Delete Vendor</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
                 <div class="modal-body">
@@ -299,7 +304,7 @@
                     <div class="mb-3">
                     <label class="col-form-label">Nama Vendor(</label><span class="required">*</span>)
                     <div class="input-group {{ $errors->has('nama_vendor') ? '' : 'mb-3' }}">
-                        <input type="text" name="nama_vendor" class="form-control custom-input" placeholder="" aria-label="Email" aria-describedby="basic-addon2" value="{{ old('email') }}">
+                        <input type="text" name="nama_vendor" class="form-control custom-input" placeholder="">
                     </div>
                     @if ($errors->has('nama_vendor'))
                         <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('nama_vendor') }}</div>
@@ -308,14 +313,14 @@
                     <div class="mb-3">
                         <label class="col-form-label">Alamat:</label>
                         <div class="input-group mb-3">
-                            <input type="text" id="alamat" class="form-control" aria-describedby="basic-addon1" name="harga_beli">
+                            <input type="text" id="alamat" class="form-control" aria-describedby="basic-addon1" name="alamat">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">No. Telp:</label>
                         <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">+62 </span>
-                            <input type="number" id="no_telp" class="form-control" aria-describedby="basic-addon1">
+                            <input type="number" id="no_telp" class="form-control" aria-describedby="basic-addon1" name="no_telp">
                         </div>
                     </div>
                    

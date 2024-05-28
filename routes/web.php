@@ -50,6 +50,8 @@ Route::middleware(['auth'])->group(
 
         Route::get('/vendor', [AdminController::class, 'vendor']);
         Route::post('/store_vendor', [AdminController::class, 'addVendor']);
+        Route::get('/vendor/delete/{id}', [AdminController::class, 'deleteVendor']);
+
         
     }
 );
