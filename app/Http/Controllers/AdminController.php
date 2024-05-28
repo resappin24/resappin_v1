@@ -128,8 +128,8 @@ class AdminController extends Controller
     public function addVendor(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kode_vendor' => 'required|unique:master_vendor',
-            'nama_vendor' => 'required|unique:master_vendor'
+            'kode_vendor' => 'required',
+            'nama_vendor' => 'required'
         ], [
             'kode_vendor.required' => 'Kode vendor tidak boleh kosong',
             'nama_vendor.required' => 'Nama vendor tidak boleh kosong',
@@ -174,6 +174,7 @@ class AdminController extends Controller
         return redirect('/vendor');
 
     }
+
 
     public function update(Request $request)
     {

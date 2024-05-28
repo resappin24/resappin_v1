@@ -52,6 +52,8 @@ Route::middleware(['auth'])->group(
         Route::post('/store_vendor', [AdminController::class, 'addVendor']);
         Route::get('/vendor/delete/{id}', [AdminController::class, 'deleteVendor']);
 
+        Route::get('/kategori', [TransaksiController::class, 'kategori']);
+
         
     }
 );

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Kerupuk;
 use App\Models\Transaksi;
+use App\Models\Kategori;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -147,4 +150,17 @@ class TransaksiController extends Controller
         $data = Transaksi::get();
         return response()->json($data);
     }
+
+    public function get_kategori() {
+        $data = Kategori::get();
+        return response()->json($data);
+    }
+
+    public function kategori($order = 'asc')
+    {
+       $kategori = DB::table('kategori_barang')->where('created_by',Auth::user()->id)->get();
+        return view('admin.kategori', compact('kategori'));
+    }
+
+
 }
