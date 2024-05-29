@@ -55,7 +55,7 @@
                     <span class="mx-2">Home</span>
                 </li>
             </a>
-            <a href="{{ url('/kerupuk') }}" class="nav-link text-white">
+            <a href="{{ url('/master_barang') }}" class="nav-link text-white">
                 <li>
                     <iconify-icon icon="fluent:list-bar-20-filled"></iconify-icon>
                     <span class="mx-2">Master Barang</span>
@@ -102,7 +102,7 @@
                     <iconify-icon icon="ion:home" width="20px"></iconify-icon>
                 </li>
             </a>
-            <a href="{{ url('/kerupuk') }}" class="nav-link text-white">
+            <a href="{{ url('/master_barang') }}" class="nav-link text-white">
                 <li>
                     <iconify-icon icon="fluent:list-bar-20-filled" width="20px"></iconify-icon>
                 </li>

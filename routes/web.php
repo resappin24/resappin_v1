@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(
         Route::get('/activity', [AdminController::class, 'history']);
 
         //Kerupuk
-        Route::get('/kerupuk', [AdminController::class, 'kerupuk']);
+        Route::get('/master_barang', [AdminController::class, 'kerupuk']);
         Route::post('/store_kerupuk', [AdminController::class, 'store']);
         Route::put('/update_kerupuk', [AdminController::class, 'update']);
         Route::get('/kerupuk/delete/{id}', [AdminController::class, 'destroy']);
@@ -53,6 +53,8 @@ Route::middleware(['auth'])->group(
         Route::get('/vendor/delete/{id}', [AdminController::class, 'deleteVendor']);
 
         Route::get('/kategori', [TransaksiController::class, 'kategori']);
+        Route::post('/store_kategori', [TransaksiController::class, 'addKategori']);
+        Route::get('/kategori/delete/{id}', [TransaksiController::class, 'deleteKategori']);
 
         
     }

@@ -29,9 +29,19 @@
         }
 
         .title-menu {
-            color:  #ff8584;
+            color:  #FFD700;
         }
 
+        .btn-close2{
+            width: 105px;
+            background-color: grey;
+            color: white;
+            height:35px;
+        }
+
+        .btn-close2:hover{
+            background-color: #A9A9A9;
+        }
 
 </style>
     <div class="row m-1">
@@ -53,7 +63,6 @@
                 <table id="example" class="table table-bordered table-striped text-center bg-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Kategori</th>
                             <th>Created date</th>
                         </tr>
@@ -61,7 +70,6 @@
                     <tbody>
                         @foreach ($kategori as $item)
                             <tr>
-                                <td>{{ $item->id }}</td>
                                 <td>{{ $item->kategori }}</td>
                                 <td>{{$item->created_date}}</td>
                                 <td>
@@ -249,17 +257,17 @@
         $(document).on('click', '#confirmDelete', function() {
             var id = $(this).data('id');
             
-            window.location.href = "{{ url('/vendor/delete') }}/" + id;
+            window.location.href = "{{ url('/kategori/delete') }}/" + id;
         });
     });
 </script>
 
-{{-- Modal Delete Vendor --}}
+{{-- Modal Delete kategori --}}
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Vendor</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Delete Kategori</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
                 <div class="modal-body">
@@ -273,53 +281,30 @@
     </div>
 </div>
 
-{{-- Modal Add Vendor --}}
+{{-- Modal Add Kategori --}}
 <div class="modal fade" id="vendorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Vendor</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add New Kategori</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ url('/store_vendor') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ url('/store_kategori') }}" method="post" enctype="multipart/form-data">
             @csrf
                 <div class="modal-body">
                 <div class="mb-3">
-                 <label class="col-form-label">Kode Vendor(</label><span class="required">*</span>)
-                    <div class="input-group {{ $errors->has('kode_vendor') ? '' : 'mb-3' }}">
+                 <label class="col-form-label">Kategori(</label><span class="required">*</span>)
+                    <div class="input-group {{ $errors->has('kategori') ? '' : 'mb-3' }}">
                          
-                        <input type="text" name="kode_vendor" class="form-control custom-input" placeholder="" aria-label="" aria-describedby="basic-addon1" value="{{ old('name') }}">
+                        <input type="text" name="kategori" class="form-control custom-input" placeholder="" aria-label="" aria-describedby="basic-addon1" value="{{ old('name') }}">
                     </div>
-                    @if ($errors->has('kode_vendor'))
-                        <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('kode_vendor') }}</div>
+                    @if ($errors->has('kategori'))
+                    <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('kategori') }}</div>
                     @endif
                     </div>
-                    <div class="mb-3">
-                    <label class="col-form-label">Nama Vendor(</label><span class="required">*</span>)
-                    <div class="input-group {{ $errors->has('nama_vendor') ? '' : 'mb-3' }}">
-                        <input type="text" name="nama_vendor" class="form-control custom-input" placeholder="">
-                    </div>
-                    @if ($errors->has('nama_vendor'))
-                        <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('nama_vendor') }}</div>
-                    @endif
-                    </div>
-                    <div class="mb-3">
-                        <label class="col-form-label">Alamat:</label>
-                        <div class="input-group mb-3">
-                            <input type="text" id="alamat" class="form-control" aria-describedby="basic-addon1" name="alamat">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="col-form-label">No. Telp:</label>
-                        <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">+62 </span>
-                            <input type="number" id="no_telp" class="form-control" aria-describedby="basic-addon1" name="no_telp">
-                        </div>
-                    </div>
-                   
                 </div>
                 <div class="my-footer mb-4">
-                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> 
+                   <button type="button" class="btn btn-close2" data-bs-dismiss="modal">Close</button> 
                     <button type="submit" class="btn btn-primary">Add</button>
                 </div>
             </form>
@@ -407,7 +392,6 @@
             "columns": [
                 { "searchable": false },
                 { "searchable": true },
-                { "searchable": false },
                 { "searchable": false }
             ]
         });

@@ -8,7 +8,7 @@
             <div class="card-header bg-light">
                 <div class="row">
                     <div class="col-md-6 text-start">
-                        <h4>Table List Kerupuk</h4>
+                        <h3>MASTER BARANG</h3>
                     </div>
                     <div class="col-md-6 text-end">
                         <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#kerupukModal">

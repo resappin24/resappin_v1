@@ -86,13 +86,14 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'username' => 'required|min:3|max:255',
-            'email' => 'required|email',
+            'email' => 'required|unique:users|email',
             'password' => 'required|max:255',
         ], [
             'name.required' => 'Name tidak boleh kosong',
             'username.required' => 'Username tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'email.email' => 'Format email tidak valid',
+            'email.unique' => 'Alamat Email sudah digunakan',
             'password.required' => 'Password tidak boleh kosong',
         ]);
 
@@ -113,7 +114,6 @@ class AuthController extends Controller
             $newUserId = $user->id;
             $newUser = User::find($newUserId);
             Mail::to($newUser->email)
-            ->bcc('resappin.tech@gmail.com')
             ->send(new EmailVerification($newUser));
 
             return redirect('/')->with('success', 'Registrasi berhasil. Silakan periksa email Anda untuk verifikasi.');
