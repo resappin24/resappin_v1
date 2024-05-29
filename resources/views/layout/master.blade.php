@@ -35,7 +35,19 @@
             <center>
                 <img src="{{ asset('desain/img/logo.png') }}" alt="logo" width="200px" style="margin-top:-50px ; margin-bottom:-50px ;" >
             </center>
+              <!-- <a href="{{ url('/user') }}"  
+                class="nav-link text-white {{ request()->routeIs('/user') ? 'active' : '' }}"> -->
+                <li class="d-flex flex-row align-items-center justify-content-center mb-3">
+                    <iconify-icon icon="ion:person-circle" width="20px"></iconify-icon>
+                    <span class="mx-2">
+                        <strong>
+                            Welcome {{ ucfirst(strtolower(Auth()->user()->username)) }}!
+                        </strong>
+                    </span>
+                </li>
+            <!-- </a> -->
             {{-- {{ Auth::user()->name }} --}}
+           
             <a href="{{ url('/dashboard') }}"
                 class="nav-link text-white {{ request()->routeIs('/dashboard') ? 'active' : '' }}">
                 <li>
@@ -82,7 +94,8 @@
     <div class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" style="width:auto;" id="sidebarLogo">
         <ul class="nav flex-column text-white w-100 mt-3">
             <a class="nav-link text-white" id="menu-btn2"><iconify-icon icon="ion:menu" width="20px"></iconify-icon></a>
-            <img src="{{ asset('desain/img/logo-1.png') }}" alt="logo" width="50px">
+            <img src="{{ asset('desain/img/logo-1.png') }}" alt="logo" width="50px" class="mb-3">
+          
             <a href="{{ url('/dashboard') }}"
                 class="nav-link text-white {{ request()->routeIs('/dashboard') ? 'active' : '' }}">
                 <li>

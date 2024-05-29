@@ -32,6 +32,22 @@
             color: blue;
         }
 
+        .btn-add {
+            width: 85px;
+            height: 40px;
+        }
+
+        .btn-close2{
+            width: 105px;
+            background-color: grey;
+            color: white;
+            height:35px;
+        }
+
+        .btn-close2:hover{
+            background-color: #A9A9A9;
+        }
+
 
 </style>
     <div class="row m-1">
@@ -41,7 +57,7 @@
                     <div class="col-md-6 text-start mt-4 mb-3">
                         <h3 class="title-menu"><b>MASTER VENDOR / SUPPLIER</b></h3>
                     </div>
-                    <div class="col-md-6 text-end  mt-4">
+                    <div class="col-md-6 text-end  mt-3">
                         <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#vendorModal">
                             <!-- <iconify-icon icon="mdi:add-box"></iconify-icon> -->
                             <!-- <iconify-icon icon="subway:add-1"></iconify-icon> -->
@@ -326,7 +342,7 @@
                    
                 </div>
                 <div class="my-footer mb-4">
-                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> 
+                   <button type="button" class="btn btn-close2" data-bs-dismiss="modal">Close</button> 
                     <button type="submit" class="btn btn-primary">Add</button>
                 </div>
             </form>

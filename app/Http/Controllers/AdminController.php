@@ -141,12 +141,24 @@ class AdminController extends Controller
         }
 
         if (Vendor::where('kode_vendor', $request->kode)->exists()) {
-            // tambah validasi 'and user_id = Auth->id 
+            
             $validator->errors()->add('kode_vendor', 'Kode vendor sudah terdaftar');
            // return back()->withErrors($validator)->withInput();
         }
 
-        $vendor = Vendor::create([
+        // tambah validasi 'and user_id = Auth->id 
+        $validation = ['nama_vendor'=> $request->nama_vendor, 'created_by' => Auth::user()->id ];
+         $vendor =   Vendor::where([
+            ['nama_vendor','=',  $request->nama_vendor],
+            ['created_by', '=', Auth::user()->id]
+            ])->get()->first();
+
+         if ($vendor !== null) {
+            // jika ada, set vendor sudah terdaftar.
+            return redirect()->back()->withErrors(['errors' => 'Vendor sudah terdaftar!']);
+         } else {
+            // process add vendor ke db
+             $vendor = Vendor::create([
             'nama_vendor' => $request->nama_vendor,
             'kode_vendor' => $request->kode_vendor,
             'alamat' => $request->alamat,
@@ -170,11 +182,12 @@ class AdminController extends Controller
         }
 
         $request->session()->flash('success', 'Add New Master Vendor Success');
+            return redirect()->back()->with('success', 'Add vendor success!');
+         }
 
         return redirect('/vendor');
 
     }
-
 
     public function update(Request $request)
     {
