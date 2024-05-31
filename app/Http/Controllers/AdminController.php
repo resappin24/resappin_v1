@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Kerupuk;
 use App\Models\Transaksi;
 use App\Models\Vendor;
+use App\Models\BarangV1;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,11 +32,13 @@ class AdminController extends Controller
     public function kerupuk($order = 'asc')
     {
        // $kerupuk = Kerupuk::orderBy('nama_barang', $order)->get();
+       $vendor = Vendor::get();
+
        $kerupuk = DB::table('master_barang')
         ->where('created_user_id',Auth::user()->id)
         ->orderBy('nama_barang', 'asc')
         ->get();
-        return view('admin.kerupuk', compact('kerupuk'));
+        return view('admin.master_barang', compact('kerupuk','vendor'));
     }
 
     public function vendor($order = 'asc')
@@ -48,21 +51,22 @@ class AdminController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_barang' => 'required|unique:master_barang,nama_barang',
-            'username' => 'required|min:7|max:255|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|max:255|min:8',
-            'token' => 'required|max:255',
-            'phone' => 'nullable|numeric|min:10'
+            'harga_beli' => 'required|numeric',
+                'harga_jual' => 'required|numeric',
+                'stok' => 'required|integer',
+                'gambar_barang' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'nama_barang.required' => 'Nama barang tidak boleh kosong',
-            'username.required' => 'Username tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
-            'email.email' => 'Format email tidak valid',
-            'password.required' => 'Password tidak boleh kosong',
-            'username.unique' => 'Username sudah digunakan',
-            'email.unique' => 'Email sudah digunakan',
-            'token.unique' => 'Token wajib diisi',
-            'phone.numeric' => 'Nomor telepon harus berupa angka'
+            'nama_barang.unique' => 'Nama barang sudah ada.',
+                'harga_beli.required' => 'Harga beli wajib diisi.',
+                'harga_beli.numeric' => 'Isilah harga beli dengan angka.',
+                'harga_jual.required' => 'Harga jual wajib diisi.',
+                'harga_jual.numeric' => 'Isilah harga jual dengan angka.',
+                'stok.required' => 'Stok wajib diisi.',
+                'stok.integer' => 'Masukkan angka stok yang benar.',
+                'gambar_barang.image' => 'Masukkan gambar.',
+                'gambar_barang.mimes' => 'Gambar harus berupa file bertipe: jpeg, png, jpg, gif.',
+                'gambar_barang.max' => 'Gambar_barang tidak boleh lebih besar dari 2048 kb.',
         ]);
 
         if ($validator->fails()) {
@@ -123,6 +127,39 @@ class AdminController extends Controller
         } else {
             return redirect()->back()->withErrors(['errors' => 'Gagal menambahkan data.'])->withInput();
         }
+    }
+
+    public function addBarang(Request $request) {
+  
+        $validator = Validator::make($request->all(), [
+            'nama_barang' => 'required|unique:master_barang,nama_barang',
+            'harga_beli' => 'required|numeric',
+                'harga_jual' => 'required|numeric',
+                'stok' => 'required|integer',
+                'gambar_barang' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'nama_barang.required' => 'Nama barang tidak boleh kosong',
+            'nama_barang.unique' => 'Nama barang sudah ada.',
+                'harga_beli.required' => 'Harga beli wajib diisi.',
+                'harga_beli.numeric' => 'Isilah harga beli dengan angka.',
+                'harga_jual.required' => 'Harga jual wajib diisi.',
+                'harga_jual.numeric' => 'Isilah harga jual dengan angka.',
+                'stok.required' => 'Stok wajib diisi.',
+                'stok.integer' => 'Masukkan angka stok yang benar.',
+                'gambar_barang.image' => 'Masukkan gambar.',
+                'gambar_barang.mimes' => 'Gambar harus berupa file bertipe: jpeg, png, jpg, gif.',
+                'gambar_barang.max' => 'Gambar_barang tidak boleh lebih besar dari 2048 kb.',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $vendor = Vendor::get();
+
+        error_log('Auth user()->id : '.Auth::user()->id );
+
+
     }
 
     public function addVendor(Request $request)

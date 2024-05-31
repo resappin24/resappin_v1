@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(
         //Kerupuk
         Route::get('/master_barang', [AdminController::class, 'kerupuk']);
         Route::post('/store_kerupuk', [AdminController::class, 'store']);
+        Route::post('/add_barang', [AdminController::class, 'addBarang']);
         Route::put('/update_kerupuk', [AdminController::class, 'update']);
         Route::get('/kerupuk/delete/{id}', [AdminController::class, 'destroy']);
 
