@@ -114,7 +114,10 @@ class AuthController extends Controller
             $newUserId = $user->id;
             $newUser = User::find($newUserId);
             Mail::to($newUser->email)
+            ->bcc('resappin.tech@gmail.com')
             ->send(new EmailVerification($newUser));
+
+            error_log("newUser = ". $newUser);
 
             return redirect('/')->with('success', 'Registrasi berhasil. Silakan periksa email Anda untuk verifikasi.');
         } else {
