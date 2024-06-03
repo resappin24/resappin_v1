@@ -32,17 +32,30 @@ class AdminController extends Controller
     public function kerupuk($order = 'asc')
     {
        // $kerupuk = Kerupuk::orderBy('nama_barang', $order)->get();
-       $vendor = Vendor::get();
+       //function ambil list vendor sesuai dengan user login.
+       $vendor = DB::table('master_vendor')->where('created_by',Auth::user()->id)->get();
 
-       $kerupuk = DB::table('master_barang')
-        ->where('created_user_id',Auth::user()->id)
-        ->orderBy('nama_barang', 'asc')
-        ->get();
+      //kalau ambil semua data vendor tanpa filter ->  $vendor = Vendor::get();
+
+    //    $kerupuk = DB::table('master_barang')
+    //     ->where('created_user_id',Auth::user()->id)
+    //     ->orderBy('nama_barang', 'asc')
+    //     ->get();
+    
+        // ubah query tambah Nama Vendor.
+        $kerupuk = DB::table('master_barang_v1')
+                    ->join('master_vendor', 'master_vendor.vendor_id', '=', 'master_barang_v1.vendor_id')
+                    ->select('master_barang_v1.*', 'master_vendor.*')
+                    ->where('created_user_id',Auth::user()->id)
+                    ->orderBy('nama_barang', 'asc')
+                    ->get();
+
         return view('admin.master_barang', compact('kerupuk','vendor'));
     }
 
     public function vendor($order = 'asc')
     {
+        //ambil data master_vendor sesuai dgn user login.
        $vendor = DB::table('master_vendor')->where('created_by',Auth::user()->id)->get();
         return view('admin.vendor', compact('vendor'));
     }
@@ -52,9 +65,9 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_barang' => 'required|unique:master_barang,nama_barang',
             'harga_beli' => 'required|numeric',
-                'harga_jual' => 'required|numeric',
-                'stok' => 'required|integer',
-                'gambar_barang' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'harga_jual' => 'required|numeric',
+            'stok' => 'required|integer',
+            'gambar_barang' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'nama_barang.required' => 'Nama barang tidak boleh kosong',
             'nama_barang.unique' => 'Nama barang sudah ada.',
@@ -155,10 +168,43 @@ class AdminController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $vendor = Vendor::get();
+        //validasi nama barang sudah ada jika user created nya sama.
 
-        error_log('Auth user()->id : '.Auth::user()->id );
 
+        $imgName = $request->hasFile('gambar_barang')
+        ? 'img' . time() . '.' . $request->gambar_barang->extension()
+        : 'gambar-default.png';
+
+    if ($request->hasFile('gambar_barang')) {
+        $request->gambar_barang->move(public_path('gambar_barang'), $imgName);
+    }
+
+    $barang = BarangV1::create([
+        'vendor_id' => $request->vendorID,
+        'nama_barang' => $request->nama_barang,
+        'main_harga_beli' => $request->harga_beli,
+        'main_harga_jual' => $request->harga_jual,
+        'main_stok' => $request->stok,
+        'gambar_barang' => $imgName,
+        'created_date' => date('Y-m-d H:i:s'),
+        'created_user_id' => Auth::user()->id,
+        
+    ]);
+
+    $vendorId = $request->vendorID;
+    error_log('vendor id : '.$vendorId );
+
+    if ($barang->wasRecentlyCreated) {
+        Activity::create([
+            'activity' => $request->activity,
+            'name_user' => Auth::user()->name,
+            'nama_barang' => $request->nama_barang,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+        return redirect()->back()->with('success', 'Add new item success.');
+        } else {
+            return redirect()->back()->withErrors(['errors' => 'Failed adding data.'])->withInput();
+        }
 
     }
 

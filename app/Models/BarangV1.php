@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kerupuk extends Model
+class BarangV1 extends Model
 {
     use HasFactory;
     protected $table = "master_barang_v1";
@@ -24,4 +24,6 @@ class Kerupuk extends Model
         'updated_date',
         'created_user_id',
     ];
+
+    public $timestamps = false;
 }

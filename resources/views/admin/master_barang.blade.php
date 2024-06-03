@@ -30,6 +30,7 @@
                             <th>Harga Beli</th>
                             <th>Harga Jual</th>
                             <th>Stok</th>
+                            <th>Vendor</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -39,21 +40,22 @@
                                 <td><img src="{{ asset('gambar_barang/' . $item->gambar_barang) }}"
                                         alt="{{ $item->nama_barang }}" width="70px"></td>
                                 <td>{{ $item->nama_barang }}</td>
-                                <td>Rp. @currency($item->harga_beli)</td>
-                                <td>Rp. @currency($item->harga_jual)</td>
-                                <td>@currency($item->stok)</td>
+                                <td>Rp. @currency($item->main_harga_beli)</td>
+                                <td>Rp. @currency($item->main_harga_jual)</td>
+                                <td>@currency($item->main_stok)</td>
+                                <td>{{ $item->nama_vendor }}</td>
                                 <td>
                                     <button class="btn btn-warning btn-edit" data-bs-toggle="modal"
-                                        data-bs-target="#editModal" data-id="{{ $item->kerupukID }}"
-                                        data-nama="{{ $item->nama_barang }}" data-harga-beli="{{ $item->harga_beli }}"
-                                        data-harga-jual="{{ $item->harga_jual }}" data-stok="{{ $item->stok }}"
+                                        data-bs-target="#editModal" data-id="{{ $item->id_barang }}"
+                                        data-nama="{{ $item->nama_barang }}" data-harga-beli="{{ $item->main_harga_beli }}"
+                                        data-harga-jual="{{ $item->main_harga_jual }}" data-stok="{{ $item->main_stok }}"
                                         data-gambar="{{ $item->gambar_barang }}">
                                         <iconify-icon icon="mingcute:edit-4-line"></iconify-icon>
                                     </button>
 
                                     <button data-bs-toggle="modal"
                                         data-bs-target="#deleteModal" class="btn btn-danger btn-delete" 
-                                        data-id="{{ $item->kerupukID }}" data-nama="{{ $item->nama_barang }}">
+                                        data-id="{{ $item->id_barang }}" data-nama="{{ $item->nama_barang }}">
                                         <iconify-icon icon="bi:trash-fill"></iconify-icon>
                                     </button>
                                 </td>
@@ -81,10 +83,10 @@
 
             console.log(id, nama, hargaBeli, hargaJual, stok, gambar, keuntungan);
 
-            $('.harga_beli').val('');
+            $('.main_harga_beli').val('');
             $('#update-keuntungan').val('');
 
-            $('.harga_beli').on('input', function() {
+            $('.main_harga_beli').on('input', function() {
                 var beli = $(this).val()
                 jual()
             })
@@ -100,7 +102,7 @@
             })
 
             function jual() {
-                var beli = parseFloat($('.harga_beli').val()) || 0;
+                var beli = parseFloat($('.main_harga_beli').val()) || 0;
                 var persen = parseFloat($('#update-keuntungan').val()) || 0;
                 beli = Math.max(beli, 0);
                 persen = Math.max(persen, 0);
@@ -172,10 +174,10 @@
                 console.log('stokValue:', stokValue);
             });
 
-            $('#harga_beli').val('');
+            $('#main_harga_beli').val('');
             $('#keuntungan').val('');
 
-            $('#harga_beli').on('input', function() {
+            $('#main_harga_beli').on('input', function() {
                 var beli = $(this).val()
 
                 beli = parseInt(beli);
@@ -196,7 +198,7 @@
             })
 
             function jual() {
-                var beli = parseFloat($('#harga_beli').val()) || 0;
+                var beli = parseFloat($('#main_harga_beli').val()) || 0;
                 var persen = parseFloat($('#keuntungan').val()) || 0;
                 beli = Math.max(beli, 0);
                 persen = Math.max(persen, 0);
@@ -406,6 +408,7 @@
                 { "searchable": false },
                 { "searchable": false },
                 { "searchable": false },
+                { "searchable": true },
                 { "searchable": false }
             ]
         });

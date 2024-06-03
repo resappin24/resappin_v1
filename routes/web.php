@@ -49,10 +49,12 @@ Route::middleware(['auth'])->group(
         Route::post('/store_transaksi', [TransaksiController::class, 'store_transaksi']);
         Route::put('/update_transaksi', [TransaksiController::class, 'update_transaksi']);
 
+        // ====== vendor =========
         Route::get('/vendor', [AdminController::class, 'vendor']);
         Route::post('/store_vendor', [AdminController::class, 'addVendor']);
         Route::get('/vendor/delete/{id}', [AdminController::class, 'deleteVendor']);
 
+        // ====== kategori ========
         Route::get('/kategori', [TransaksiController::class, 'kategori']);
         Route::post('/store_kategori', [TransaksiController::class, 'addKategori']);
         Route::get('/kategori/delete/{id}', [TransaksiController::class, 'deleteKategori']);
