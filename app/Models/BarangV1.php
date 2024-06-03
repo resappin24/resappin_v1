@@ -20,6 +20,7 @@ class BarangV1 extends Model
         'new_harga_beli',
         'new_harga_jual',
         'gambar_barang',
+        'tanggal_beli',
         'created_date',
         'updated_date',
         'created_user_id',

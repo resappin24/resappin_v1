@@ -185,7 +185,9 @@ class AdminController extends Controller
         'main_harga_beli' => $request->harga_beli,
         'main_harga_jual' => $request->harga_jual,
         'main_stok' => $request->stok,
+        'new_harga_beli' => $request->harga_beli_new,
         'gambar_barang' => $imgName,
+        'tanggal_beli' => $request->tgl_beli,
         'created_date' => date('Y-m-d H:i:s'),
         'created_user_id' => Auth::user()->id,
         

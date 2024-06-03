@@ -3,12 +3,19 @@
 
 @extends('layout.master')
 @section('konten')
+<style>
+
+    .label-bold {
+        font-weight: bold;
+
+    }
+</style>
     <div class="row m-1">
         <div class="card col-md-12 mt-1">
             <div class="card-header bg-light">
                 <div class="row">
                     <div class="col-md-6 text-start">
-                        <h3>MASTER BARANG</h3>
+                        <h3 class="label-bold">MASTER BARANG</h3>
                     </div>
                     <div class="col-md-6 text-end">
                         <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#kerupukModal">
@@ -258,16 +265,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Barang</h5>
+                <h4 class="label-bold" id="exampleModalLabel">Add New Item</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ url('/add_barang') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                 <div class="mb-3">
-                        <label for="vendor" class="col-form-label">Vendor</label>
-                        <div class="dropdown-form">
-                            <select name="vendorID" id="vendorSelect" class="form-control">
+                        <label for="vendor" class="col-form-label label-bold">Vendor &nbsp;</label><i>(opsional) :</i>
+                        <div>
+                            <select name="vendorID" id="vendorSelect" >
                                 <option>Pilih Vendor</option>
                                 @foreach ($vendor as $item)
                                         <option value="{{ $item->vendor_id }}">
@@ -279,41 +286,66 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="col-form-label">Nama Barang:</label>
+                        <label class="col-form-label label-bold">Nama Barang</label>(<span class="required">*</span>) :
 
                         <input type="text" class="form-control" id="nama-barang" name="nama_barang">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label">Harga Beli:</label>
+                        <label class="col-form-label">Harga Beli</label>(<span class="required">*</span>) :
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
                             <input type="number" id="harga_beli" class="form-control" aria-describedby="basic-addon1" name="harga_beli"
                             >
                         </div>
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label class="col-form-label">Keuntungan</label>
                         <div class="input-group mb-3">
                             <input type="number" id="keuntungan" class="form-control" aria-describedby="basic-addon1">
                             <span class="input-group-text" id="basic-addon1">% </span>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
-                        <label class="col-form-label">Harga Jual:</label>
+                        <label class="col-form-label">Harga Jual</label>(<span class="required">*</span>) :
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
-                            <input type="number" id="harga_jual" class="form-control" aria-describedby="basic-addon1" name="harga_jual"
-                             readonly>
+                            <input type="number" id="harga_jual" class="form-control" aria-describedby="basic-addon1" name="harga_jual">
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label">Stok:</label>
+                        <label class="col-form-label">Stok</label>(<span class="required">*</span>) :
                         <input type="number" class="form-control" id="stok" name="stok">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label">Gambar Barang:</label>
+                        <label class="col-form-label">Harga Beli (New) &nbsp;</label><i>(opsional) :</i>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                            <input type="number" id="harga_beli_new" class="form-control" aria-describedby="basic-addon1" name="harga_beli_new"
+                            >
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Harga Jual (New) &nbsp;</label><i>(opsional) :</i>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                            <input type="number" id="harga_jual_new" class="form-control" aria-describedby="basic-addon1" name="harga_jual_new">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Stok (new) &nbsp;</label><i>(opsional) :</i>
+                        <input type="number" class="form-control" id="stok_new" name="stok_new">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Tanggal Beli &nbsp;</label><i>(opsional) :</i>
+                        <input type="date" class="form-control" id="tgl_beli" name="tgl_beli">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Gambar Barang &nbsp;</label><i>(opsional) :</i>
                         <input class="form-control" type="file" id="formFile" name="gambar_barang">
                     </div>
+                    <div class="mb-3">
+                            (<span class="required">*</span>) <i>mandatory field<i>
+                        </div>
                 </div>
                 <input type="hidden" value="Add Master Barang" name="activity">
                 <div class="modal-footer">
