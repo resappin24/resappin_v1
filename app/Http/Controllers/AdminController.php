@@ -43,8 +43,16 @@ class AdminController extends Controller
     //     ->get();
     
         // ubah query tambah Nama Vendor.
+        // $kerupuk = DB::table('master_barang_v1')
+        //             ->join('master_vendor', 'master_vendor.vendor_id', '=', 'master_barang_v1.vendor_id')
+        //             ->select('master_barang_v1.*', 'master_vendor.*')
+        //             ->where('created_user_id',Auth::user()->id)
+        //             ->orderBy('nama_barang', 'asc')
+        //             ->get();
+        
+        //pakai leftjoin ke mastervendor.
         $kerupuk = DB::table('master_barang_v1')
-                    ->join('master_vendor', 'master_vendor.vendor_id', '=', 'master_barang_v1.vendor_id')
+                    ->leftJoin('master_vendor', 'master_vendor.vendor_id', '=', 'master_barang_v1.vendor_id')
                     ->select('master_barang_v1.*', 'master_vendor.*')
                     ->where('created_user_id',Auth::user()->id)
                     ->orderBy('nama_barang', 'asc')
@@ -85,29 +93,7 @@ class AdminController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-        
-        // tambah validasi 'where nama_barang = ... and user_id = ... ' 
-
-        // $request->validate([
-        //     'nama_barang' => 'required|unique:master_barang,nama_barang',
-        //     'harga_beli' => 'required|numeric',
-        //     'harga_jual' => 'required|numeric',
-        //     'stok' => 'required|integer',
-        //     'gambar_barang' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        // ], [
-        //     'nama_barang.required' => 'Nama barang wajib diisi.',
-        //     'nama_barang.unique' => 'Nama barang sudah ada.',
-        //     'harga_beli.required' => 'Harga beli wajib diisi.',
-        //     'harga_beli.numeric' => 'Isilah harga beli dengan angka.',
-        //     'harga_jual.required' => 'Harga jual wajib diisi.',
-        //     'harga_jual.numeric' => 'Isilah harga jual dengan angka.',
-        //     'stok.required' => 'Stok wajib diisi.',
-        //     'stok.integer' => 'Masukkan angka stok yang benar.',
-        //     'gambar_barang.image' => 'Masukkan gambar.',
-        //     'gambar_barang.mimes' => 'Gambar harus berupa file bertipe: jpeg, png, jpg, gif.',
-        //     'gambar_barang.max' => 'Gambar_barang tidak boleh lebih besar dari 2048 kb.',
-        // ]);
-
+      
         // Validation passed
         $imgName = $request->hasFile('gambar_barang')
             ? 'img' . time() . '.' . $request->gambar_barang->extension()

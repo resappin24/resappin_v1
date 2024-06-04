@@ -113,13 +113,19 @@ class AuthController extends Controller
         if ($user) {
             $newUserId = $user->id;
             $newUser = User::find($newUserId);
-            Mail::to($newUser->email)
-            ->bcc('resappin.tech@gmail.com')
-            ->send(new EmailVerification($newUser));
+            // Mail::to($newUser->email)
+            // ->bcc('resappin.tech@gmail.com')
+            // ->send(new EmailVerification($newUser));
 
             error_log("newUser = ". $newUser);
 
-            return redirect('/')->with('success', 'Registrasi berhasil. Silakan periksa email Anda untuk verifikasi.');
+            // session()->put('otpRoute', 'register');
+
+            // $request->session()->flash('success', 'Registrasi Berhasil!');
+            return redirect('/')->withSuccess('Register Success! Please check your email to proceed verification. Thankyou.');
+
+           // return redirect('/');
+          //  return redirect('/')->with('success', 'Registrasi berhasil. Silakan periksa email Anda untuk verifikasi.');
         } else {
             return redirect('/')->with('error', 'Registrasi gagal. Silakan coba lagi.');
         }

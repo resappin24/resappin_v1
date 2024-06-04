@@ -220,8 +220,6 @@ class TransaksiController extends Controller
          }
 
         return redirect('/kategori');
-
-
     }
 
     public function deleteKategori(Request $request)
