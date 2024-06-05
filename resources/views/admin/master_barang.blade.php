@@ -275,7 +275,7 @@
                         <label for="vendor" class="col-form-label label-bold">Vendor &nbsp;</label><i>(opsional) :</i>
                         <div>
                             <select name="vendorID" id="vendorSelect" >
-                                <option>Pilih Vendor</option>
+                                <option value="">Pilih Vendor</option>
                                 @foreach ($vendor as $item)
                                         <option value="{{ $item->vendor_id }}">
                                         {{ $item->kode_vendor }} - {{ $item->nama_vendor }} 

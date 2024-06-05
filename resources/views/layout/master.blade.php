@@ -33,7 +33,7 @@
     <div class="side-navbar d-flex justify-content-between flex-wrap flex-column" style="z-index: 2" id="sidebar">
         <ul class="nav flex-column text-white w-100">
             <center>
-                <img src="{{ asset('desain/img/logo.png') }}" alt="logo" width="200px" style="margin-top:-50px ; margin-bottom:-50px ;" >
+                <img src="{{ asset('desain/img/logo-2-effect.png') }}" alt="logo" width="200px" height="80px" style="margin-top:20px; margin-bottom:20px; " >
             </center>
               <!-- <a href="{{ url('/user') }}"  
                 class="nav-link text-white {{ request()->routeIs('/user') ? 'active' : '' }}"> -->
@@ -94,7 +94,7 @@
     <div class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" style="width:auto;" id="sidebarLogo">
         <ul class="nav flex-column text-white w-100 mt-3">
             <a class="nav-link text-white" id="menu-btn2"><iconify-icon icon="ion:menu" width="20px"></iconify-icon></a>
-            <img src="{{ asset('desain/img/logo-1.png') }}" alt="logo" width="50px" class="mb-3">
+            <img src="{{ asset('desain/img/logo-2-effect.png') }}" alt="logo" width="130px" class="mb-3">
           
             <a href="{{ url('/dashboard') }}"
                 class="nav-link text-white {{ request()->routeIs('/dashboard') ? 'active' : '' }}">

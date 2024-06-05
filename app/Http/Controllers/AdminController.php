@@ -130,8 +130,9 @@ class AdminController extends Controller
 
     public function addBarang(Request $request) {
   
+          //validasi nama barang sudah ada jika user created nya sama. (sementara sambil nunggu table baru)
         $validator = Validator::make($request->all(), [
-            'nama_barang' => 'required|unique:master_barang,nama_barang',
+            'nama_barang' => 'required|unique:master_barang_v1,nama_barang',
             'harga_beli' => 'required|numeric',
                 'harga_jual' => 'required|numeric',
                 'stok' => 'required|integer',
@@ -154,9 +155,7 @@ class AdminController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        //validasi nama barang sudah ada jika user created nya sama.
-
-
+      
         $imgName = $request->hasFile('gambar_barang')
         ? 'img' . time() . '.' . $request->gambar_barang->extension()
         : 'gambar-default.png';
@@ -165,34 +164,58 @@ class AdminController extends Controller
         $request->gambar_barang->move(public_path('gambar_barang'), $imgName);
     }
 
-    $barang = BarangV1::create([
-        'vendor_id' => $request->vendorID,
-        'nama_barang' => $request->nama_barang,
-        'main_harga_beli' => $request->harga_beli,
-        'main_harga_jual' => $request->harga_jual,
-        'main_stok' => $request->stok,
-        'new_harga_beli' => $request->harga_beli_new,
-        'gambar_barang' => $imgName,
-        'tanggal_beli' => $request->tgl_beli,
-        'created_date' => date('Y-m-d H:i:s'),
-        'created_user_id' => Auth::user()->id,
-        
-    ]);
+  //  error_log($request->vendorID);
+  //validasi saat barang sudah mencapai limit (10) per akun user.
+    $jmlItem = DB::table('master_barang_v1')
+                ->leftJoin('master_vendor', 'master_vendor.vendor_id', '=', 'master_barang_v1.vendor_id')
+                ->select('master_barang_v1.*', 'master_vendor.*')
+                ->where('created_user_id',Auth::user()->id)->count();
+    
+    error_log('count item : '.$jmlItem);
+    // validasi jika barang item per user sudah mencapai 10, tidak bisa lagi tambah.
+    if($jmlItem == 10) {
 
-    $vendorId = $request->vendorID;
-    error_log('vendor id : '.$vendorId );
+        return redirect()->back()->withErrors(['errors' => 'Sorry, you have reach the maximum number of adding master data.'])->withInput();
 
-    if ($barang->wasRecentlyCreated) {
-        Activity::create([
-            'activity' => $request->activity,
-            'name_user' => Auth::user()->name,
-            'nama_barang' => $request->nama_barang,
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
-        return redirect()->back()->with('success', 'Add new item success.');
-        } else {
-            return redirect()->back()->withErrors(['errors' => 'Failed adding data.'])->withInput();
+    } else {
+        if ($request->vendorID == 'Pilih Vendor') {
+            $IDvendor = null;
+        }else {
+            $IDvendor = $request->vendorID;
         }
+    
+        $barang = BarangV1::create([
+            'vendor_id' => $IDvendor,
+            'nama_barang' => $request->nama_barang,
+            'main_harga_beli' => $request->harga_beli,
+            'main_harga_jual' => $request->harga_jual,
+            'main_stok' => $request->stok,
+            'new_harga_beli' => $request->harga_beli_new,
+            'gambar_barang' => $imgName,
+            'tanggal_beli' => $request->tgl_beli,
+            'created_date' => date('Y-m-d H:i:s'),
+            'created_user_id' => Auth::user()->id,
+            
+        ]);
+    
+        $vendorId = $request->vendorID;
+        error_log('vendor id : '.$vendorId );
+    
+        if ($barang->wasRecentlyCreated) {
+            Activity::create([
+                'activity' => $request->activity,
+                'name_user' => Auth::user()->name,
+                'nama_barang' => $request->nama_barang,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+           return redirect()->back()->with('success', 'Add new item success.');
+           
+            } else {
+                return redirect()->back()->withErrors(['errors' => 'Failed adding data.'])->withInput();
+            }
+
+    }
+
 
     }
 
@@ -340,7 +363,7 @@ class AdminController extends Controller
 
     public function destroy(Request $request)
     {
-        $kerupuk = Kerupuk::find($request->id);
+        $kerupuk = BarangV1::find($request->id);
 
         if (!$kerupuk) {
             return redirect()->back()->with('error', 'Kerupuk tidak ditemukan.');
