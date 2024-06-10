@@ -23,10 +23,16 @@ Route::post('/', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'storeRegister']);
 Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/verify-success', [AuthController::class, 'verifySuccess']);
+Route::get('/verify-email/{email}', [AuthController::class, 'verifyEmail']);
+
+
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/email/verify/{id}/{hash}', 'AuthController@verifyEmail')->name('verification.verify');
     Route::get('/email/resend', 'AuthController@resendEmailVerification')->name('verification.resend');
+  
 });
 
 Route::middleware(['auth'])->group(

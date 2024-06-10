@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\EmailVerification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -15,36 +16,82 @@ class AuthController extends Controller
      * Display a listing of the resource.
      */
 
-    public function verifyEmail(Request $request, $id, $hash)
+    public function verifyEmail($email)
     {
-        $user = User::findOrFail($id);
+        // $user = User::findOrFail($id);
 
-        if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
-            return redirect()->back()->with('error', 'Verifikasi email gagal. Invalid verification link.');
+        // if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
+        //     return redirect()->back()->with('error', 'Verifikasi email gagal. Invalid verification link.');
+        // }
+
+        // if ($user->hasVerifiedEmail()) {
+        //     return redirect('/')->with('info', 'Email sudah diverifikasi sebelumnya.'); // Ganti dengan halaman yang sesuai
+        // }
+
+        // if ($user->markEmailAsVerified()) {
+        //     event(new Verified($user));
+        //     return redirect('/')->with('success', 'Email berhasil diverifikasi.'); // Ganti dengan halaman yang sesuai
+        // }
+
+        // return redirect()->back()->with('error', 'Verifikasi email gagal. Silakan coba lagi.');
+        // ========================
+
+        // cek emailnya, update email_verified_at = now(). lanjut ke login.
+        $cekEmailRegistered = DB::table('users')->where('email',$email)->limit(1);
+
+        error_log("email = ". $email);
+       // error_log("cekEmailRegis = ". $cekEmailRegistered);
+
+        if($cekEmailRegistered){
+            //update email_verified_at = now.
+           $cekEmailRegistered->update(['email_verified_at' => now()]);
+            // return response()->json(['message' => 'verify'], 200);
+
+            // return view('session.verify');
+            return redirect('/verify-success')->withSuccess('Your email has been verified! Please go back to Login page.');
+
+        }else {
+           //return view ('failed.verified');
+                 
         }
 
-        if ($user->hasVerifiedEmail()) {
-            return redirect('/')->with('info', 'Email sudah diverifikasi sebelumnya.'); // Ganti dengan halaman yang sesuai
-        }
+       // return view('session.verify');
+       
+    }
 
-        if ($user->markEmailAsVerified()) {
-            event(new Verified($user));
-            return redirect('/')->with('success', 'Email berhasil diverifikasi.'); // Ganti dengan halaman yang sesuai
-        }
-
-        return redirect()->back()->with('error', 'Verifikasi email gagal. Silakan coba lagi.');
+    public function verifySuccess() {
+        return view ('session.verify');
     }
 
     // Metode untuk mengirim ulang email verifikasi
     public function resendEmailVerification(Request $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
-            return redirect('/'); // Ganti dengan halaman yang sesuai
+        // if ($request->user()->hasVerifiedEmail()) {
+        //     return redirect('/'); // Ganti dengan halaman yang sesuai
+        // }
+
+        // $request->user()->sendEmailVerificationNotification();
+
+        // return back()->with('resent', true);
+
+        //cek email jika sudah terdaftar.
+        $checkEmail = User::find($request->email);
+        
+        if($checkEmail) {
+            // jika ada, kirim email lagi.
+            $newUserId = $checkEmail->id;
+            $newUser = User::find($newUserId);
+            Mail::to($newUser->email)
+            ->send(new EmailVerification($newUser));
+
+            return redirect('/')->withSuccess('Resend Email Verification Link Success! Please check your email to complete verification. Thankyou.');
+
+
+        }else {
+            //return back with errors.
+
         }
 
-        $request->user()->sendEmailVerificationNotification();
-
-        return back()->with('resent', true);
     }
 
     public function index()
@@ -132,6 +179,7 @@ class AuthController extends Controller
         }
     }
     
+
     function logout()
     {
         Auth::logout();

@@ -80,7 +80,8 @@
     <p>Hello {{ $user->name }},</p>
     <p>Thank you for registering. Please click on the following link to verify your email:</p>
 
-    <a href="{{ url('verification.verify', ['id' => $user->id, 'hash' => $user->verification_token]) }}">Verify Email</a>
+    <!-- <a href="{{ url('verification.verify', ['id' => $user->id, 'hash' => $user->verification_token]) }}">Verify Email</a> -->
+    <a href="{{ url('verify-email/'.$user->email) }}">Verify Email : {{ $user->email }}</a>
     </div>
 </body>
 </html>
