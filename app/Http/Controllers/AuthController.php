@@ -48,31 +48,53 @@ class AuthController extends Controller
             // return response()->json(['message' => 'verify'], 200);
 
             // return view('session.verify');
-            return redirect('/verify-success')->withSuccess('Your email has been verified! Please go back to Login page.');
+            return redirect('verify-success/'. $email)->withSuccess('Your email has been verified! Please go back to Login page.');
 
         }else {
            //return view ('failed.verified');
-                 
+           return redirect('/failed-verification');
         }
 
        // return view('session.verify');
        
     }
 
-    public function verifySuccess() {
-        return view ('session.verify');
+    public function verifySuccess($email) {
+     //   if (Auth::attempt(['email' => $email, 'password' => $password])) {
+        //cek lagi emailnya, jika verification_at tidak null, direct ke dashboard.
+
+        
+        $checkUser = DB::table('users')->where('email',$email)->first();
+
+        //error_log("checkUser : ". $checkUser.toString());
+    
+       
+       // if(Auth::user()){
+
+            if($checkUser->email_verified_at !== null) {
+                $user = auth::user();
+                if($user){
+                    header("refresh:5;url=http://127.0.0.1:8000/dashboard");
+                    return view ('session.verify');
+        
+                }
+               
+            }
+        // } else {
+
+        // }
+              
+
+      
+           
+       // }
+     
+       
     }
 
     // Metode untuk mengirim ulang email verifikasi
     public function resendEmailVerification(Request $request)
     {
-        // if ($request->user()->hasVerifiedEmail()) {
-        //     return redirect('/'); // Ganti dengan halaman yang sesuai
-        // }
-
-        // $request->user()->sendEmailVerificationNotification();
-
-        // return back()->with('resent', true);
 
         //cek email jika sudah terdaftar.
         $checkEmail = User::find($request->email);
@@ -92,6 +114,24 @@ class AuthController extends Controller
 
         }
 
+    }
+
+    public function failedVerification() {
+
+        session()->put('failed', 'failed');
+
+        return view('session.verify-account');
+    }
+
+    public function pendingVerification() {
+        //jika email_verified_at masih null, masuk kesini.
+      //  dd($email);
+        
+        session()->forget('failed');
+        session()->flush();
+        session()->put('pending', 'pending.');
+
+        return view('session.verify-account');
     }
 
     public function index()
@@ -121,11 +161,29 @@ class AuthController extends Controller
         
         if (Auth::attempt($infologin)){
             if (Auth::user()) {
-                return redirect('/dashboard');
+                // cek email verified at..
+                $emailVerified = User::where('username', $request->username)->first();
+
+                if ($emailVerified->email_verified_at == null) {
+                    //jika masih null, arahkan ke page pendingverified, dan kirim email link verifikasi langsung.
+                    $newUserId = $emailVerified->id;
+                    $newUser = User::find($newUserId);
+                    Mail::to($newUser->email)
+                    ->send(new EmailVerification($newUser));
+
+                    return redirect('pending-verification');
+                    // return redirect()->route('pending', ['email'=>$request->email]);
+
+                } else {
+                    //jika sudah verified tidak null, mka direct ke dashboard.
+                    return redirect('/dashboard');
+                }
+              
             }
         } else {
             return redirect('/')->withErrors('Username atau password yang anda masukkan salah');
         }
+
     }
 
     public function storeRegister(Request $request)

@@ -43,6 +43,12 @@
     </div>
     @endif
 
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
+
     <style>
         .texture-bg {
             position: fixed;
@@ -100,10 +106,27 @@
     <div class="texture-bg">
     </div>
     <div class="login-page">
-        <h3 class="title2">Email Verification Success ! </h3>
+            @if(session('failed'))
+             <div>
+                 <h3 class="title2">
+                Email Verification failed!
+                </h3>
     </div>
+            @else
+            <div>
+                <h4 class="title2">
+                Sorry, your email has not been verified. We have sent email verification to your email, please check your inbox. Thankyou.
+                </h4>
+            </div>
+            @endif
+
     <div><img class ="img-url"></div>
-    <div class="center">Directing you to Dashboard in 5s...</div>
+
+    @if(session('failed'))
+         <div><a href="#">Resend Email Verification Link </a></div>
+    @else
+         <div class="center"><a href="{{ url('/') }}">>> Go to Login Page</a></div>
+     @endif
     
     <!-- <div class="judul mt-5">
         <h1 style="text-align: center; ">Admin Dashboard</h1>

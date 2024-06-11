@@ -23,8 +23,15 @@ Route::post('/', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'storeRegister']);
 Route::get('/logout', [AuthController::class, 'logout']);
-Route::get('/verify-success', [AuthController::class, 'verifySuccess']);
+Route::get('/verify-success/{email}', [AuthController::class, 'verifySuccess']);
 Route::get('/verify-email/{email}', [AuthController::class, 'verifyEmail']);
+Route::get('/failed-verification', [AuthController::class, 'failedVerification']);
+Route::get('/pending-verification', [AuthController::class, 'pendingVerification']);
+// Route::post('/pending-verification2', function() {
+//     $email=session('email');
+//     dd($email);
+//     return view('pendingVerification', $email);
+// })->name('pending');
 
 
 
