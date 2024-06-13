@@ -18,77 +18,48 @@ class AuthController extends Controller
 
     public function verifyEmail($email)
     {
-        // $user = User::findOrFail($id);
-
-        // if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
-        //     return redirect()->back()->with('error', 'Verifikasi email gagal. Invalid verification link.');
-        // }
-
-        // if ($user->hasVerifiedEmail()) {
-        //     return redirect('/')->with('info', 'Email sudah diverifikasi sebelumnya.'); // Ganti dengan halaman yang sesuai
-        // }
-
-        // if ($user->markEmailAsVerified()) {
-        //     event(new Verified($user));
-        //     return redirect('/')->with('success', 'Email berhasil diverifikasi.'); // Ganti dengan halaman yang sesuai
-        // }
-
-        // return redirect()->back()->with('error', 'Verifikasi email gagal. Silakan coba lagi.');
-        // ========================
-
         // cek emailnya, update email_verified_at = now(). lanjut ke login.
         $cekEmailRegistered = DB::table('users')->where('email',$email)->limit(1);
+        $cekEmailRegistered2 = User::where('email', $email)->first();
 
-        error_log("email = ". $email);
-       // error_log("cekEmailRegis = ". $cekEmailRegistered);
-
+       
         if($cekEmailRegistered){
             //update email_verified_at = now.
            $cekEmailRegistered->update(['email_verified_at' => now()]);
-            // return response()->json(['message' => 'verify'], 200);
+       
+           $user = User::where('email', $email)
+           ->first();
 
-            // return view('session.verify');
-            return redirect('verify-success/'. $email)->withSuccess('Your email has been verified! Please go back to Login page.');
+           if($user){
+            if (Auth::loginUsingId($user->id)) {
 
+                return redirect('verify-success/'. $email)->withSuccess('Your email has been verified!');
+            }else {
+                return redirect('/failed-verification');
+            }
+
+           }else {
+            return redirect('/failed-verification');
+        }
+           
         }else {
-           //return view ('failed.verified');
+      
            return redirect('/failed-verification');
         }
-
-       // return view('session.verify');
-       
-    }
+   
+}
 
     public function verifySuccess($email) {
      //   if (Auth::attempt(['email' => $email, 'password' => $password])) {
         //cek lagi emailnya, jika verification_at tidak null, direct ke dashboard.
 
-        
         $checkUser = DB::table('users')->where('email',$email)->first();
 
         //error_log("checkUser : ". $checkUser.toString());
     
-       
-       // if(Auth::user()){
-
-            if($checkUser->email_verified_at !== null) {
-                $user = auth::user();
-                if($user){
-                    header("refresh:5;url=http://127.0.0.1:8000/dashboard");
-                    return view ('session.verify');
-        
-                }
-               
-            }
-        // } else {
-
-        // }
-              
-
-      
-           
-       // }
-     
+        header("Refresh:5; url=http://127.0.0.1:8000/dashboard");
+          return view ('session.verify');
+         
        
     }
 

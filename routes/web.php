@@ -23,7 +23,6 @@ Route::post('/', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'storeRegister']);
 Route::get('/logout', [AuthController::class, 'logout']);
-Route::get('/verify-success/{email}', [AuthController::class, 'verifySuccess']);
 Route::get('/verify-email/{email}', [AuthController::class, 'verifyEmail']);
 Route::get('/failed-verification', [AuthController::class, 'failedVerification']);
 Route::get('/pending-verification', [AuthController::class, 'pendingVerification']);
@@ -44,6 +43,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth'])->group(
     function () {
+        Route::get('/verify-success/{email}', [AuthController::class, 'verifySuccess']);
+
         Route::get('/dashboard', [AdminController::class, 'index']);
 
         //Activity

@@ -103,14 +103,9 @@
         <h3 class="title2">Email Verification Success ! </h3>
     </div>
     <div><img class ="img-url"></div>
-    <div class="center">Directing you to Dashboard in 5s...</div>
-    
-    <!-- <div class="judul mt-5">
-        <h1 style="text-align: center; ">Admin Dashboard</h1>
-    </div>
-    <div class="subjudul mt-3 mb-4">
-        <h2 style="text-align: center; ">Login</h2>
-    </div> -->
+    <div class="center">Directing you to Dashboard in 5 4 3 2 1...</div>
+    <!-- <div class="center"><a href="{{ url('/dashboard') }}">>> Go to Dashboard</a></div> -->
+
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

@@ -111,6 +111,7 @@
                  <h3 class="title2">
                 Email Verification failed!
                 </h3>
+                <p>Please re-check your email. Thankyou. </p>
     </div>
             @else
             <div>
