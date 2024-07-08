@@ -40,7 +40,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('{{ asset('desain/img/bg-2.jpg') }}');
+           /* background-image: url('{{ asset('desain/img/bg-2.jpg') }}'); */
+           background-image: url('{{ asset('desain/img/bg-v2.png') }}');
             background-size: cover;
             background-position: center;
             z-index: -2;
