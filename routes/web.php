@@ -33,7 +33,7 @@ Route::get('/pending-verification', [AuthController::class, 'pendingVerification
 // })->name('pending');
 
 
-
+Route::get('/get_transaksi', [TransaksiController::class, 'get_transaksi']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/email/verify/{id}/{hash}', 'AuthController@verifyEmail')->name('verification.verify');
@@ -58,7 +58,7 @@ Route::middleware(['auth'])->group(
         Route::get('/kerupuk/delete/{id}', [AdminController::class, 'destroy']);
 
         //transaksi
-        Route::get('/get_transaksi', [TransaksiController::class, 'get_transaksi']);
+        // Route::get('/get_transaksi', [TransaksiController::class, 'get_transaksi']);
         Route::get('/transaksi', [TransaksiController::class, 'transaksi']);
         Route::post('/store_transaksi', [TransaksiController::class, 'store_transaksi']);
         Route::put('/update_transaksi', [TransaksiController::class, 'update_transaksi']);
