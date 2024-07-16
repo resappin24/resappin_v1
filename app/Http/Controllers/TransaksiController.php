@@ -34,14 +34,17 @@ class TransaksiController extends Controller
 
         $transaksi = Transaksi::select('*')
         ->when($selectedDate, function ($query) use ($selectedDate) {
-            $query->whereDate('created_at', $selectedDate);
+            $query->whereDate('created_at', $selectedDate)
+            ->where('created_by',Auth::user()->id);
         })
         ->when($start && $end, function ($query) use ($start, $end) {
             $query->where('created_at', '>=', $start)
-                ->where('created_at', '<', Carbon::parse($end)->addDay());
+                ->where('created_at', '<', Carbon::parse($end)->addDay())
+                ->where('created_by',Auth::user()->id);
         })
         ->when(!$selectedDate && !$start && !$end, function ($query) {
-            $query->whereDate('created_at', Carbon::now()->toDateString());
+            $query->whereDate('created_at', Carbon::now()->toDateString())
+                    ->where('created_by',Auth::user()->id);
         })
         ->get();
 
@@ -99,6 +102,7 @@ class TransaksiController extends Controller
                 'satuan' => $request->satuan,
                 'subtotal' => $request->subtotal,
                 'created_at' => date('Y-m-d H:i:s'),
+                'created_by' => Auth::user()->id,
             ]);
 
             $kerupuk->stok -= $request->qty;
