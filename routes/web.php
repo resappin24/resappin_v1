@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\ProductCategoryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes(['verify' => true]);
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('/', [AuthController::class, 'login']);
+// Route::post('/login', [AuthController::class, 'loginJson']);
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'storeRegister']);
 Route::get('/logout', [AuthController::class, 'logout']);
@@ -73,6 +75,7 @@ Route::middleware(['auth'])->group(
         Route::post('/store_kategori', [TransaksiController::class, 'addKategori']);
         Route::get('/kategori/delete/{id}', [TransaksiController::class, 'deleteKategori']);
 
-        
+        //======= prod category =======
+        Route::get('/prod_category', [ProductCategoryController::class, 'prod_kategori']);
     }
 );

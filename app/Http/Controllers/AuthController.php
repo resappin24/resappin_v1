@@ -157,6 +157,60 @@ class AuthController extends Controller
 
     }
 
+    public function loginJson(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|min:3|max:255',
+            'password' => 'required|max:255'
+        ], [
+            'username.required' => 'Username tidak boleh kosong',
+            'password.required' => 'Password tidak boleh kosong'
+        ]);
+
+        $infologin = [
+            'username' => $request->username,
+            'password' => $request->password,
+        ];
+        
+        if (Auth::attempt($infologin)){
+            if (Auth::user()) {
+                // cek email verified at..
+                $emailVerified = User::where('username', $request->username)->first();
+
+                if ($emailVerified->email_verified_at == null) {
+                    //jika masih null, arahkan ke page pendingverified, dan kirim email link verifikasi langsung.
+                    $newUserId = $emailVerified->id;
+                    $newUser = User::find($newUserId);
+                    Mail::to($newUser->email)
+                    ->send(new EmailVerification($newUser));
+
+                // yg asli :    return redirect('pending-verification');
+                    // return redirect()->route('pending', ['email'=>$request->email]);
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Email has not been verified',
+                    ], 401);
+
+                } else {
+                    //jika sudah verified tidak null, mka direct ke dashboard.
+                    //return redirect('/dashboard');
+                    return response()->json([
+                        'status' => 'success',
+                        'user' => $emailVerified->username,
+                    ], 200);
+                }
+              
+            }
+        } else {
+          //  return redirect('/')->withErrors('Username atau password yang anda masukkan salah');
+          return response()->json([
+            'status' => 'error',
+            'message' => 'Username atau password yang anda masukkan salah',
+        ], 402);
+        }
+
+    }
+
     public function storeRegister(Request $request)
     {
         $request->validate([
