@@ -6,6 +6,7 @@ use App\Models\ProductCategoryModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ProductCategoryController extends Controller
 {
@@ -20,18 +21,25 @@ class ProductCategoryController extends Controller
 
        $kategori = DB::table('kategori_barang')->where('created_by',Auth::user()->id)->get();
 
-        return view('admin.prod_category', compact('kategori','barang'));
 
-    //    $prod_cat = 
+        $prod_cat = DB::table('master_barang_v1')
+                    ->Join('product_category', 'product_category.barang_id', '=', 'master_barang_v1.id_barang')
+                    ->join('kategori_barang', 'product_category.category_id', '=', 'kategori_barang.id')
+                    ->select('master_barang_v1.nama_barang', 'kategori_barang.kategori')
+                    ->where('created_user_id',Auth::user()->id)
+                    ->orderBy('kategori', 'asc')
+                    ->get();
+
+        return view('admin.prod_category', compact('kategori','barang','prod_cat'));
 
     }
 
-    public function addProdCat(Request $request){
+    public function addProdKategori(Request $request){
         $validator = Validator::make($request->all(), [
-             'nama_barang' => 'required',
-            'kategori' => 'required'
+             'barangID' => 'required',
+            'categoryID' => 'required'
         ], [
-            'kategori.required' => 'Kategori tidak boleh kosong'
+            'categoryID.required' => 'Kategori tidak boleh kosong'
             
         ]);
 
@@ -39,35 +47,38 @@ class ProductCategoryController extends Controller
            return back()->withErrors($validator)->withInput();
         }
 
-        if (Kategori::where('kategori', $request->kategori)->exists()) {
+        //validasi sudah terdaftar....
+        // if (Kategori::where('kategori', $request->kategori)->exists()) {
             
-            $validator->errors()->add('kategori', 'Kategori sudah terdaftar!');
+        //     $validator->errors()->add('kategori', 'Kategori sudah terdaftar!');
            // return back()->withErrors($validator)->withInput();
-        }
+        // }
 
         // tambah validasi 'and user_id = Auth->id 
-        $validation = ['kategori'=> $request->kategori, 'created_by' => Auth::user()->id ];
+    /*    $validation = ['kategori'=> $request->kategori, 'created_by' => Auth::user()->id ];
          $kategori =   Kategori::where([
             ['kategori','=',  $request->kategori],
             ['created_by', '=', Auth::user()->id]
-            ])->get()->first();
+            ])->get()->first(); */
 
-         if ($kategori !== null) {
-            // jika ada, set kategori sudah terdaftar.
-            return redirect()->back()->withErrors(['errors' => 'Sorry, Product Kategori sudah terdaftar!']);
-         } else {
+        //  if ($kategori !== null) {
+        //     // jika ada, set kategori sudah terdaftar.
+        //     return redirect()->back()->withErrors(['errors' => 'Sorry, Product Kategori sudah terdaftar!']);
+        //  } else {
             // process add kategori ke db
-             $kategori = Kategori::create([
-            'kategori' => $request->kategori,
+             $kategori = ProductCategoryModel::create([
+            'barang_id' => $request->barangID,
+            'category_id' => $request->categoryID,
             'created_date' => now(),
             'created_by' => Auth::user()->id,
             
         ]);
 
+
         //insert ke log activity
         if ($kategori->wasRecentlyCreated) {
             Activity::create([
-                'activity' => 'Add Kategori',
+                'activity' => 'Add Product Categori',
                 'name_user' => Auth::user()->name,
                 'nama_barang' => $request->kategori,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -77,9 +88,9 @@ class ProductCategoryController extends Controller
             return redirect()->back()->withErrors(['errors' => 'Gagal menambahkan data kategori.'])->withInput();
         }
 
-        $request->session()->flash('success', 'Add New Category Item Success');
-          return redirect()->back()->with('success', 'Add Category success!');
-         }
+        $request->session()->flash('success', 'Add New Product Category Item Success');
+          return redirect()->back()->with('success', 'Add Product Category success!');
+       //  }
 
         return redirect('/prod_category');
     }

@@ -77,5 +77,6 @@ Route::middleware(['auth'])->group(
 
         //======= prod category =======
         Route::get('/prod_category', [ProductCategoryController::class, 'prod_kategori']);
+        Route::post('/add_prod_kategori', [ProductCategoryController::class, 'addProdKategori']);
     }
 );

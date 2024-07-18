@@ -82,26 +82,26 @@
                 <table id="example" class="table table-bordered table-striped text-center bg-table">
                     <thead>
                         <tr>
+                            <th>Nama Barang</th>
                             <th>Kategori</th>
-                            <th>Created date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($kategori as $item)
+                        @foreach ($prod_cat as $item)
                             <tr>
-                                <td>{{ $item->kategori }}</td>
-                                <td>{{$item->created_date}}</td>
+                                <td>{{ $item->nama_barang }}</td>
+                                <td>{{$item->kategori}}</td>
                                 <td>
                                     <button class="btn btn-warning btn-edit" data-bs-toggle="modal"
-                                        data-bs-target="#editModal" data-id="{{ $item->id }}"
-                                        data-nama="{{ $item->kategori }}" 
+                                        data-bs-target="#editModal" data-id="{{ $item->vendor_id }}"
+                                        data-nama="{{ $item->id_barang }}" 
                                         disabled="true">
                                         <iconify-icon icon="mingcute:edit-4-line"></iconify-icon>
                                     </button>
 
                                     <button data-bs-toggle="modal"
                                         data-bs-target="#deleteModal" class="btn btn-danger btn-delete" 
-                                        data-id="{{ $item->id }}" data-nama="{{ $item->kategori }}">
+                                        data-id="{{ $item->id_barang }}" data-nama="{{ $item->vendor_id }}">
                                         <iconify-icon icon="bi:trash-fill"></iconify-icon>
                                     </button>
                                 </td>
@@ -308,7 +308,7 @@
                 <h5 id="exampleModalLabel" class="modal-title">Add New Product Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="modalAdd" action="{{ url('/store_kategori') }}" method="post" enctype="multipart/form-data">
+            <form class="modalAdd" action="{{ url('/add_prod_kategori') }}" method="post" enctype="multipart/form-data">
             @csrf
                 <div class="modal-body">
                 <div class="mb-3">

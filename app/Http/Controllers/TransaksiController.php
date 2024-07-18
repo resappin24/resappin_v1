@@ -214,7 +214,7 @@ class TransaksiController extends Controller
                 'nama_barang' => $request->kategori,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-            return redirect()->back()->with('success', 'Add kategori success.');
+            return redirect()->back()->with('success', 'Add new kategori success.');
         } else {
             return redirect()->back()->withErrors(['errors' => 'Gagal menambahkan data kategori.'])->withInput();
         }
