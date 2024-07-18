@@ -49,7 +49,7 @@
             <div class="card-header bg-content">
                 <div class="row  bg-header">
                     <div class="col-md-6 text-start mt-4 mb-3">
-                        <h3 class="title-menu"><b>KATEGORI BARANG</b></h3>
+                        <h3 class="title-menu"><b>MASTER KATEGORI</b></h3>
                     </div>
                     <div class="col-md-6 text-end  mt-4">
                         <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#vendorModal">

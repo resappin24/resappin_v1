@@ -43,13 +43,32 @@
             background-color: #A9A9A9;
         }
 
+        .modalAdd {
+            width: 250px;
+            height: 400px;
+        }
+
+        .dropdown-select {
+            width: 400px;
+            height: 50px;
+        }
+
+        .modal-title {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .adjust {
+            top: 100;
+        }
+
 </style>
     <div class="row m-1">
         <div class="card col-md-12 mt-1 bg-content">
             <div class="card-header bg-content">
                 <div class="row  bg-header">
                     <div class="col-md-6 text-start mt-4 mb-3">
-                        <h3 class="title-menu"><b>KATEGORI BARANG</b></h3>
+                        <h3 class="title-menu"><b>PRODUCT CATEGORY</b></h3>
                     </div>
                     <div class="col-md-6 text-end  mt-4">
                         <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#vendorModal">
@@ -281,17 +300,53 @@
     </div>
 </div>
 
-{{-- Modal Add Kategori --}}
+{{-- Modal Add Product Kategori --}}
 <div class="modal fade" id="vendorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content adjust">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Kategori</h5>
+                <h5 id="exampleModalLabel" class="modal-title">Add New Product Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ url('/store_kategori') }}" method="post" enctype="multipart/form-data">
+            <form class="modalAdd" action="{{ url('/store_kategori') }}" method="post" enctype="multipart/form-data">
             @csrf
                 <div class="modal-body">
+                <div class="mb-3">
+                 <label class="col-form-label">Nama Barang(</label><span class="required">*</span>)
+                     <div>
+                            <select name="barangID" class="dropdown-select" id="barangSelect" >
+                                <option value="">Pilih Barang</option>
+                                @foreach ($barang as $item)
+                                        <option value="{{ $item->id_barang }}">
+                                                {{ $item->nama_barang }} 
+                                        </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @if ($errors->has('barang'))
+                    <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('barang') }}
+
+                    </div>
+                    @endif
+                    </div>
+                    <div class="mb-3">
+                 <label class="col-form-label">Kategori(</label><span class="required">*</span>)
+                     <div>
+                            <select name="categoryID" class="dropdown-select" id="barangSelect" >
+                                <option value="">Pilih Kategori</option>
+                                @foreach ($kategori as $item)
+                                        <option value="{{ $item->id }}">
+                                                {{ $item->kategori }} 
+                                        </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @if ($errors->has('barang'))
+                    <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('barang') }}
+
+                    </div>
+                    @endif
+                    </div>
                 <div class="mb-3">
                  <label class="col-form-label">Kategori(</label><span class="required">*</span>)
                     <div class="input-group {{ $errors->has('kategori') ? '' : 'mb-3' }}">
@@ -299,7 +354,9 @@
                         <input type="text" name="kategori" class="form-control custom-input" placeholder="" aria-label="" aria-describedby="basic-addon1" value="{{ old('name') }}">
                     </div>
                     @if ($errors->has('kategori'))
-                    <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('kategori') }}</div>
+                    <div class="text-danger mb-1" id="errorMessage">{{ $errors->first('kategori') }}
+
+                    </div>
                     @endif
                     </div>
                 </div>
