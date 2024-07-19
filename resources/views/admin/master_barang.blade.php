@@ -9,6 +9,11 @@
         font-weight: bold;
 
     }
+    .dropdown-select {
+            width: 400px;
+            height: 50px;
+        }
+
 </style>
     <div class="row m-1">
         <div class="card col-md-12 mt-1">
@@ -274,7 +279,7 @@
                 <div class="mb-3">
                         <label for="vendor" class="col-form-label label-bold">Vendor &nbsp;</label><i>(opsional) :</i>
                         <div>
-                            <select name="vendorID" id="vendorSelect" >
+                            <select name="vendorID" id="vendorSelect" class="dropdown-select" >
                                 <option value="">Pilih Vendor</option>
                                 @foreach ($vendor as $item)
                                         <option value="{{ $item->vendor_id }}">
@@ -316,7 +321,7 @@
                         <label class="col-form-label">Stok</label>(<span class="required">*</span>) :
                         <input type="number" class="form-control" id="stok" name="stok">
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label class="col-form-label">Harga Beli (New) &nbsp;</label><i>(opsional) :</i>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
@@ -334,7 +339,7 @@
                     <div class="mb-3">
                         <label class="col-form-label">Stok (new) &nbsp;</label><i>(opsional) :</i>
                         <input type="number" class="form-control" id="stok_new" name="stok_new">
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label class="col-form-label">Tanggal Beli &nbsp;</label><i>(opsional) :</i>
                         <input type="date" class="form-control" id="tgl_beli" name="tgl_beli">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductCategoryModel;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,7 @@ class ProductCategoryController extends Controller
         $prod_cat = DB::table('master_barang_v1')
                     ->Join('product_category', 'product_category.barang_id', '=', 'master_barang_v1.id_barang')
                     ->join('kategori_barang', 'product_category.category_id', '=', 'kategori_barang.id')
-                    ->select('master_barang_v1.nama_barang', 'kategori_barang.kategori')
+                    ->select('master_barang_v1.*', 'kategori_barang.*')
                     ->where('created_user_id',Auth::user()->id)
                     ->orderBy('kategori', 'asc')
                     ->get();
@@ -74,13 +75,19 @@ class ProductCategoryController extends Controller
             
         ]);
 
+        //ambil nama barangnya...
+        $barang = DB::table('master_barang_v1')
+                    ->select('master_barang_v1.*')
+                    ->where('id_barang',$request->barangID)
+                    ->first();
 
+                
         //insert ke log activity
         if ($kategori->wasRecentlyCreated) {
             Activity::create([
-                'activity' => 'Add Product Categori',
+                'activity' => 'Add Product Category',
                 'name_user' => Auth::user()->name,
-                'nama_barang' => $request->kategori,
+                'nama_barang' => $barang->nama_barang,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
             return redirect()->back()->with('success', 'Add New Product Category success.');

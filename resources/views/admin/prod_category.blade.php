@@ -45,7 +45,12 @@
 
         .modalAdd {
             width: 250px;
-            height: 400px;
+            height: 300px;
+            alignment: center;
+        }
+
+        .footer-add{
+            width: 350px;
         }
 
         .dropdown-select {
@@ -71,7 +76,7 @@
                         <h3 class="title-menu"><b>PRODUCT CATEGORY</b></h3>
                     </div>
                     <div class="col-md-6 text-end  mt-4">
-                        <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#vendorModal">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vendorModal">
                             <iconify-icon icon="subway:add"></iconify-icon>
                         </button>
                     </div>
@@ -93,15 +98,15 @@
                                 <td>{{$item->kategori}}</td>
                                 <td>
                                     <button class="btn btn-warning btn-edit" data-bs-toggle="modal"
-                                        data-bs-target="#editModal" data-id="{{ $item->vendor_id }}"
-                                        data-nama="{{ $item->id_barang }}" 
+                                        data-bs-target="#editModal" data-id="{{ $item->id_barang }}"
+                                        data-nama="{{ $item->nama_barang }}" 
                                         disabled="true">
                                         <iconify-icon icon="mingcute:edit-4-line"></iconify-icon>
                                     </button>
 
                                     <button data-bs-toggle="modal"
                                         data-bs-target="#deleteModal" class="btn btn-danger btn-delete" 
-                                        data-id="{{ $item->id_barang }}" data-nama="{{ $item->vendor_id }}">
+                                        data-id="{{ $item->id }}" data-nama="{{ $item->kategori }}">
                                         <iconify-icon icon="bi:trash-fill"></iconify-icon>
                                     </button>
                                 </td>
@@ -347,7 +352,7 @@
                     </div>
                     @endif
                     </div>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                  <label class="col-form-label">Kategori(</label><span class="required">*</span>)
                     <div class="input-group {{ $errors->has('kategori') ? '' : 'mb-3' }}">
                          
@@ -358,9 +363,9 @@
 
                     </div>
                     @endif
-                    </div>
+                    </div> -->
                 </div>
-                <div class="my-footer mb-4">
+                <div class="modal-footer footer-add">
                    <button type="button" class="btn btn-close2" data-bs-dismiss="modal">Close</button> 
                     <button type="submit" class="btn btn-primary">Add</button>
                 </div>
