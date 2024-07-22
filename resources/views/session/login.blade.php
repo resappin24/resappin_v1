@@ -50,12 +50,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('{{ asset('desain/img/bg-v2.png') }}');
+            background-image: url('{{ asset('desain/img/bg-v1.png') }}');
             background-size: cover;
             background-position: center;
             z-index: -2;
             /* filter: blur(3px); */
-            opacity: 0.8;
+            opacity: 0.99;
           
         }
 
