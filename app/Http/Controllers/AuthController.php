@@ -107,7 +107,7 @@ class AuthController extends Controller
 
     public function index()
     {
-        return view('session.login');
+        return view('session.login2');
     }
 
     public function register()
