@@ -14,7 +14,8 @@
     padding: 45px;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: rgb(247, 248, 248);
+    opacity: 0.89;
 }
 .login-wrapper {
     display: flex;

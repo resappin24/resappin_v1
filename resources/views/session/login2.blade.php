@@ -81,10 +81,11 @@
         }
 
         h2 {
-            margin-top: -50px;
-            margin-left:-250px;
+            margin-top: -20px;
+            margin-left:-200px;
             color : black;
             text-align: left;
+            font-family: 'CustomFont', sans-serif;
         }
 
         .form-login {
@@ -96,9 +97,9 @@
             background: #FFFFFF;
         }
 
-        body{
+        /*body{
             font-family: 'CustomFont', sans-serif;
-        }
+        }*/
 
     </style>
     <div class="texture-bg" >
@@ -116,9 +117,8 @@
         <div class="logo">
              </div> 
     </div>
-    <div>  <h2>LOGIN 2</h2> </div>
+   <h2>LOGIN</h2> 
     
-      <div>
             <div class="form-login">
                 <form action="/" method="post">
                     @if ($errors->any())
@@ -137,7 +137,7 @@
                     <p class="regis-text"><a href="/register">Register</a>, Jika belum memiliki account</p>
                 </div>
             </div> <!--end class form-login-->
-            </div>
+           
             </div>
   
     </div>
