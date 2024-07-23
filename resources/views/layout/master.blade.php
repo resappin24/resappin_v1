@@ -21,12 +21,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('{{ asset('desain/img/bg-2.jpg') }}');
+            background-image: url('{{ asset('desain/img/bg-v1.png') }}');
             background-size: cover;
             background-position: center;
             /* z-index: 0; */
             /* background-color:blue; */
             /* filter: blur(3px); */
+            opacity: 0.99;
+        }
+
+        .nav-top {
+            height: 50px;
+            background-color: #87CEFA;
         }
 </style>
 
@@ -137,7 +143,7 @@
         <div class="texture-bg2">
             <!-- <img src="{{url(asset('desain/img/bg-2.jpg'))}}" height="800px" style="z-index: 0"> -->
         <div>
-        <nav class="navbar top-navbar navbar-light bg-light px-5">
+        <nav class="navbar top-navbar navbar-light px-5 nav-top">
             <a class="btn border-0" id="menu-btn"><i class="bx bx-menu"></i></a>
         </nav>
         @if (Session::has('success'))

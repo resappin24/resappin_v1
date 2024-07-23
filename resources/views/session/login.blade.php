@@ -60,11 +60,12 @@
         }
 
         .title{
-            position: fixed;
+            position: absolute;
             margin-top: 15px;
-            width: 300px;
-            height: 300px;
-            background-image: url('{{ asset('desain/img/admin-login.png') }}');
+            max-width: 300px;
+            max-height: 300px;
+            /* background-image: url('{{ asset('desain/img/admin-login.png') }}'); */
+            background-image: url('{{ asset('desain/img/resappin-logo-trans.png') }}');
             background-size: cover;
             background-position: center;
             /* filter: blur(3px); */
@@ -74,9 +75,18 @@
           
         }
 
+        .title h2 {
+            margin-top: 300px;
+            color : #AFEEEE;
+            text-align: center;
+        }
+
+        body{
+            font-family: 'CustomFont', sans-serif;
+        }
 
     </style>
-    <div class="texture-bg">
+    <div class="texture-bg" >
     </div>
     
     <!-- <div class="judul mt-5">
@@ -87,6 +97,7 @@
     </div> -->
     <div class="login-page">
     <div class="title">
+        <h2>LOGIN</h2>
         <div class="login-form">
             <div class="form">
                 <form action="/" method="post">

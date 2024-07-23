@@ -1,3 +1,9 @@
+@font-face {
+    font-family: "CustomFont"; /* Name your font family */
+    src: url("JosefinSans-Bold.ttf"); /* Locate the .ttf file within your directory*/
+    /*font/JosefinSans-Bold.ttf */
+ }
+
 .login-page {
     width: 360px;
     margin: auto;
@@ -29,7 +35,7 @@ a {
 }
 
 .login-form {
-    margin-top: 320px;
+   /* margin-top: 320px; */
     margin-left: 23px;
     max-width: 500px;
 }
