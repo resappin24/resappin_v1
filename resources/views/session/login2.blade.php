@@ -8,7 +8,7 @@
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{{ asset('desain') }}/css/style.css">
+    <!-- <link rel="stylesheet" href="{{ asset('desain') }}/css/style.css"> -->
     <link rel="stylesheet" href="{{ asset('desain') }}/css/login.css">
 </head>
 
@@ -62,8 +62,8 @@
 
         .logo{
             position: fixed;
-            margin-top: -45px;
-            margin-left: 50px;
+            /* margin-top: 10px; */
+            margin-left: 10px;
             /* max-width: 220px;
             max-height: 170px; */
             width: 200px;
@@ -81,22 +81,40 @@
         }
 
         h2 {
-            margin-top: -20px;
-            margin-left:-200px;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            margin-left:-250px;
             color : black;
             text-align: left;
-            font-family: 'CustomFont', sans-serif;
+            font-family: 'boldJosefin', sans-serif;
+            border-bottom: 3px solid #000000;
         }
 
         .form-login {
             margin-top: 80px;
-            margin-left: -150px;
+            margin-left: -100px;
             width: 200px;
-            position: relative;
-            z-index: 9999;
-            background: #FFFFFF;
+            /* position: relative;
+            z-index: 9999; */
+            /* background: #FFFFFF; */
+            font-size: 12pt;
         }
 
+        .form {
+            position: relative;
+            z-index: 3;
+            /* background: #FFFFFF; */
+            width: 360px;
+            max-height: 200px;
+            /* margin: 200 auto 100px; */
+            padding: 25px;
+            margin-left: -55px;
+            /* margin-top: 80px; */
+            font-family: 'regJosefin', sans-serif;
+            margin-bottom: 10px;
+         
+            /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); */
+        }
         /*body{
             font-family: 'CustomFont', sans-serif;
         }*/
@@ -117,9 +135,11 @@
         <div class="logo">
              </div> 
     </div>
+   
    <h2>LOGIN</h2> 
     
             <div class="form-login">
+            <div class="form">
                 <form action="/" method="post">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -129,15 +149,18 @@
                         </div>
                     @endif
                     @csrf
-                    <input type="text" name="username" placeholder="Username" />
-                    <input type="password" name="password" placeholder="Password" />
-                    <button>login</button>
+                    <input type="text" name="username" placeholder="Username" class="mb-2" />
+                    <input type="password" name="password" placeholder="Password" class="mb-2" />
+                    <button class="mb-2">login</button>
                 </form>
+                <div>
+                    <p class="forgot-text"><a class="forgot-text" href="/forgot-password">Forgot Password?</a></p>
+                </div>
                 <div class="regis">
                     <p class="regis-text"><a href="/register">Register</a>, Jika belum memiliki account</p>
                 </div>
             </div> <!--end class form-login-->
-           
+            </div>
             </div>
   
     </div>
