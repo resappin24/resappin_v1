@@ -137,7 +137,6 @@
     </div>
    
    <h2>LOGIN</h2> 
-    
             <div class="form-login">
             <div class="form">
                 <form action="/" method="post">
@@ -152,6 +151,21 @@
                     <input type="text" name="username" placeholder="Username" class="mb-2" />
                     <input type="password" name="password" placeholder="Password" class="mb-2" />
                     <button class="mb-2">login</button>
+                    <div class="card-body">
+                            @auth
+                            <h4>Name: {{ auth('web')->user()->name }}</h4>
+                            <h4>Email: {{ auth('web')->user()->email }}</h4>
+                            <hr />
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <button class="btn btn-dark" type="submit">Logout</button>
+                            </form>
+                            @else
+                            <a href="{{ route('redirect') }}" class="btn btn-danger"
+                                >Login With Google</a
+                            >
+                            @endauth
+                            </div>
                 </form>
                 <div>
                     <p class="forgot-text"><a class="forgot-text" href="/forgot-password">Forgot Password?</a></p>

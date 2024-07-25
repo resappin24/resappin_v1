@@ -38,6 +38,7 @@ class SocialiteController extends Controller
             auth('web')->login($newUser);
             session()->regenerate();
 
+            // return redirect('/dashboard');
             return redirect('/');
         }
 
@@ -46,6 +47,8 @@ class SocialiteController extends Controller
         session()->regenerate();
 
         return redirect('/');
+
+        // return redirect('/dashboard');
     }
 
     public function logout(Request $request)
