@@ -62,14 +62,14 @@
 
         .logo{
             position: fixed;
-            /* margin-top: 10px; */
-            margin-left: 10px;
+            margin-top: -50px;
+            margin-left: 50px;
             /* max-width: 220px;
             max-height: 170px; */
-            width: 200px;
+            width: 150px;
             height: 150px;
             /* background-image: url('{{ asset('desain/img/admin-login.png') }}'); */
-            background-image: url('{{ asset('desain/img/resappin-logo-trans.png') }}');
+            background-image: url('{{ asset('desain/img/logo-v1.png') }}');
             background-size: contain;
             /* background-position: center; */
             /* filter: blur(3px); */
@@ -161,7 +161,7 @@
                                 <button class="btn btn-dark" type="submit">Logout</button>
                             </form>
                             @else
-                            <a href="{{ route('redirect') }}" class="btn btn-danger"
+                            <a href="/login/google/redirect" class="btn btn-danger"
                                 >Login With Google</a
                             >
                             @endauth
@@ -183,6 +183,12 @@
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
 </script>
 
+<script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
     integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
 </script>

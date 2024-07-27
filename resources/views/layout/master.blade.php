@@ -47,7 +47,7 @@
                     <iconify-icon icon="ion:person-circle" width="20px"></iconify-icon>
                     <span class="mx-2">
                         <strong>
-                            Welcome {{ ucfirst(strtolower(Auth()->user()->username)) }}!
+                            Welcome...
                         </strong>
                     </span>
                 </li>
