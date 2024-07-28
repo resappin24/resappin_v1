@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Transaksi;
 
 
 class SocialiteController extends Controller
@@ -15,7 +16,6 @@ class SocialiteController extends Controller
     {
       return Socialite::driver('google')->redirect();
     }
-
 
     public function callback()
     {
@@ -37,7 +37,7 @@ class SocialiteController extends Controller
 
             $newUser->save();
 
-            Auth::login($newUser);
+            Auth::user($newUser);
 
             $infologin = [
                 'username' => $userFromGoogle->getName(),
@@ -45,25 +45,55 @@ class SocialiteController extends Controller
             ];
 
             // Login user yang baru dibuat
-            // auth('web')->login($newUser);
+            auth('web')->login($newUser);
             // session()->regenerate();
 
+            error_log("newUser = ". $newUser);
+           // dd(Auth::user());
+            error_log("auth = ". Auth::user());
+            
+            $user = User::where('username', $userFromGoogle->getName())->first();
+          //  error_log("user : ", $user.toString());
+          if($user){
+            //creturn redirect()->route('dashboard', ['user' => $user])->with('message', 'State saved correctly!!!');
+            $data = Transaksi::get();
+
+           // return view('admin.dashboar', compact('data','user'));
+            return redirect('/dashboard');
+          }else {
+            return redirect('/mm');
+          }
+           //return redirect()->intended('/dashboard')->with('user', $user);
             // return redirect('/dashboard');
-            // return redirect('/');
-            // if (Auth::attempt($infologin)){
-            //     if (Auth::user()) {
-            //         // validasi Otp / link.
-            //         // $emailVerified = User::where('username', $request->username)->first();
-
-            //         // if ($emailVerified->email_verified_at == null) {
-            //         // }
-            //         Auth::user()->name;
-            //         return redirect('/dashboard');
-
             //     }
             // } 
         }else {
-            return redirect('/')->withErrors('Username atau password yang anda masukkan salah');
+            $user = User::where('username', $userFromGoogle->getName())->first();
+            //  error_log("user : ", $user.toString());
+         
+            $infologin2 = [
+                'username' => $user->username,
+                 'email' => $user->email,
+            ];
+
+            error_log("user: " . $user);
+            error_log("user-username = ".$user->username);
+
+         //   if (Auth::attempt($infologin2)) {
+                session()->put('user', [
+                    'email' => $userFromGoogle->getEmail(),
+                    'username' => $userFromGoogle->getName(),
+                ]);
+
+             // error_log("auth login = ". Auth::login());
+
+             $data = Transaksi::get();
+             return view('admin.dashboar', compact('data','user'));
+            //   return redirect('/dashboard');
+            // }else {
+            //   return redirect('/mm');
+            // }
+          //  return redirect('/pp')->withErrors('Username atau password yang anda masukkan salah');
         }
 
 
@@ -71,8 +101,19 @@ class SocialiteController extends Controller
       //  auth('web')->login($userFromDatabase);
      //   session()->regenerate();
         if(Auth::check()){
+           // dump(Auth::user());
             $user =  User::where('username', $userFromGoogle->getName())->get();
            //  $username = $user->username;
+           $newUser2 = new User([
+                'google_id' => $userFromGoogle->getId(),
+                'name' => $userFromGoogle->getName(),
+             ]);
+             error_log("newUser2 = ". $newUser2);
+             
+             auth('web')->login($newUser2);
+             Auth::login($user);
+             session()->regenerate();
+             error_log("auth = ". Auth::user());
              return redirect()->intended('/dashboard')->with('user', $user);
         } else {
             return redirect('/nnn');

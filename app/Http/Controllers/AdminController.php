@@ -7,6 +7,7 @@ use App\Models\Kerupuk;
 use App\Models\Transaksi;
 use App\Models\Vendor;
 use App\Models\BarangV1;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +18,16 @@ class AdminController extends Controller
     public function index()
     {
         $data = Transaksi::get();
-
-        return view('admin.dashboar', compact('data'));
+        // $user = User::where('username', $userFromGoogle->getName())->first();
+        // auth('web')->login($user);
+        if(Auth::user()){
+          //  session()->regenerate();
+            return view('admin.dashboar', compact('data'));
+        }else {
+            //redirect ke login lagi.
+            return redirect('/');
+        }
+      
         //$data = Transaksi::get();
        // return response()->json($data);
     }
@@ -33,7 +42,7 @@ class AdminController extends Controller
     {
        // $kerupuk = Kerupuk::orderBy('nama_barang', $order)->get();
        //function ambil list vendor sesuai dengan user login.
-       $vendor = DB::table('master_vendor')->where('created_by',Auth::user()->id)->get();
+       $vendor = DB::table('master_vendor')->where('created_by',Auth::user()->email)->get();
 
       //kalau ambil semua data vendor tanpa filter ->  $vendor = Vendor::get();
 

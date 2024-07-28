@@ -47,11 +47,12 @@
                     <iconify-icon icon="ion:person-circle" width="20px"></iconify-icon>
                     <span class="mx-2">
                         <strong>
-                            Welcome...
+                            Welcome {{ Auth::user()->username }}!
                         </strong>
                     </span>
                 </li>
             <!-- </a> -->
+            <!-- {{ auth('web')->user()->name }}! -->
             {{-- {{ Auth::user()->name }} --}}
            
             <a href="{{ url('/dashboard') }}"

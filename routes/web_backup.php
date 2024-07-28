@@ -56,11 +56,6 @@ Route::get('login/google/callback', [SocialiteController::class, 'callback'])
     // ->middleware(['auth'])
     ->name('callback');
 
-    // Untuk logout
-Route::post('logout', [SocialiteController::class, 'logout'])
-->middleware(['auth'])
-->name('logout');
-
 Route::middleware(['guest'])->group(
     function () {
         Route::get('/verify-success/{email}', [AuthController::class, 'verifySuccess']);

@@ -151,7 +151,9 @@
                     <input type="text" name="username" placeholder="Username" class="mb-2" />
                     <input type="password" name="password" placeholder="Password" class="mb-2" />
                     <button class="mb-2">login</button>
-                    <div class="card-body">
+                  
+                </form>
+                <div class="card-body">
                             @auth
                             <h4>Name: {{ auth('web')->user()->name }}</h4>
                             <h4>Email: {{ auth('web')->user()->email }}</h4>
@@ -166,7 +168,6 @@
                             >
                             @endauth
                             </div>
-                </form>
                 <div>
                     <p class="forgot-text"><a class="forgot-text" href="/forgot-password">Forgot Password?</a></p>
                 </div>
