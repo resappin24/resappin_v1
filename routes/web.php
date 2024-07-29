@@ -47,13 +47,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // Untuk redirect ke Google
 Route::get('login/google/redirect', [SocialiteController::class, 'redirect'])
     ->middleware(['guest'])
-    // ->middleware(['auth'])
     ->name('redirect');
 
 // Untuk callback dari Google
 Route::get('login/google/callback', [SocialiteController::class, 'callback'])
     ->middleware(['guest'])
-    // ->middleware(['auth'])
     ->name('callback');
 
     // Untuk logout
@@ -61,7 +59,7 @@ Route::post('logout', [SocialiteController::class, 'logout'])
 ->middleware(['auth'])
 ->name('logout');
 
-Route::middleware(['guest'])->group(
+Route::middleware(['auth'])->group(
     function () {
         Route::get('/verify-success/{email}', [AuthController::class, 'verifySuccess']);
 

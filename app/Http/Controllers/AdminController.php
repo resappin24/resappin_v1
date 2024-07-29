@@ -18,15 +18,19 @@ class AdminController extends Controller
     public function index()
     {
         $data = Transaksi::get();
-        // $user = User::where('username', $userFromGoogle->getName())->first();
+         $user = User::where('username', 'Monicasan')->first();
         // auth('web')->login($user);
         if(Auth::user()){
           //  session()->regenerate();
+          error_log("masuk dashbord auth");
             return view('admin.dashboar', compact('data'));
         }else {
+            error_log("gamasuk dashbord, login");
             //redirect ke login lagi.
             return redirect('/');
         }
+
+        error_log("dashboard luar");
       
         //$data = Transaksi::get();
        // return response()->json($data);
@@ -42,7 +46,7 @@ class AdminController extends Controller
     {
        // $kerupuk = Kerupuk::orderBy('nama_barang', $order)->get();
        //function ambil list vendor sesuai dengan user login.
-       $vendor = DB::table('master_vendor')->where('created_by',Auth::user()->email)->get();
+       $vendor = DB::table('master_vendor')->where('created_by',Auth::user()->id)->get();
 
       //kalau ambil semua data vendor tanpa filter ->  $vendor = Vendor::get();
 

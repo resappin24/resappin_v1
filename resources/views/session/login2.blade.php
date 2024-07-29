@@ -155,7 +155,7 @@
                 </form>
                 <div class="card-body">
                             @auth
-                            <h4>Name: {{ auth('web')->user()->name }}</h4>
+                            <h4>Name: {{ Auth::user()->name }}</h4>
                             <h4>Email: {{ auth('web')->user()->email }}</h4>
                             <hr />
                             <form action="{{ route('logout') }}" method="post">
