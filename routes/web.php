@@ -59,11 +59,14 @@ Route::post('logout', [SocialiteController::class, 'logout'])
 ->middleware(['auth'])
 ->name('logout');
 
+
+Route::get('/dashboard', [AdminController::class, 'index']);
+
 Route::middleware(['auth'])->group(
     function () {
         Route::get('/verify-success/{email}', [AuthController::class, 'verifySuccess']);
 
-        Route::get('/dashboard', [AdminController::class, 'index']);
+        // Route::get('/dashboard', [AdminController::class, 'index']);
 
         //Activity
         Route::get('/activity', [AdminController::class, 'history']);

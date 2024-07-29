@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -20,14 +21,18 @@ class AdminController extends Controller
         $data = Transaksi::get();
          $user = User::where('username', 'Monicasan')->first();
         // auth('web')->login($user);
-        if(Auth::user()){
+        if(Auth::check()){
           //  session()->regenerate();
           error_log("masuk dashbord auth");
             return view('admin.dashboar', compact('data'));
         }else {
             error_log("gamasuk dashbord, login");
             //redirect ke login lagi.
-            return redirect('/');
+         //  return redirect('/')->with('error', 'Maaf, session sudah habis. Silahkan Login kembali.');
+         Session::flash('error', 'Some thing is wrong. Please try again');
+          return redirect('/');
+        //    return redirect('/')->withSuccess('Register Success! Please check your email to complete verification. Thankyou.');
+
         }
 
         error_log("dashboard luar");

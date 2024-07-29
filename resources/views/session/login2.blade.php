@@ -44,6 +44,10 @@
     </div>
     @endif
 
+    @if(Session::has('error'))
+        <p class="alert alert-danger">{{ Session::get('error') }}</p>
+    @endif
+
     <style>
         .texture-bg {
             position: fixed;
@@ -154,19 +158,10 @@
                   
                 </form>
                 <div class="card-body">
-                            @auth
-                            <h4>Name: {{ Auth::user()->name }}</h4>
-                            <h4>Email: {{ auth('web')->user()->email }}</h4>
-                            <hr />
-                            <form action="{{ route('logout') }}" method="post">
-                                @csrf
-                                <button class="btn btn-dark" type="submit">Logout</button>
-                            </form>
-                            @else
+                           
                             <a href="/login/google/redirect" class="btn btn-danger"
-                                >Login With Google</a
-                            >
-                            @endauth
+                                >Login With Google</a>
+                          
                             </div>
                 <div>
                     <p class="forgot-text"><a class="forgot-text" href="/forgot-password">Forgot Password?</a></p>

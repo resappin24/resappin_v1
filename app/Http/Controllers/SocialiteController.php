@@ -25,9 +25,14 @@ class SocialiteController extends Controller
 
         // Ambil user dari database berdasarkan google user id
         $userFromDatabase = User::where('google_id', $userFromGoogle->getId())->first();
-
+     
+        // tambah validasi jika register dgn google tapi tdk pakai google oauth.
         // Jika tidak ada user, maka buat user baru
         if (!$userFromDatabase) {
+
+          // validasi lagi jika email google nya sudah dipakai.
+          $userEmail = User::where('email', $userFromGoogle->getEmail())->first();
+          if (!userEmail) {
             $newUser = new User([
                 'google_id' => $userFromGoogle->getId(),
                 'name' => $userFromGoogle->getName(),
@@ -68,7 +73,13 @@ class SocialiteController extends Controller
             // return redirect('/dashboard');
             //     }
             // } 
-        }else {
+        } else {
+          // return email sudah dipakai menggunakan login biasa.
+          return redirect('/')->with('error', 'Maaf, Alamat email sudah terdaftar menggunakan password. Silahkan login menggunakan password atau Forget password');
+        }
+      }
+        
+         else {
             $user = User::where('username', $userFromGoogle->getName())->first();
             //  error_log("user : ", $user.toString());
          
