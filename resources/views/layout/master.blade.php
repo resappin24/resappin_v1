@@ -39,7 +39,7 @@
     <div class="side-navbar d-flex justify-content-between flex-wrap flex-column" style="z-index: 2" id="sidebar">
         <ul class="nav flex-column text-white w-100">
             <center>
-                <img src="{{ asset('desain/img/logo-2-effect.png') }}" alt="logo" width="200px" height="80px" style="margin-top:20px; margin-bottom:20px; " >
+                <img src="{{ asset('desain/img/logo-v1-horizontal.png') }}" alt="logo" width="200px" height="80px" style="margin-top:20px; margin-bottom:20px; " >
             </center>
               <!-- <a href="{{ url('/user') }}"  
                 class="nav-link text-white {{ request()->routeIs('/user') ? 'active' : '' }}"> -->

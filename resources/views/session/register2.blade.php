@@ -66,7 +66,7 @@
 
         .logo{
             position: fixed;
-            margin-top: -10px;
+            margin-top: -120px;
             margin-left: 60px;
             /* max-width: 220px;
             max-height: 170px; */
@@ -85,9 +85,9 @@
         }
 
         h2 {
-            margin-top: 10px;
-            margin-bottom: 40px;
-            margin-left:-250px;
+            margin-top: -80px;
+            margin-bottom: 30px;
+            margin-left:-210px;
             color : black;
             text-align: left;
             font-family: 'boldJosefin', sans-serif;
@@ -104,7 +104,7 @@
         }
 
         .form-login {
-            margin-top: 80px;
+            margin-top: 30px;
             margin-left: -100px;
             width: 200px;
             /* position: relative;
@@ -148,8 +148,8 @@
         <div class="logo">
              </div> 
     </div>
-   <h3>ADMIN DASHBOARD </h3>
-   <h2>LOGIN</h2> 
+   <!-- <h3>ADMIN DASHBOARD </h3> -->
+   <h2>REGISTER</h2> 
             <div class="form-login">
             <div class="form">
                 <form action="/" method="post">
@@ -161,22 +161,21 @@
                         </div>
                     @endif
                     @csrf
+                    <input type="text" name="name" placeholder="Name" class="mb-2" />
                     <input type="text" name="username" placeholder="Username" class="mb-2" />
                     <input type="password" name="password" placeholder="Password" class="mb-2" />
-                    <button class="mb-2">login</button>
+                    <input type="password" name="conf_password" placeholder="Confirm Password" class="mb-2" />
+                    <button class="mb-2">REGISTER</button>
                   
                 </form>
                 <div class="card-body">
-                           
-                            <a href="/login/google/redirect" class="btn btn-danger"
-                                >Login With Google</a>
+                           <hr>
+                            <a href="#" class="btn btn-danger mb-2"
+                                >Register with Google</a>
                           
                             </div>
-                <div>
-                    <p class="forgot-text"><a class="forgot-text" href="/forgot-password">Forgot Password?</a></p>
-                </div>
                 <div class="regis">
-                    <p class="regis-text"><a href="/register">Register</a>, Jika belum memiliki account</p>
+                    <p class="regis-text"><a href="/">Login</a>, Jika sudah memiliki akun.</p>
                 </div>
             </div> <!--end class form-login-->
             </div>

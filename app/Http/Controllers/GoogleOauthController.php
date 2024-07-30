@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Transaksi;
 
 
-class SocialiteController extends Controller
+class GoogleOauthController extends Controller
 {
     //
     public function redirect()
@@ -25,9 +25,14 @@ class SocialiteController extends Controller
 
         // Ambil user dari database berdasarkan google user id
         $userFromDatabase = User::where('google_id', $userFromGoogle->getId())->first();
-
+     
+        // tambah validasi jika register dgn google tapi tdk pakai google oauth.
         // Jika tidak ada user, maka buat user baru
         if (!$userFromDatabase) {
+
+          // validasi lagi jika email google nya sudah dipakai.
+          $userEmail = User::where('email', $userFromGoogle->getEmail())->first();
+          if (!$userEmail) {
             $newUser = new User([
                 'google_id' => $userFromGoogle->getId(),
                 'name' => $userFromGoogle->getName(),
@@ -46,7 +51,7 @@ class SocialiteController extends Controller
             ];
 
             // Login user yang baru dibuat
-            auth('web')->login($newUser);
+            //auth('web')->login($newUser);
             // session()->regenerate();
 
             error_log("newUser = ". $newUser);
@@ -64,14 +69,16 @@ class SocialiteController extends Controller
           }else {
             return redirect('/mm');
           }
-           //return redirect()->intended('/dashboard')->with('user', $user);
-            // return redirect('/dashboard');
-            //     }
-            // } 
-        }else {
+        
+        } else {
+          // return email sudah dipakai menggunakan login biasa.
+          return redirect('/')->with('error', 'Maaf, Alamat email sudah terdaftar menggunakan password. Silahkan login menggunakan password atau Forget password');
+        }
+      }
+        
+         else {
             $user = User::where('username', $userFromGoogle->getName())->first();
-            //  error_log("user : ", $user.toString());
-         
+        
             $infologin2 = [
                 'username' => $user->username,
                  'email' => $user->email,
@@ -91,8 +98,6 @@ class SocialiteController extends Controller
                     error_log("masuk 2");
                   return redirect('/xx');
               }
-
-             // error_log("auth login = ". Auth::login());
 
              $data = Transaksi::get();
 
@@ -140,10 +145,6 @@ class SocialiteController extends Controller
             return redirect('/nnn');
         }
         
-        // $user =  User::where('username', $userFromGoogle->getName())->first();
-        // $username = $user->username;
-        // return redirect()->route('/dashboard')->with( ['user' => $user] );
-        //return redirect()->intended('/dashboard')->with('user', $username);
     }
 
     public function logout(Request $request)

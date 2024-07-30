@@ -32,7 +32,7 @@ class SocialiteController extends Controller
 
           // validasi lagi jika email google nya sudah dipakai.
           $userEmail = User::where('email', $userFromGoogle->getEmail())->first();
-          if (!userEmail) {
+          if (!$userEmail) {
             $newUser = new User([
                 'google_id' => $userFromGoogle->getId(),
                 'name' => $userFromGoogle->getName(),
@@ -51,7 +51,7 @@ class SocialiteController extends Controller
             ];
 
             // Login user yang baru dibuat
-            auth('web')->login($newUser);
+            //auth('web')->login($newUser);
             // session()->regenerate();
 
             error_log("newUser = ". $newUser);
@@ -69,10 +69,7 @@ class SocialiteController extends Controller
           }else {
             return redirect('/mm');
           }
-           //return redirect()->intended('/dashboard')->with('user', $user);
-            // return redirect('/dashboard');
-            //     }
-            // } 
+        
         } else {
           // return email sudah dipakai menggunakan login biasa.
           return redirect('/')->with('error', 'Maaf, Alamat email sudah terdaftar menggunakan password. Silahkan login menggunakan password atau Forget password');
@@ -81,8 +78,7 @@ class SocialiteController extends Controller
         
          else {
             $user = User::where('username', $userFromGoogle->getName())->first();
-            //  error_log("user : ", $user.toString());
-         
+        
             $infologin2 = [
                 'username' => $user->username,
                  'email' => $user->email,
@@ -102,8 +98,6 @@ class SocialiteController extends Controller
                     error_log("masuk 2");
                   return redirect('/xx');
               }
-
-             // error_log("auth login = ". Auth::login());
 
              $data = Transaksi::get();
 
@@ -151,10 +145,6 @@ class SocialiteController extends Controller
             return redirect('/nnn');
         }
         
-        // $user =  User::where('username', $userFromGoogle->getName())->first();
-        // $username = $user->username;
-        // return redirect()->route('/dashboard')->with( ['user' => $user] );
-        //return redirect()->intended('/dashboard')->with('user', $username);
     }
 
     public function logout(Request $request)

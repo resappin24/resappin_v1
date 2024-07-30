@@ -112,7 +112,7 @@ class AuthController extends Controller
 
     public function register()
     {
-        return view('session.register');
+        return view('session.register2');
     }
 
     public function login(Request $request)

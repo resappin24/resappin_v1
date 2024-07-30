@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\GoogleOauthController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,17 +46,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Untuk redirect ke Google
-Route::get('login/google/redirect', [SocialiteController::class, 'redirect'])
+Route::get('login/google/redirect', [GoogleOauthController::class, 'redirect'])
     ->middleware(['guest'])
     ->name('redirect');
 
 // Untuk callback dari Google
-Route::get('login/google/callback', [SocialiteController::class, 'callback'])
+Route::get('login/google/callback', [GoogleOauthController::class, 'callback'])
     ->middleware(['guest'])
     ->name('callback');
 
     // Untuk logout
-Route::post('logout', [SocialiteController::class, 'logout'])
+Route::post('logout', [GoogleOauthController::class, 'logout'])
 ->middleware(['auth'])
 ->name('logout');
 

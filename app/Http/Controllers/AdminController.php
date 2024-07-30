@@ -29,7 +29,7 @@ class AdminController extends Controller
             error_log("gamasuk dashbord, login");
             //redirect ke login lagi.
          //  return redirect('/')->with('error', 'Maaf, session sudah habis. Silahkan Login kembali.');
-         Session::flash('error', 'Some thing is wrong. Please try again');
+         Session::flash('error', 'Your session has ended. Please Login.');
           return redirect('/');
         //    return redirect('/')->withSuccess('Register Success! Please check your email to complete verification. Thankyou.');
 
