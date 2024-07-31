@@ -8,12 +8,13 @@
         .bg-header {
             width: 100%;
             height: 100%;
-            background-color: cyan;
+            /* background-color: cyan; */
         }
         .bg-content {
             width: 100%;
             height: auto;
             background-color: lightblue;
+            opacity: 1;
         }
         .bg-table {
             width: 100%;
