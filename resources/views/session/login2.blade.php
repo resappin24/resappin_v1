@@ -48,6 +48,8 @@
         <p class="alert alert-danger">{{ Session::get('error') }}</p>
     @endif
 
+    <script src="https://apis.google.com/js/api:client.js"></script>
+
     <style>
         .texture-bg {
             position: fixed;
@@ -132,6 +134,25 @@
             font-family: 'CustomFont', sans-serif;
         }*/
 
+        .icon {
+            image: url('{{ asset('desain/logo/g-sign.png') }}');
+            vertical-align: middle;
+            width: 142px;
+            z-index: 3;
+            height: 42px;
+        }
+
+        #customBtn {
+            background: transparent;
+            color: #444;
+            width: 190px;
+            border-radius: 5px;
+            height: 45px;
+            border: thin solid #888;
+            box-shadow: 1px 1px 1px grey;
+            white-space: nowrap;
+    }
+
     </style>
     <div class="texture-bg" >
     </div>
@@ -166,11 +187,12 @@
                     <button class="mb-2">login</button>
                   
                 </form>
-                <div class="card-body">
-                           
-                            <a href="/login/google/redirect" class="btn btn-danger"
-                                >Login With Google</a>
-                          
+                <!-- <div class="icon"></div> -->
+                 <div id="customBtn">
+                    <img src="desain/logo/g-sign.png" width="50px" height="50px"/>
+                   </div>
+                <div>
+                            <a href="/login/google/redirect">Login With Google</a>
                             </div>
                 <div>
                     <p class="forgot-text"><a class="forgot-text" href="/forgot-password">Forgot Password?</a></p>
