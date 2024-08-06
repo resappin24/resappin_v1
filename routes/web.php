@@ -51,9 +51,9 @@ Route::get('login/google/redirect', [GoogleOauthController::class, 'redirect'])
     ->name('redirect');
 
 // Untuk callback dari Google
-Route::get('login/google/callback', [GoogleOauthController::class, 'callback'])
+Route::get('login/google/callback', [GoogleOauthController::class, 'callback_login'])
     ->middleware(['guest'])
-    ->name('callback');
+    ->name('callback_login');
 
     // Untuk logout
 Route::post('logout', [GoogleOauthController::class, 'logout'])

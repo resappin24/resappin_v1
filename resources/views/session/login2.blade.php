@@ -189,11 +189,10 @@
                 </form>
                 <!-- <div class="icon"></div> -->
                  <div id="customBtn">
-                    <img src="desain/logo/g-sign.png" width="50px" height="50px"/>
+                    <img src="desain/logo/g-sign.png" width="35px" height="35px" />
+                    <a href="/login/google/redirect" class="mt-5">Login With Google</a>
                    </div>
-                <div>
-                            <a href="/login/google/redirect">Login With Google</a>
-                            </div>
+             
                 <div>
                     <p class="forgot-text"><a class="forgot-text" href="/forgot-password">Forgot Password?</a></p>
                 </div>

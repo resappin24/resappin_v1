@@ -18,7 +18,7 @@ class GoogleOauthController extends Controller
       return Socialite::driver('google')->redirect();
     }
 
-    public function callback(Request $request)
+    public function callback_login(Request $request)
     {
         // Google user object dari google
         $userFromGoogle = Socialite::driver('google')->stateless()->user();
@@ -33,42 +33,7 @@ class GoogleOauthController extends Controller
           // validasi lagi jika email google nya sudah dipakai.
           $userEmail = User::where('email', $userFromGoogle->getEmail())->first();
           if (!$userEmail) {
-            $newUser = new User([
-                'google_id' => $userFromGoogle->getId(),
-                'name' => $userFromGoogle->getName(),
-                'email' => $userFromGoogle->getEmail(),
-                'password' => '',
-                'username' => $userFromGoogle->getName(),
-            ]);
-
-            $newUser->save();
-
-            Auth::user($newUser);
-
-            $infologin = [
-                'username' => $userFromGoogle->getName(),
-                 'password' => '',
-            ];
-
-            // Login user yang baru dibuat
-            //auth('web')->login($newUser);
-            // session()->regenerate();
-
-            error_log("newUser = ". $newUser);
-           // dd(Auth::user());
-            error_log("auth = ". Auth::user());
-            
-            $user = User::where('username', $userFromGoogle->getName())->first();
-          //  error_log("user : ", $user.toString());
-          if($user){
-            //creturn redirect()->route('dashboard', ['user' => $user])->with('message', 'State saved correctly!!!');
-            $data = Transaksi::get();
-
-           // return view('admin.dashboar', compact('data','user'));
-            return redirect('/dashboard');
-          }else {
-            return redirect('/mm');
-          }
+            return redirect('/')->with('error', 'Maaf, Alamat email belum terdaftar. Silahkan Register / Sign Up terlebih dahulu pada Register Page. Terimakasih.');
         
         } else {
           // return email sudah dipakai menggunakan login biasa.
@@ -77,72 +42,24 @@ class GoogleOauthController extends Controller
       }
         
          else {
+          // sudah terdaftar id googlenya, langsung direct ke dashboard,
+
+          $newUser = new User([
+            'google_id' => $userFromGoogle->getId(),
+            'name' => $userFromGoogle->getName(),
+            'email' => $userFromGoogle->getEmail(),
+            'password' => '',
+            'username' => $userFromGoogle->getName(),
+            ]);
+
             $user = User::where('username', $userFromGoogle->getName())->first();
-        
-            $infologin2 = [
-                'username' => $user->username,
-                 'email' => $user->email,
-            ];
 
-            error_log("user: " . $user);
-            error_log("user-username = ".$user->username);
+          //  Auth::user($newUser);
+            Auth::loginUsingId($user->id);
+            $data = Transaksi::get();
 
-         //   if (Auth::attempt($infologin2)) {
-                $request->session()->put('user', [
-                    'email' => $userFromGoogle->getEmail(),
-                    'username' => $userFromGoogle->getName(),
-                ]);
-                 error_log("masuk 1");
-                if (Auth::attempt(['email' => $user->email, 'password' => $user->password])) {
-                  // The user is being remembered...
-                    error_log("masuk 2");
-                  return redirect('/xx');
-              }
+             return redirect('/dashboard');
 
-             $data = Transaksi::get();
-
-               error_log("masuk 3");
-               Auth::loginUsingId($user->id);
-               error_log("masuk authlogin");
-               // masuk sini...
-             return view('admin.dashboar', compact('data','user'));
-           Auth::loginUsingId($user->id);
-                if(Auth::user()){
-                  error_log("masuk auth user");
-                  auth('web')->login($user);
-                  return redirect('/dashboard');
-                } else {
-                  return redirect('/rr');
-                }
-             
-            // }else {
-            //   return redirect('/mm');
-            // }
-          //  return redirect('/pp')->withErrors('Username atau password yang anda masukkan salah');
-        }
-
-
-        // Jika ada user langsung login saja
-      //  auth('web')->login($userFromDatabase);
-     //   session()->regenerate();
-        if(Auth::check()){
-           // dump(Auth::user());
-            $user =  User::where('username', $userFromGoogle->getName())->get();
-           //  $username = $user->username;
-           $newUser2 = new User([
-                'google_id' => $userFromGoogle->getId(),
-                'name' => $userFromGoogle->getName(),
-             ]);
-             error_log("newUser2 = ". $newUser2);
-             
-             auth('web')->login($newUser2);
-             Auth::login($user);
-             session()->regenerate();
-             error_log("auth = ". Auth::user());
-               error_log("masuk 4 ");
-             return redirect()->intended('/dashboard')->with('user', $user);
-        } else {
-            return redirect('/nnn');
         }
         
     }
