@@ -4,13 +4,15 @@
     <div class="row m-1">
         <div class="card col-md-7 m-1">
             <div class="card-header text-center bg-light">
-                <p>Penjualan</p>
+                <h3>Sales per Week</h3>
             </div>
             <div class="card-body">
                 <canvas id="myChart"></canvas>
-                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#details-modal">
-                    Show Detail
-                </button>
+                <div class="text-end">
+                  <button type="button" class="btn btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#details-modal">
+                      Show Detail
+                  </button>
+                </div>
        
             </div>
             

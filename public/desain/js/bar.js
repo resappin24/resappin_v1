@@ -39,10 +39,11 @@
                     new Chart(ctx, {
                         type: 'bar',
                         data: {
-                            labels: labels,
+                            labels: ['Thursday','Friday','Saturday','Sunday','Monday','Tuesday','Wednesday'],
                             datasets: [{
-                                label: 'Penjualan 7 hari terakhir',
+                                label: 'Last 7 Days Sales',
                                 data: dataValues,
+                                backgroundColor: ['#083f6d', '#215284', '#34669b', '#477ab3', '#598fcc', '#6ca5e5', '#7ebbff'],
                                 borderWidth: 1
                             }]
                         },

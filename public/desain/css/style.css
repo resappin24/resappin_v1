@@ -232,6 +232,10 @@ body {
     transition: 0.5s;
 }
 
+.nav-link{
+    position: relative;
+}
+
 .nav-link:active,
 .nav-link:focus,
 .nav-link:hover {
@@ -247,6 +251,18 @@ body {
 .active-nav {
     margin-left: 0;
     z-index: 0;
+}
+
+.btn-detail {
+    border-color: rgb(133, 175, 253);
+    align-items: end;
+    color:#4d4d4d
+}
+
+.btn-detail:hover {
+    background-color: rgb(133, 175, 253);
+    align-items: end;
+    color:#cfdbda
 }
 
 /* for main section */

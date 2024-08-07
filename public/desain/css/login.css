@@ -85,10 +85,16 @@ input[type=password] {
 
 .regis-text {
     font-size: 1em;
+    margin-top:-5px;
+}
+
+.regis a {
+    color: #3033ea;
 }
 
 .forgot-text {
     text-align: right;
     color: red;
     font-size: 1em;
+    margin-top:13px;
 }

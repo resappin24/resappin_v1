@@ -148,11 +148,15 @@
             color: #444;
             width: 190px;
             border-radius: 5px;
-            height: 45px;
+            height: 40px;
             border: thin solid #888;
             font-size:8pt;
             box-shadow: 1px 1px 1px grey;
             white-space: nowrap;
+    }
+
+    #customBtn:hover{
+        background-color: #D3D3D3;
     }
 
     </style>
@@ -194,7 +198,7 @@
                 </form>
                 <!-- <div class="icon"></div> -->
                  <button onclick="location.href = 'login/google/redirect';" id="customBtn">
-                    <img src="desain/logo/g-sign.png" width="35px" height="35px" />&nbsp;
+                    <img src="desain/logo/g-sign.png" width="20px" height="20px" />&nbsp;
                     Login With Google
                 </button>
              
@@ -202,7 +206,7 @@
                     <p class="forgot-text"><a class="forgot-text" href="/forgot-password">Forgot Password?</a></p>
                 </div>
                 <div class="regis">
-                    <p class="regis-text"><a href="/register">Register</a>, Jika belum memiliki account</p>
+                    <p class="regis-text">Don't have account? <a href="/register">Register</a></p>
                 </div>
             </div> <!--end class form-login-->
             </div>

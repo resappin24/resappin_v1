@@ -34,6 +34,21 @@
             height: 50px;
             background-color: #87CEFA;
         }
+
+        .dropdown-submenu {
+            position: relative;
+            }
+
+            .dropdown-submenu .dropdown-menu {
+                position: relative;
+            top: 1;
+            left: 20%;
+            color: white;
+            width: 80%;
+            border: 0;
+            background-color: #54a1d8;
+            }
+
 </style>
 
     <div class="side-navbar d-flex justify-content-between flex-wrap flex-column" style="z-index: 2" id="sidebar">
@@ -62,12 +77,13 @@
                     <span class="mx-2">Home</span>
                 </li>
             </a>
-            <a href="{{ url('/master_barang') }}" class="nav-link text-white">
-                <li>
-                    <iconify-icon icon="fluent:list-bar-20-filled"></iconify-icon>
-                    <span class="mx-2">Master Barang</span>
-                </li>
-            </a>
+            <li class="dropdown-submenu">
+                <a class="test nav-link text-white" href="#">Master<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" class="nav-link text-white">3rd level dropdown</a></li>
+                    <li><a href="#">3rd level dropdown</a></li>
+                </ul>
+              </li>
             <a href="{{ url('/transaksi') }}"
                 class="nav-link text-white {{ request()->routeIs('/activity') ? 'active' : '' }}">
                 <li>
@@ -175,6 +191,16 @@
       
     </div>
              
+    <script>
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>
+
 </body>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

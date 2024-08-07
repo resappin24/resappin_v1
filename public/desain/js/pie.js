@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(dataValues)
 
             const ctx = document.getElementById('myPieChart');
+            var data_colors = 'rgb('+(Math.floor(Math.random() *150)+75)+','+(Math.floor(Math.random() *200)+45)+','+(Math.floor(Math.random() *200)+35)+','+(Math.floor(Math.random() *150)+55)+','+(Math.floor(Math.random() *150)+60)+','+(Math.floor(Math.random() *150)+70)+')';
 
             if (ctx) {
                 new Chart(ctx, {
@@ -45,8 +46,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         datasets: [{
                             label: 'Penjualan 7 hari terakhir',
                             data: dataValues,
-                            backgroundColor: ['red', 'blue', 'yellow', 'purple', 'green', 'pink', 'brown'],
-                            hoverBackgroundColor: ['red', 'blue', 'yellow', 'purple', 'green', 'pink', 'brown'],
+                             backgroundColor: ['#7FFFD4', '#FFE4C4', '#5F9EA0', '#6495ED', '#BDB76B', '#9932CC', '#90EE90'],
+                            //backgroundColor: data_colors,
+                        //    hoverBackgroundColor: ['red', 'blue', 'yellow', 'purple', 'green', 'pink', 'brown'],
                         }]
                     },
                     options: {
