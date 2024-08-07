@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>RESAPPIN - REGISTER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <!-- <link rel="stylesheet" href="{{ asset('desain') }}/css/style.css"> -->
@@ -128,10 +128,46 @@
          
             /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); */
         }
-        /*body{
-            font-family: 'CustomFont', sans-serif;
-        }*/
-
+        #customBtn {
+            background: transparent;
+            color: #444;
+            width: 190px;
+            border-radius: 5px;
+            height: 45px;
+            border: thin solid #888;
+            box-shadow: 1px 1px 1px grey;
+            white-space: nowrap;
+    }
+    .hr-text {
+  line-height: 2em;
+  position: relative;
+  outline: 0;
+  border: 0;
+  width: 190px;
+  color: black;
+  text-align: center;
+  height: 1.5em;
+  opacity: 1;
+  &:before {
+    content: '';
+    background: linear-gradient(to right, transparent, #818078, transparent);
+    position: absolute;
+    left: 0;
+    top: 20%;
+    width: 100%;
+    height: 2px;
+  }
+  &:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    color: black;
+    padding: 0em;
+    top: -8px;
+    line-height: 2em;
+    background-color: #fcfcfa;
+        }
+        }
     </style>
     <div class="texture-bg" >
     </div>
@@ -169,8 +205,8 @@
                   
                 </form>
                 <div class="card-body">
-                           <hr>
-                            <a href="#" class="btn btn-danger mb-2"
+                           <hr class="hr-text" data-content="OR">
+                            <a href="/register/google/redirect" class=""
                                 >Register with Google</a>
                           
                             </div>

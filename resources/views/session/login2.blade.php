@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>RESAPPIN - LOGIN</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <!-- <link rel="stylesheet" href="{{ asset('desain') }}/css/style.css"> -->
@@ -47,6 +47,7 @@
     @if(Session::has('error'))
         <p class="alert alert-danger">{{ Session::get('error') }}</p>
     @endif
+
 
     <script src="https://apis.google.com/js/api:client.js"></script>
 
@@ -106,7 +107,7 @@
         }
 
         .form-login {
-            margin-top: 80px;
+            margin-top: 30px;
             margin-left: -100px;
             width: 200px;
             /* position: relative;
@@ -149,11 +150,15 @@
             border-radius: 5px;
             height: 45px;
             border: thin solid #888;
+            font-size:8pt;
             box-shadow: 1px 1px 1px grey;
             white-space: nowrap;
     }
 
     </style>
+
+
+
     <div class="texture-bg" >
     </div>
     
@@ -188,10 +193,10 @@
                   
                 </form>
                 <!-- <div class="icon"></div> -->
-                 <div id="customBtn">
-                    <img src="desain/logo/g-sign.png" width="35px" height="35px" />
-                    <a href="/login/google/redirect" class="mt-5">Login With Google</a>
-                   </div>
+                 <button onclick="location.href = 'login/google/redirect';" id="customBtn">
+                    <img src="desain/logo/g-sign.png" width="35px" height="35px" />&nbsp;
+                    Login With Google
+                </button>
              
                 <div>
                     <p class="forgot-text"><a class="forgot-text" href="/forgot-password">Forgot Password?</a></p>

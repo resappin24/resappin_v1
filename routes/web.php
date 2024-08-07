@@ -46,14 +46,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Untuk redirect ke Google
-Route::get('login/google/redirect', [GoogleOauthController::class, 'redirect'])
+Route::get('login/google/redirect', [GoogleOauthController::class, 'signInRedirect'])
     ->middleware(['guest'])
     ->name('redirect');
 
-// Untuk callback dari Google
+//redirect google dari register.
+Route::get('register/google/redirect', [GoogleOauthController::class, 'redirect'])
+    ->middleware(['guest'])
+    ->name('redirect');
+
+// Untuk callback dari Google login
 Route::get('login/google/callback', [GoogleOauthController::class, 'callback_login'])
     ->middleware(['guest'])
     ->name('callback_login');
+
+// Untuk callback dari Google register
+Route::get('register/google/callback', [GoogleOauthController::class, 'callback_register'])
+->middleware(['guest'])
+->name('callback_register');
 
     // Untuk logout
 Route::post('logout', [GoogleOauthController::class, 'logout'])
