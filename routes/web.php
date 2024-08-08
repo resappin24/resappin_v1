@@ -83,7 +83,7 @@ Route::middleware(['auth'])->group(
         Route::get('/activity', [AdminController::class, 'history']);
 
         //Kerupuk
-        Route::get('/master_barang', [AdminController::class, 'kerupuk']);
+        Route::get('/master_product', [AdminController::class, 'kerupuk']);
         Route::post('/store_kerupuk', [AdminController::class, 'store']);
         Route::post('/add_barang', [AdminController::class, 'addBarang']);
         Route::put('/update_kerupuk', [AdminController::class, 'update']);

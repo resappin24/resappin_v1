@@ -1,20 +1,25 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
-@extends('layout.master')
+
 @section('konten')
 
 <style>
         .bg-header {
             width: 100%;
             height: 100%;
-            /* background-color: cyan; */
+            /* background-color: lightblue; */
+            background-color: hsla(360, 100%, 100%, 0.6);
+            color:black;
         }
         .bg-content {
             width: 100%;
             height: auto;
-            background-color: lightblue;
-            opacity: 1;
+            /* background-color: lightblue; */
+            /* background-color: hsla(360, 100%, 100%, 0.6); white */ 
+            background-color: hsla(213, 100%, 50%, 0.5);
+            z-index: -1;
+            color:black;
         }
         .bg-table {
             width: 100%;
@@ -30,7 +35,7 @@
         }
 
         .title-menu {
-            color: blue;
+            color: black;
         }
 
         .btn-add {
@@ -53,8 +58,8 @@
 </style>
     <div class="row m-1">
         <div class="card col-md-12 mt-1 bg-content">
-            <div class="card-header bg-content">
-                <div class="row  bg-header">
+            <div class="card-header">
+                <div class="row">
                     <div class="col-md-6 text-start mt-4 mb-3">
                         <h3 class="title-menu"><b>MASTER VENDOR / SUPPLIER</b></h3>
                     </div>
@@ -68,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-content">
+            <div class="bg-header">
             <div class="card-body">
                 <table id="example" class="table table-bordered table-striped text-center bg-table">
                     <thead>
@@ -111,6 +116,8 @@
         </div>
     </div>
 @endsection
+
+@extends('layout.master')
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>

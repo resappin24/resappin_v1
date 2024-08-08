@@ -32,20 +32,36 @@
 
         .nav-top {
             height: 50px;
+            position: relative;
             background-color: #87CEFA;
+        }
+
+        .profile{
+           margin-left: 330px;
+           position: fixed;
+           margin-top : 0px;
+        }
+
+       .strong {
+        position: fixed;
+            top: 0px;
+            left: 830;
         }
 
         .dropdown-submenu {
             position: relative;
+            background-color: lightblue;
             }
 
-            .dropdown-submenu .dropdown-menu {
-                position: relative;
-            top: 1;
-            left: 20%;
+         .dropdown-submenu .dropdown-menu {
+             position: fixed;
+            top: 13;
+            left: 1000;
             color: white;
-            width: 80%;
+            height: 120px;
+            width: 100px;
             border: 0;
+            z-index: 9999;
             background-color: #54a1d8;
             }
 
@@ -58,14 +74,14 @@
             </center>
               <!-- <a href="{{ url('/user') }}"  
                 class="nav-link text-white {{ request()->routeIs('/user') ? 'active' : '' }}"> -->
-                <li class="d-flex flex-row align-items-center justify-content-center mb-3">
+                <!-- <li class="d-flex flex-row align-items-center justify-content-center mb-3">
                     <iconify-icon icon="ion:person-circle" width="20px"></iconify-icon>
                     <span class="mx-2">
                         <strong>
                             Welcome {{ Auth::user()->name }}!
                         </strong>
                     </span>
-                </li>
+                </li> -->
             <!-- </a> -->
          
             {{-- {{ Auth::user()->name }} --}}
@@ -78,10 +94,11 @@
                 </li>
             </a>
             <li class="dropdown-submenu">
-                <a class="test nav-link text-white" href="#">Master<span class="caret"></span></a>
+                <a class="test nav-link text-white" href="#">  <iconify-icon icon="fluent:list-bar-20-filled"></iconify-icon><span class="mx-2">Master</span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#" class="nav-link text-white">3rd level dropdown</a></li>
-                    <li><a href="#">3rd level dropdown</a></li>
+                <a href="{{ url('/master_product') }}" class="nav-link text-white">  <li> Master Product</li></a>
+                <a href="{{ url('/vendor') }}" class="nav-link text-white">  <li> Master Supplier/Vendor</li></a>
+                <a href="{{ url('/kategori') }}" class="nav-link text-white">  <li> Master Category</li></a>
                 </ul>
               </li>
             <a href="{{ url('/transaksi') }}"
@@ -91,12 +108,12 @@
                     <span class="mx-2">Transaksi</span>
                 </li>
             </a>
-            <a href="{{ url('/vendor') }}"
+            <a href="{{ url('/prod_category') }}"
                 class="nav-link text-white {{ request()->routeIs('/activity') ? 'active' : '' }}">
                 <li>
                     <!-- <iconify-icon icon="ep:sell"></iconify-icon> -->
                     <iconify-icon icon="healthicons:stock-out"></iconify-icon>
-                    <span class="mx-2">Master Vendor</span>
+                    <span class="mx-2">Product Category</span>
                 </li>
             </a>
             <a href="{{ url('/activity') }}"
@@ -160,8 +177,25 @@
         <div class="texture-bg2">
             <!-- <img src="{{url(asset('desain/img/bg-2.jpg'))}}" height="800px" style="z-index: 0"> -->
         <div>
-        <nav class="navbar top-navbar navbar-light px-5 nav-top">
+        <nav class="top-navbar navbar-light nav-top">
             <a class="btn border-0" id="menu-btn"><i class="bx bx-menu"></i></a>
+            <span class="mx-2">
+            <ul class="strong">
+                <li class="dropdown-submenu">
+                <a class="test nav-link text-white" href="#"> <iconify-icon icon="ion:person-circle" width="30px" class="mt-2"></iconify-icon>
+                        <strong>
+                            Welcome {{ Auth::user()->name }}!
+                        </strong>
+                        </a>
+                        <ul class="dropdown-menu">
+                        <a href="{{ url('/master_product') }}" class="nav-link text-white">  <li> Master Product</li></a>
+                        <a href="{{ url('/vendor') }}" class="nav-link text-white">  <li> Master Supplier/Vendor</li></a>
+                        <a href="{{ url('/kategori') }}" class="nav-link text-white">  <li> Master Category</li></a>
+                        </ul>
+        </li>
+        </ul>
+                    </span>
+     
         </nav>
         @if (Session::has('success'))
                 <script>
@@ -187,10 +221,10 @@
                     });
                 </script>
             @endif
-        @yield('konten')
       
     </div>
-             
+             <div>  @yield('konten')
+                </div>
     <script>
 $(document).ready(function(){
   $('.dropdown-submenu a.test').on("click", function(e){
