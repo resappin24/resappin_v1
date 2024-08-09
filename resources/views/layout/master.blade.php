@@ -8,11 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://unpkg.com/@adminkit/core@latest/dist/js/app.js"></script>
     <link rel="stylesheet" href="{{ asset('desain') }}/css/style.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
+
 <body>
 <style>
         .texture-bg2 {
@@ -36,16 +38,12 @@
             background-color: #87CEFA;
         }
 
-        .profile{
-           margin-left: 330px;
-           position: fixed;
-           margin-top : 0px;
-        }
 
-       .strong {
+       .strong { /* css dropdown top navbar */
         position: fixed;
             top: -5px;
             left: 1030;
+            z-index: 5;
         }
 
         .dropdown-submenu {
@@ -60,6 +58,7 @@
             color: white;
             width: 80%;
             border: 0;
+         
             background-color: #54a1d8;
         }
 
@@ -92,7 +91,7 @@
                 </li>
             </a>
             <li class="dropdown-submenu">
-                <a class="test nav-link text-white" href="#">  <iconify-icon icon="fluent:list-bar-20-filled"></iconify-icon><span class="mx-2">Master</span>  <i class="fa fa-caret-down"></i></a>
+                <a class="test nav-link text-white" href="#">  <iconify-icon icon="fluent:list-bar-20-filled"></iconify-icon><span class="mx-2">Master <i class="fa fa-caret-down"></i></span> </a>
                 <ul class="dropdown-menu">
                     <a href="{{ url('/master_product') }}" class="nav-link text-white">  <li> Master Product</li></a>
                     <a href="{{ url('/vendor') }}" class="nav-link text-white">  <li> Master Supplier/Vendor</li></a>

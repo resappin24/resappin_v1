@@ -18,7 +18,7 @@
             /* background-color: lightblue; */
             /* background-color: hsla(360, 100%, 100%, 0.6); white */ 
             background-color: hsla(213, 100%, 50%, 0.5);
-            z-index: -1;
+            z-index: 0;
             color:black;
         }
         .bg-table {

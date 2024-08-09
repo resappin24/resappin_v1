@@ -314,3 +314,10 @@ select {
     padding: 1rem;
     padding-right: 2rem;
   }
+
+  @media (max-width: 995px) {
+    .strong {
+        /* display: none; */
+        left: 200;
+    }
+  }
