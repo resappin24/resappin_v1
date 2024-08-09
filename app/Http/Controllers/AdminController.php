@@ -19,7 +19,7 @@ class AdminController extends Controller
     public function index()
     {
         $data = Transaksi::get();
-         $user = User::where('username', 'Monicasan')->first();
+      //   $user = User::where('username', 'Monicasan')->first();
         // auth('web')->login($user);
         if(Auth::check()){
           //  session()->regenerate();
