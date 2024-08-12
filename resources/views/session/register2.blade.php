@@ -75,12 +75,6 @@
             /* background-image: url('{{ asset('desain/img/admin-login.png') }}'); */
             background-image: url('{{ asset('desain/img/logo-v1.png') }}');
             background-size: contain;
-            /* background-position: center; */
-            /* filter: blur(3px); */
-            /* z-index:2; */
-            /* display: block; */
-            /* margin-left: auto;
-            margin-right: auto; */
           
         }
 
@@ -128,44 +122,52 @@
          
             /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); */
         }
-        #customBtn {
+    
+       #customBtn {
             background: transparent;
             color: #444;
             width: 190px;
             border-radius: 5px;
-            height: 45px;
+            height: 40px;
             border: thin solid #888;
+            font-size:8pt;
             box-shadow: 1px 1px 1px grey;
             white-space: nowrap;
+            margin-bottom: 15px;
     }
+
+    #customBtn:hover{
+        background-color: #D3D3D3;
+    }
+
     .hr-text {
-  line-height: 2em;
-  position: relative;
-  outline: 0;
-  border: 0;
-  width: 190px;
-  color: black;
-  text-align: center;
-  height: 1.5em;
-  opacity: 1;
-  &:before {
-    content: '';
-    background: linear-gradient(to right, transparent, #818078, transparent);
-    position: absolute;
-    left: 0;
-    top: 20%;
-    width: 100%;
-    height: 2px;
-  }
-  &:after {
-    content: attr(data-content);
-    position: relative;
-    display: inline-block;
-    color: black;
-    padding: 0em;
-    top: -8px;
-    line-height: 2em;
-    background-color: #fcfcfa;
+        line-height: 2em;
+        position: relative;
+        outline: 0;
+        border: 0;
+        width: 190px;
+        color: black;
+        text-align: center;
+        height: 1em;
+        opacity: 1;
+        &:before {
+            content: '';
+            background: linear-gradient(to right, transparent, #818078, transparent);
+            position: absolute;
+            left: 0;
+            top: 20%;
+            width: 100%;
+            height: 2px;
+        }
+        &:after {
+            content: attr(data-content);
+            position: relative;
+            display: inline-block;
+            color: black;
+            padding: 0em;
+            top: -8px;
+            line-height: 2em;
+            background-color: #fcfcfa;
         }
         }
     </style>
@@ -206,9 +208,10 @@
                 </form>
                 <div class="card-body">
                            <hr class="hr-text" data-content="OR">
-                            <a href="/register/google/redirect" class=""
-                                >Register with Google</a>
-                          
+                                <button onclick="location.href = 'register/google/redirect';" id="customBtn">
+                                <img src="desain/logo/g-sign.png" width="20px" height="20px" />&nbsp;
+                                  Register With Google
+                            </button>
                             </div>
                 <div class="regis">
                     <p class="regis-text"><a href="/">Login</a>, Jika sudah memiliki akun.</p>

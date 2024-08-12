@@ -62,6 +62,10 @@
             background-color: #54a1d8;
         }
 
+        .icon_dropdown {
+            margin-left: 120px;
+        }
+
 </style>
 
     <div class="side-navbar d-flex justify-content-between flex-wrap flex-column" style="z-index: 2" id="sidebar">
@@ -91,7 +95,7 @@
                 </li>
             </a>
             <li class="dropdown-submenu">
-                <a class="test nav-link text-white" href="#">  <iconify-icon icon="fluent:list-bar-20-filled"></iconify-icon><span class="mx-2">Master <i class="fa fa-caret-down"></i></span> </a>
+                <a class="test nav-link text-white" href="#">  <iconify-icon icon="fluent:list-bar-20-filled"></iconify-icon><span class="mx-2">Master<i class="fa fa-caret-down icon_dropdown"></i></span> </a>
                 <ul class="dropdown-menu">
                     <a href="{{ url('/master_product') }}" class="nav-link text-white">  <li> Master Product</li></a>
                     <a href="{{ url('/vendor') }}" class="nav-link text-white">  <li> Master Supplier/Vendor</li></a>
