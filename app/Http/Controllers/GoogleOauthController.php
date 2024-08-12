@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Transaksi;
 use Laravel\Socialite\Two\GoogleProvider;
+use App\Mail\EmailVerification;
+use Illuminate\Support\Facades\Mail;
 
 class GoogleOauthController extends Controller
 {
@@ -22,6 +24,15 @@ class GoogleOauthController extends Controller
     {
         $driver = Socialite::buildProvider(
             GoogleProvider::class, config('services.google_signin')
+        );
+
+       return $driver->stateless()->redirect();
+    }
+
+    public function signUpRedirect()
+    {
+        $driver = Socialite::buildProvider(
+            GoogleProvider::class, config('services.google_signup')
         );
 
        return $driver->redirect();
@@ -73,8 +84,14 @@ class GoogleOauthController extends Controller
 
     public function callback_register(Request $request)
     {
+
+       // Google user object dari google
+       $driver = Socialite::buildProvider(
+        GoogleProvider::class, config('services.google_signup')
+       );
+
         // Google user object dari google
-        $userFromGoogle = Socialite::driver('google')->stateless()->user();
+        $userFromGoogle = $driver->stateless()->user();
 
         // Ambil user dari database berdasarkan google user id
         $userFromDatabase = User::where('google_id', $userFromGoogle->getId())->first();
@@ -111,7 +128,17 @@ class GoogleOauthController extends Controller
           //  error_log("user : ", $user.toString());
           if($user){
            // cek email sukses terdaftar..  
-           return redirect('/')->withSuccess('Registration Success! Please Login and Verification your email. Thankyou.');
+           $emailVerified = User::where('username', $userFromGoogle->getName())->first();
+           if ($emailVerified->email_verified_at == null) {
+               $newUserId = $emailVerified->id;
+                               $newUser = User::find($newUserId);
+                               Mail::to($newUser->email)
+                               ->send(new EmailVerification($newUser));
+             
+             //redirect login, with notif please verified your email.
+             return redirect('/')->withSuccess('Registration Success! Please Login after Verified your email. Thankyou.');
+           }
+          
             
           }else {
             return redirect('/')->with('error', 'Sorry, your registration unsuccessful, please register again.');

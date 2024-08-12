@@ -51,7 +51,7 @@ Route::get('login/google/redirect', [GoogleOauthController::class, 'signInRedire
     ->name('redirect');
 
 //redirect google dari register.
-Route::get('register/google/redirect', [GoogleOauthController::class, 'redirect'])
+Route::get('register/google/redirect', [GoogleOauthController::class, 'signUpRedirect'])
     ->middleware(['guest'])
     ->name('redirect');
 

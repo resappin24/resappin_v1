@@ -37,4 +37,9 @@ return [
     'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
     
+    'google_signup' => [
+        'client_id' => env('GOOGLE_REG_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_REG_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REG_REDIRECT_URI'),
+        ],
 ];
