@@ -108,5 +108,9 @@ Route::middleware(['auth'])->group(
         //======= prod category =======
         Route::get('/prod_category', [ProductCategoryController::class, 'prod_kategori']);
         Route::post('/add_prod_kategori', [ProductCategoryController::class, 'addProdKategori']);
+
+        //========repack ==========
+        Route::get('/repack',[TransaksiController::class, 'getRepack']);
+        Route::post('/add_repack',[TransaksiController::class, 'addRepack']);
     }
 );

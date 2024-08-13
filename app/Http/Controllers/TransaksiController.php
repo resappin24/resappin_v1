@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+
 class TransaksiController extends Controller
 {
     public function transaksi(Request $request)
@@ -246,7 +247,83 @@ class TransaksiController extends Controller
             return redirect()->back()->with('success', 'Delete Kategori berhasil.');
         }
 
-      
     }
+        public function getRepack() {
+            $vendor = DB::table('master_vendor')->where('created_by',Auth::user()->id)->get();
+
+            $kerupuk = DB::table('master_barang_v1')
+                    ->select('master_barang_v1.*')
+                    ->where('created_user_id',Auth::user()->id)
+                    ->orderBy('nama_barang', 'asc')
+                    ->get();
+
+                $repack = DB::table('repack_product')
+                                    ->Join('master_vendor', 'master_vendor.vendor_id', '=', 'repack_product.vendor_id')
+                                ->Join('master_barang_v1', 'master_barang_v1.id_barang', '=', 'repack_product.product_id')
+                                    ->select('master_barang_v1.*', 'master_vendor.*', 'repack_product.*')
+                                    ->where('created_user_id',Auth::user()->id)
+                                ->orderBy('nama_barang', 'asc')
+                                ->get();
+
+            return view('admin.repack', compact('vendor', 'kerupuk', 'repack'));
+        }
+
+        public function addRepack(Request $request) 
+        {
+            $validator = Validator::make($request->all(), [
+                'vendorID' => 'required'
+            ], [
+                'vendorID.required' => 'Vendor tidak boleh kosong'
+                
+            ]);
+    
+            if ($validator->fails()) {
+               return back()->withErrors($validator)->withInput();
+            }
+    
+            if (Kategori::where('kategori', $request->kategori)->exists()) {
+                
+                $validator->errors()->add('kategori', 'Kategori sudah terdaftar!');
+               // return back()->withErrors($validator)->withInput();
+            }
+    
+            // tambah validasi 'and user_id = Auth->id 
+            $validation = ['kategori'=> $request->kategori, 'created_by' => Auth::user()->id ];
+             $kategori =   Kategori::where([
+                ['kategori','=',  $request->kategori],
+                ['created_by', '=', Auth::user()->id]
+                ])->get()->first();
+    
+             if ($kategori !== null) {
+                // jika ada, set kategori sudah terdaftar.
+                return redirect()->back()->withErrors(['errors' => 'Kategori sudah terdaftar!']);
+             } else {
+                // process add kategori ke db
+                 $kategori = Kategori::create([
+                'kategori' => $request->kategori,
+                'created_date' => now(),
+                'created_by' => Auth::user()->id,
+                
+            ]);
+    
+            //insert ke log activity
+            if ($kategori->wasRecentlyCreated) {
+                Activity::create([
+                    'activity' => 'Add Kategori',
+                    'name_user' => Auth::user()->name,
+                    'nama_barang' => $request->kategori,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+                return redirect()->back()->with('success', 'Add new kategori success.');
+            } else {
+                return redirect()->back()->withErrors(['errors' => 'Gagal menambahkan data kategori.'])->withInput();
+            }
+    
+            $request->session()->flash('success', 'Add New Category Item Success');
+              return redirect()->back()->with('success', 'Add Category success!');
+             }
+    
+            return redirect('/kategori');
+        }
 
 }

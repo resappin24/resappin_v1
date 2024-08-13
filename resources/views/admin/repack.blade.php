@@ -1,0 +1,455 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
+@extends('layout.master')
+@section('konten')
+<style>
+
+    .label-bold {
+        font-weight: bold;
+
+    }
+    .dropdown-select {
+            width: 400px;
+            height: 50px;
+        }
+
+</style>
+    <div class="row m-1">
+        <div class="card col-md-12 mt-1">
+            <div class="card-header bg-light">
+                <div class="row">
+                    <div class="col-md-6 text-start">
+                        <h3 class="label-bold">Repack Product</h3>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#kerupukModal">
+                            <!-- <iconify-icon icon="mdi:add-box"></iconify-icon> -->
+                            <!-- <iconify-icon icon="subway:add-1"></iconify-icon> -->
+                            <!-- <iconify-icon icon="carbon:add-alt"></iconify-icon> -->
+                            <iconify-icon icon="subway:add"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <table id="example" class="table table-bordered table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th>Vendor</th>
+                            <th>Nama Barang</th>
+                            <th>Berat asli</th>
+                            <th>Berat repack</th>
+                            <th>Harga asli</th>
+                            <th>Harga Repack</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($repack as $item)
+                            <tr>
+                                        <td>{{ $item->nama_vendor }}</td>
+                                        <td>{{ $item->nama_barang }}</td>
+                                        <td>{{ $item->base_weight }}</td>
+                                        <td>{{ $item->repack_weight }}</td>
+                                        <td>{{ $item->base_nett }}</td>
+                                        <td>{{ $item->repack_nett }}</td>
+                              
+                                <td>
+                                  
+                                    <button data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal" class="btn btn-danger btn-delete" 
+                                        data-id="{{ $item->id_repack }}" data-nama="{{ $item->nama_barang }}">
+                                        <iconify-icon icon="bi:trash-fill"></iconify-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.btn-edit', function() {
+            var id = $(this).data('id');
+            var nama = $(this).data('nama');
+            var hargaBeli = $(this).data('harga-beli');
+            var hargaJual = $(this).data('harga-jual');
+            var stok = $(this).data('stok');
+            var gambar = $(this).data('gambar');
+
+            var keuntungan = (hargaJual - hargaBeli) / hargaBeli * 100
+
+            console.log(id, nama, hargaBeli, hargaJual, stok, gambar, keuntungan);
+
+            $('.main_harga_beli').val('');
+            $('#update-keuntungan').val('');
+
+            $('.main_harga_beli').on('input', function() {
+                var beli = $(this).val()
+                jual()
+            })
+
+            $('#update-keuntungan').on('input', function() {
+                var persen = $(this).val()
+
+                persen = parseInt(persen);
+
+                $(this).val(persen);
+                console.log(persen)
+                jual()
+            })
+
+            function jual() {
+                var beli = parseFloat($('.main_harga_beli').val()) || 0;
+                var persen = parseFloat($('#update-keuntungan').val()) || 0;
+                beli = Math.max(beli, 0);
+                persen = Math.max(persen, 0);
+
+                var jual = beli * persen / 100 + beli
+                $(this).val(jual);
+                $('#edit-harga-jual').val(jual);
+            }
+
+            $('#edit-stok').on('input', function() {
+                var stokValue = $(this).val();
+
+                // Ensure stok is between 0 and maxstok (stock)
+                stokValue = parseInt(stokValue);
+
+                if (isNaN(stokValue) || stokValue < 0) {
+                    stokValue = 0;
+                }
+
+                $(this).val(stokValue);
+                console.log('stokValue:', stokValue);
+            });
+
+            stok = Math.max(stok, 0);
+
+            $('#edit-id').val(id);
+            $('#edit-nama-barang').val(nama);
+            $('#update-keuntungan').val(keuntungan);
+            $('#edit-harga-beli').val(hargaBeli);
+            $('#edit-harga-jual').val(hargaJual);
+            $('#edit-stok').val(stok);
+
+            $('#edit-gambar-preview').attr('src', '{{ asset('gambar_barang/') }}' + '/' + gambar);
+
+            if (gambar !== 'gambar-default.png') {
+                $('#edit-gambar-container').hide();
+                $('#edit-gambar-ada').show();
+                $('#edit-gambar-update').show();
+            } else {
+                $('#edit-gambar-container').show();
+                $('#edit-gambar-ada').hide();
+                $('#edit-gambar-update').hide();
+            }
+
+            $(document).on('click', '.edit-gambar-update', function(event) {
+                event.preventDefault();
+
+                $('#edit-gambar-container').show();
+                $('#edit-gambar-ada').hide();
+                $('#edit-gambar-update').hide(); 
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.btn-add', function() {
+
+            $('#stok').on('input', function() {
+                var stokValue = $(this).val();
+
+                stokValue = parseInt(stokValue);
+
+                if (isNaN(stokValue) || stokValue < 0) {
+                    stokValue = 0;
+                }
+
+                $(this).val(stokValue);
+                console.log('stokValue:', stokValue);
+            });
+
+            $('#main_harga_beli').val('');
+            $('#keuntungan').val('');
+
+            $('#main_harga_beli').on('input', function() {
+                var beli = $(this).val()
+
+                beli = parseInt(beli);
+
+                $(this).val(beli);
+                console.log(beli)
+                jual()
+            })
+
+            $('#keuntungan').on('input', function() {
+                var persen = $(this).val()
+
+                persen = parseInt(persen);
+
+                $(this).val(persen);
+                console.log(persen)
+                jual()
+            })
+
+            function jual() {
+                var beli = parseFloat($('#main_harga_beli').val()) || 0;
+                var persen = parseFloat($('#keuntungan').val()) || 0;
+                beli = Math.max(beli, 0);
+                persen = Math.max(persen, 0);
+
+                var jual = beli * persen / 100 + beli
+                
+
+                console.log('harga:', jual)
+                $('#harga_jual').val(jual);
+            }
+
+            stok = Math.max(stok, 0);
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.btn-delete', function() {
+            var nama = $(this).data('nama');
+            var id = $(this).data('id');
+
+            $('#deleteItemName').text(nama);
+            $('#confirmDelete').data('id', id);
+
+            $('#deleteModal').modal('show');
+        });
+
+        $(document).on('click', '#confirmDelete', function() {
+            var id = $(this).data('id');
+            
+            window.location.href = "{{ url('/kerupuk/delete') }}/" + id;
+        });
+    });
+</script>
+
+{{-- Modal Delete Kerupuk --}}
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Barang</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <div class="modal-body">
+                    <p>Apakah kamu yakin ingin menghapus <span id="deleteItemName"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Add Repack --}}
+<div class="modal fade" id="kerupukModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="label-bold" id="exampleModalLabel">Add New Repack Item</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ url('/add_repack') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                <div class="mb-3">
+                        <label for="vendor" class="col-form-label label-bold">Vendor &nbsp;</label>(<span class="required">*</span>) :
+                        <div>
+                            <select name="vendorID" id="vendorSelect" class="dropdown-select" >
+                                <option value="">Pilih Vendor</option>
+                                @foreach ($vendor as $item)
+                                        <option value="{{ $item->vendor_id }}">
+                                        {{ $item->kode_vendor }} - {{ $item->nama_vendor }} 
+                                        </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                    <label for="barang" class="col-form-label label-bold">Product &nbsp;</label>(<span class="required">*</span>) :
+                        <div>
+                            <select name="barangID" id="barangSelect" class="dropdown-select" >
+                                <option value="">Pilih Barang</option>
+                                @foreach ($kerupuk as $item)
+                                        <option value="{{ $item->id_barang }}">
+                                        {{ $item->id_barang }} - {{ $item->nama_barang }} 
+                                        </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Base Nett (harga)</label>(<span class="required">*</span>) :
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                            <input type="number" id="base_nett" class="form-control" aria-describedby="basic-addon1" name="harga_beli"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="col-form-label">Repack Nett</label>(<span class="required">*</span>) :
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                            <input type="number" id="repack_nett" class="form-control" aria-describedby="basic-addon1" name="harga_jual">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Base Qty</label>(<span class="required">*</span>) :
+                        <input type="number" class="form-control" id="base_qty" name="base_qty">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Repack Qty</label>(<span class="required">*</span>) :
+                        <input type="number" class="form-control" id="repack_qty" name="repack_qty">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Base Weight (in gram)</label>(<span class="required">*</span>) :
+                        <input type="number" class="form-control" id="base_weight" name="base_weight">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Repack Weight (in gram)</label>(<span class="required">*</span>) :
+                        <input type="number" class="form-control" id="repack_weight" name="repack_weight">
+                    </div>
+                    <!-- <div class="mb-3">
+                        <label class="col-form-label">Harga Beli (New) &nbsp;</label><i>(opsional) :</i>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                            <input type="number" id="harga_beli_new" class="form-control" aria-describedby="basic-addon1" name="harga_beli_new"
+                            >
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Harga Jual (New) &nbsp;</label><i>(opsional) :</i>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                            <input type="number" id="harga_jual_new" class="form-control" aria-describedby="basic-addon1" name="harga_jual_new">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Stok (new) &nbsp;</label><i>(opsional) :</i>
+                        <input type="number" class="form-control" id="stok_new" name="stok_new">
+                    </div> -->
+                  
+                    <div class="mb-3">
+                            (<span class="required">*</span>) <i>mandatory field<i>
+                        </div>
+                </div>
+                <input type="hidden" value="Add Master Barang" name="activity">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Edit Kerupuk  --}}
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Barang</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ url('/update_kerupuk') }}" id="edit-form" method="POST" enctype="multipart/form-data">
+                @csrf @method('PUT')
+                <div class="modal-body">
+                    <input type="hidden" id="edit-id" name="id">
+                    <div class="mb-3">
+                        <label class="col-form-label">Nama Barang :</label>
+                        <input type="text" class="form-control" id="edit-nama-barang" name="nama_barang"
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-form-label">Harga Beli:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                            <input type="number" class="form-control harga_beli" aria-describedby="basic-addon1"
+                                id="edit-harga-beli" name="harga_beli">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-form-label">Keuntungan</label>
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" aria-describedby="basic-addon1"
+                            id="update-keuntungan">
+                            <span class="input-group-text" id="basic-addon1">%</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-form-label">Harga Jual:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                            <input type="number" class="form-control harga_jual" aria-describedby="basic-addon1"
+                                id="edit-harga-jual" name="harga_jual" readonly>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-form-label">Stok:</label>
+                        <input type="number" class="form-control" id="edit-stok" name="stok">
+                    </div>
+
+                    <div class="mb-3" id="edit-gambar-update">
+                        <button class="btn btn-primary edit-gambar-update">Ubah Gambar</button>
+                    </div>
+
+                    <div class="mb-3" id="edit-gambar-container">
+                        <label class="col-form-label">Gambar Barang:</label>
+                        <input class="form-control" type="file" id="edit-gambar" name="gambar_barang">
+                    </div>
+
+                    <div class="mb-3" id="edit-gambar-ada">
+                        <label class="col-form-label">Gambar Barang:</label>
+                        <img id="edit-gambar-preview" width="100%">
+                    </div>
+                </div>
+                <input type="hidden" value="Update Master Barang" name="activity">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            "columns": [
+                { "searchable": false },
+                { "searchable": true },
+                { "searchable": false },
+                { "searchable": false },
+                { "searchable": false },
+                { "searchable": true },
+                { "searchable": false }
+            ]
+        });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
