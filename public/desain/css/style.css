@@ -4,6 +4,12 @@
     /*font/JosefinSans-Bold.ttf */
  }
 
+ @font-face {
+    font-family: "regJosefin"; /* Name your font family */
+    src: url("JosefinSans-Regular.ttf"); /* Locate the .ttf file within your directory*/
+    /*font/JosefinSans-Bold.ttf */
+ }
+ 
 .login-page {
     width: 360px;
     margin: auto;

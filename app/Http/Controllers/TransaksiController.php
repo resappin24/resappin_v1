@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kerupuk;
 use App\Models\Transaksi;
 use App\Models\Kategori;
+use App\Models\Repack;
 use App\Models\Activity;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -271,16 +272,30 @@ class TransaksiController extends Controller
         public function addRepack(Request $request) 
         {
             $validator = Validator::make($request->all(), [
-                'vendorID' => 'required'
+                'vendorID' => 'required',
+                'barangID' => 'required',
+                'base_nett' => 'required',
+                'repack_nett' => 'required',
+                'base_qty' => 'required',
+                'repack_qty' => 'required',
+                'base_weight' => 'required',
+                'repack_weight' => 'required',
             ], [
-                'vendorID.required' => 'Vendor tidak boleh kosong'
-                
+                'vendorID.required' => 'Vendor tidak boleh kosong',
+                'barangID.required' => 'Product tidak boleh kosong',
+                'base_nett.required' => 'Base nett tidak boleh kosong',
+                'repack_nett.required' => 'Repack Nett tidak boleh kosong',
+                'base_qty.required' => 'Base Qty tidak boleh kosong',
+                'repack_qty.required' => 'Repack Qty tidak boleh kosong',
+                'base_weight.required' => 'Base Weight tidak boleh kosong',
+                'repack_weight.required' => 'Repack Weight tidak boleh kosong',
             ]);
     
             if ($validator->fails()) {
                return back()->withErrors($validator)->withInput();
             }
     
+            //validasi - ntar lagi.
             if (Kategori::where('kategori', $request->kategori)->exists()) {
                 
                 $validator->errors()->add('kategori', 'Kategori sudah terdaftar!');
@@ -288,30 +303,37 @@ class TransaksiController extends Controller
             }
     
             // tambah validasi 'and user_id = Auth->id 
-            $validation = ['kategori'=> $request->kategori, 'created_by' => Auth::user()->id ];
-             $kategori =   Kategori::where([
-                ['kategori','=',  $request->kategori],
-                ['created_by', '=', Auth::user()->id]
-                ])->get()->first();
+            // $validation = ['kategori'=> $request->kategori, 'created_by' => Auth::user()->id ];
+            //  $kategori =   Kategori::where([
+            //     ['kategori','=',  $request->kategori],
+            //     ['created_by', '=', Auth::user()->id]
+            //     ])->get()->first();
     
-             if ($kategori !== null) {
-                // jika ada, set kategori sudah terdaftar.
-                return redirect()->back()->withErrors(['errors' => 'Kategori sudah terdaftar!']);
-             } else {
+            //  if ($kategori !== null) {
+            //     // jika ada, set kategori sudah terdaftar.
+            //     return redirect()->back()->withErrors(['errors' => 'Kategori sudah terdaftar!']);
+            //  } else {
                 // process add kategori ke db
-                 $kategori = Kategori::create([
-                'kategori' => $request->kategori,
+                 $repack = Repack::create([
+                'vendor_id' => $request->vendorID,
+                'product_id' => $request->barangID,
+                'base_weight' => $request->base_weight,
+                'base_qty' => $request->base_qty,
+                'repack_weight' => $request->repack_weight,
+                'repack_qty' => $request->repack_qty,
+                'base_nett' => $request->base_nett,
+                'repack_nett' => $request->repack_nett,
                 'created_date' => now(),
                 'created_by' => Auth::user()->id,
                 
             ]);
     
             //insert ke log activity
-            if ($kategori->wasRecentlyCreated) {
+            if ($repack->wasRecentlyCreated) {
                 Activity::create([
-                    'activity' => 'Add Kategori',
+                    'activity' => 'Add Repack Product',
                     'name_user' => Auth::user()->name,
-                    'nama_barang' => $request->kategori,
+                    'nama_barang' => $request->barangID,
                     'created_at' => date('Y-m-d H:i:s'),
                 ]);
                 return redirect()->back()->with('success', 'Add new kategori success.');
@@ -321,7 +343,7 @@ class TransaksiController extends Controller
     
             $request->session()->flash('success', 'Add New Category Item Success');
               return redirect()->back()->with('success', 'Add Category success!');
-             }
+         //    }
     
             return redirect('/kategori');
         }

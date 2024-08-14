@@ -28,7 +28,8 @@
                         <td>{{ $item->name_user }}</td>
                         <td>{{ $item->nama_barang }}</td>
                         <td>{{ $item->activity }}</td>
-                        <td>{{ DateTime::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d-m-Y H:i:s') }}</td>
+                        <!-- <td>{{ DateTime::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d-m-Y H:i:s') }}</td> -->
+                         <td>{{ $item->created_at }}</td>
                     </tr>
                     @endforeach
                 </tbody>

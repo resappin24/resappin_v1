@@ -14,6 +14,11 @@
             height: 50px;
         }
 
+    .btn-add {
+            width: 85px;
+            height: 40px;
+        }
+
 </style>
     <div class="row m-1">
         <div class="card col-md-12 mt-1">
@@ -39,8 +44,8 @@
                         <tr>
                             <th>Vendor</th>
                             <th>Nama Barang</th>
-                            <th>Berat asli</th>
-                            <th>Berat repack</th>
+                            <th>Qty asli</th>
+                            <th>Qty repack</th>
                             <th>Harga asli</th>
                             <th>Harga Repack</th>
                         </tr>
@@ -50,8 +55,8 @@
                             <tr>
                                         <td>{{ $item->nama_vendor }}</td>
                                         <td>{{ $item->nama_barang }}</td>
-                                        <td>{{ $item->base_weight }}</td>
-                                        <td>{{ $item->repack_weight }}</td>
+                                        <td>{{ $item->base_qty }}</td>
+                                        <td>{{ $item->repack_qty }}</td>
                                         <td>{{ $item->base_nett }}</td>
                                         <td>{{ $item->repack_nett }}</td>
                               
@@ -299,7 +304,7 @@
                         <label class="col-form-label">Base Nett (harga)</label>(<span class="required">*</span>) :
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
-                            <input type="number" id="base_nett" class="form-control" aria-describedby="basic-addon1" name="harga_beli"
+                            <input type="number" id="base_nett" class="form-control" aria-describedby="basic-addon1" name="base_nett"
                             >
                         </div>
                     </div>
@@ -308,7 +313,7 @@
                         <label class="col-form-label">Repack Nett</label>(<span class="required">*</span>) :
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
-                            <input type="number" id="repack_nett" class="form-control" aria-describedby="basic-addon1" name="harga_jual">
+                            <input type="number" id="repack_nett" class="form-control" aria-describedby="basic-addon1" name="repack_nett">
                         </div>
                     </div>
                     <div class="mb-3">

@@ -14,13 +14,22 @@
             height: 50px;
         }
 
+        .btn-add {
+            width: 85px;
+            height: 40px;
+        }
+
+        body {
+            font-family: 'regJosefin', sans-serif;
+        }
+
 </style>
     <div class="row m-1">
         <div class="card col-md-12 mt-1">
             <div class="card-header bg-light">
                 <div class="row">
                     <div class="col-md-6 text-start">
-                        <h3 class="label-bold">MASTER BARANG</h3>
+                        <h3 class="label-bold">MASTER PRODUCT</h3>
                     </div>
                     <div class="col-md-6 text-end">
                         <button class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#kerupukModal">
@@ -299,7 +308,7 @@
                         <label class="col-form-label">Harga Beli</label>(<span class="required">*</span>) :
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
-                            <input type="number" id="harga_beli" class="form-control" aria-describedby="basic-addon1" name="harga_beli"
+                            <input type="number" step=".01" id="harga_beli" class="form-control" aria-describedby="basic-addon1" name="harga_beli"
                             >
                         </div>
                     </div>
@@ -314,7 +323,7 @@
                         <label class="col-form-label">Harga Jual</label>(<span class="required">*</span>) :
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
-                            <input type="number" id="harga_jual" class="form-control" aria-describedby="basic-addon1" name="harga_jual">
+                            <input type="number" step=".01" id="harga_jual" class="form-control" aria-describedby="basic-addon1" name="harga_jual">
                         </div>
                     </div>
                     <div class="mb-3">
