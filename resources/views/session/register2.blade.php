@@ -175,6 +175,15 @@
             width: 240px;
         }
 
+        .failed {
+        width: 350px;
+        height: 50px;
+        padding: 1px;
+    }
+    .p-text {
+        margin-top: -10px;
+    }
+
     </style>
     <div class="texture-bg" >
     </div>
@@ -195,11 +204,11 @@
    <h2>REGISTER</h2> 
             <div class="form-login">
             <div class="form-reg">
-                <form action="/" method="post">
+                <form action="/register" method="post">
                     @if ($errors->any())
-                        <div class="alert alert-danger">
+                        <div class="alert failed alert-danger">
                             @foreach ($errors->all() as $error)
-                                <p>{{ $error }}</p>
+                                <p class="p-text">{{ $error }}</p>
                             @endforeach
                         </div>
                     @endif
