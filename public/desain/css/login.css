@@ -39,6 +39,22 @@
     background-color: rgb(247, 248, 248);
     opacity: 0.95;
 }
+
+.form-container-reg {
+    /* width: 40%;
+    height: 80%; */
+    width: 450px;
+    height: 550px;
+    display: flex;
+    max-width: calc(100% - 20px);
+    flex-direction: column;
+    padding: 45px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(247, 248, 248);
+    opacity: 0.95;
+}
+
 .login-wrapper {
     display: flex;
     width: 80%;
@@ -86,6 +102,7 @@ input[type=password] {
 .regis-text {
     font-size: 1em;
     margin-top:-5px;
+    width: 320px;
 }
 
 .regis a {
@@ -97,4 +114,26 @@ input[type=password] {
     color: red;
     font-size: 1em;
     margin-top:13px;
+}
+
+.form-reg button {
+    font-family: boldJosefin, sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #3033ea;
+    width: 120%;
+    border: 0;
+    padding: 5px;
+    color: #222121;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
+.form-reg button:hover,
+.form-reg button:active,
+.form-reg button:focus {
+    background: #7a7cf4;
+    color : #d3d3d3;
 }

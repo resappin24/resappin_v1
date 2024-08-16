@@ -159,6 +159,11 @@
         background-color: #D3D3D3;
     }
 
+    .failed {
+        width: 350px;
+        height: 50px;
+        padding: 1px;
+    }
     </style>
 
 
@@ -184,7 +189,7 @@
             <div class="form">
                 <form action="/" method="post">
                     @if ($errors->any())
-                        <div class="alert alert-danger">
+                        <div class="alert failed alert-danger">
                             @foreach ($errors->all() as $error)
                                 <p>{{ $error }}</p>
                             @endforeach

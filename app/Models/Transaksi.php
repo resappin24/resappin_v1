@@ -15,5 +15,6 @@ class Transaksi extends Model
         'qty',
         'created_at',
         'updated_at',
+        'created_by'
     ];
 }

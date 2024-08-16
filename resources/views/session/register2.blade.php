@@ -66,7 +66,7 @@
 
         .logo{
             position: fixed;
-            margin-top: -120px;
+            margin-top: -10px;
             margin-left: 60px;
             /* max-width: 220px;
             max-height: 170px; */
@@ -79,7 +79,7 @@
         }
 
         h2 {
-            margin-top: -80px;
+            margin-top: 30px;
             margin-bottom: 30px;
             margin-left:-210px;
             color : black;
@@ -98,8 +98,8 @@
         }
 
         .form-login {
-            margin-top: 30px;
-            margin-left: -100px;
+            margin-top: 50px;
+            margin-left: -150px;
             width: 200px;
             /* position: relative;
             z-index: 9999; */
@@ -111,7 +111,7 @@
             position: relative;
             z-index: 3;
             /* background: #FFFFFF; */
-            width: 360px;
+            width: 400px;
             max-height: 200px;
             /* margin: 200 auto 100px; */
             padding: 25px;
@@ -126,7 +126,7 @@
        #customBtn {
             background: transparent;
             color: #444;
-            width: 190px;
+            width: 240px;
             border-radius: 5px;
             height: 40px;
             border: thin solid #888;
@@ -145,7 +145,7 @@
         position: relative;
         outline: 0;
         border: 0;
-        width: 190px;
+        width: 240px;
         color: black;
         text-align: center;
         height: 1em;
@@ -170,6 +170,11 @@
             background-color: #fcfcfa;
         }
         }
+
+        .textfield {
+            width: 240px;
+        }
+
     </style>
     <div class="texture-bg" >
     </div>
@@ -181,7 +186,7 @@
         <h2 style="text-align: center; ">Login</h2>
     </div> -->
 <div class="container-login">
-  <div class="form-container">
+  <div class="form-container-reg">
     <div>
         <div class="logo">
              </div> 
@@ -189,7 +194,7 @@
    <!-- <h3>ADMIN DASHBOARD </h3> -->
    <h2>REGISTER</h2> 
             <div class="form-login">
-            <div class="form">
+            <div class="form-reg">
                 <form action="/" method="post">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -199,16 +204,17 @@
                         </div>
                     @endif
                     @csrf
-                    <input type="text" name="name" placeholder="Name" class="mb-2" />
-                    <input type="text" name="username" placeholder="Username" class="mb-2" />
-                    <input type="password" name="password" placeholder="Password" class="mb-2" />
-                    <input type="password" name="conf_password" placeholder="Confirm Password" class="mb-2" />
-                    <button class="mb-2">REGISTER</button>
+                    <input type="text" name="name" placeholder="Name" class="mb-2 textfield" />
+                    <input type="text" name="username" placeholder="Username" class="mb-2 textfield" />
+                    <input type="text" name="email" placeholder="Email" class="mb-2 textfield" />
+                    <input type="password" name="password" placeholder="Password" class="mb-2 textfield" />
+                    <input type="password" name="conf_password" placeholder="Confirm Password" class="mb-2 textfield" />
+                    <button class="mb-2 textfield">REGISTER</button>
                   
                 </form>
                 <div class="card-body">
                            <hr class="hr-text" data-content="OR">
-                                <button onclick="location.href = 'register/google/redirect';" id="customBtn">
+                                <button onclick="location.href = 'register/google/redirect';" id="customBtn" class="textfield">
                                 <img src="desain/logo/g-sign.png" width="20px" height="20px" />&nbsp;
                                   Register With Google
                             </button>
