@@ -124,11 +124,12 @@ class GoogleOauthController extends Controller
            // dd(Auth::user());
             error_log("auth = ". Auth::user());
             
-            $user = User::where('username', $userFromGoogle->getName())->first();
+            // ganti jadi email yg unique..
+            $user = User::where('email', $userFromGoogle->getEmail())->first();
           //  error_log("user : ", $user.toString());
           if($user){
            // cek email sukses terdaftar..  
-           $emailVerified = User::where('username', $userFromGoogle->getName())->first();
+           $emailVerified = User::where('email', $userFromGoogle->getEmail())->first();
            if ($emailVerified->email_verified_at == null) {
                $newUserId = $emailVerified->id;
                                $newUser = User::find($newUserId);

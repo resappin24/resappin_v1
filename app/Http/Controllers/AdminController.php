@@ -150,7 +150,7 @@ class AdminController extends Controller
   
           //validasi nama barang sudah ada jika user created nya sama. (sementara sambil nunggu table baru)
         $validator = Validator::make($request->all(), [
-            'nama_barang' => 'required|unique:master_barang_v1,nama_barang',
+            'nama_barang' => 'required', //|unique:master_barang_v1,nama_barang (jika mau di modified multi user)
             'harga_beli' => 'required|numeric',
                 'harga_jual' => 'required|numeric',
                 'stok' => 'required|integer',
