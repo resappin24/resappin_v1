@@ -8,7 +8,7 @@
     <title>Email Verification</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{{ asset('desain') }}/css/style.css">
+    <link rel="stylesheet" href="{{ asset('desain') }}/css/login.css">
 </head>
 
 <body>
@@ -50,7 +50,7 @@
     @endif
 
     <style>
-        .texture-bg {
+        .texture-bg-v2 {
             position: fixed;
             top: 0;
             left: 0;
@@ -62,6 +62,21 @@
             z-index: -2;
             /* filter: blur(3px); */
             opacity: 0.8;
+          
+        }
+
+        .texture-bg-v1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{{ asset('desain/img/bg-v1.png') }}');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            /* filter: blur(3px); */
+            opacity: 0.99;
           
         }
 
@@ -78,24 +93,26 @@
         }
 
         .title2 {
-            margin-top: 100px;
+            margin-top: -30px;
             margin bottom : 50px;
+            font-size: 15px;
+            font-family: 'boldJosefin', sans-serif;
         }
 
         .img-url {
-            content:url('{{ asset('desain/img/resappin-logo-trans.png') }}');
-            
-            height: 200px;
-            margin-top: 10px;
+            /* content:url('{{ asset('desain/img/resappin-logo-trans.png') }}'); */
+            content : url('{{ asset('desain/img/logo-v1.png') }}');
+            height: 130px;
+            margin-top: 30px;
             margin-left: auto;
             margin-right: auto;
-            width: 280px;
+            width: 180px;
             margin-bottom: 30px;
             display: block;
-            
         }
         .center {
             text-align: center;
+            font-family: 'boldJosefin', sans-serif;
         }
 
         a {
@@ -103,8 +120,16 @@
         }
 
     </style>
-    <div class="texture-bg">
+    <div class="texture-bg-v1">
     </div>
+
+    <div class="container-verify">
+  <div class="form-container-verify">
+    <div>
+        <div class="logo">
+             </div> 
+    </div>
+    
     <div class="login-page">
             @if(session('failed'))
              <div>
