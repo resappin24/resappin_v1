@@ -157,7 +157,7 @@ class GoogleOauthController extends Controller
 
         }
 
-        
+
     }
 
     public function logout(Request $request)

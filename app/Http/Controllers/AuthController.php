@@ -217,7 +217,8 @@ class AuthController extends Controller
             'name' => 'required',
             'username' => 'required|min:3|max:255',
             'email' => 'required|unique:users|email',
-            'password' => 'required|max:255',
+            'password' => 'required|min:5|max:255|confirmed',
+            'password_confirmation' => 'min:5'
         ], [
             'name.required' => 'Name tidak boleh kosong',
             'username.required' => 'Username tidak boleh kosong',

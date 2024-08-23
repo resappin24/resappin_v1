@@ -217,7 +217,7 @@
                     <input type="text" name="username" placeholder="Username" class="mb-2 textfield" />
                     <input type="text" name="email" placeholder="Email" class="mb-2 textfield" />
                     <input type="password" name="password" placeholder="Password" class="mb-2 textfield" />
-                    <input type="password" name="conf_password" placeholder="Confirm Password" class="mb-2 textfield" />
+                    <input type="password" name="password_confirmation" placeholder="Confirm Password" class="mb-2 textfield" />
                     <button class="mb-2 textfield">REGISTER</button>
                   
                 </form>
