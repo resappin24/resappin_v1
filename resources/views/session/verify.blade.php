@@ -50,7 +50,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('{{ asset('desain/img/bg-v2.png') }}');
+            background-image: url('{{ asset('desain/img/bg-v1.png') }}');
             background-size: cover;
             background-position: center;
             z-index: -2;
@@ -72,18 +72,21 @@
         }
 
         .title2 {
-            margin-top: 100px;
-            margin bottom : 50px;
+            margin-top: 0px;
+            margin-bottom: 20px;
+            width: 500px;
+            font-family: 'boldJosefin', sans-serif;
+            margin-left: 150px;
         }
 
         .img-url {
-            content:url('{{ asset('desain/img/resappin-logo-trans.png') }}');
-            
-            height: 200px;
-            margin-top: 10px;
+            /* content:url('{{ asset('desain/img/resappin-logo-trans.png') }}'); */
+            content : url('{{ asset('desain/img/logo-v1.png') }}');
+            height: 130px;
+            margin-top: 0px;
             margin-left: auto;
             margin-right: auto;
-            width: 280px;
+            width: 180px;
             margin-bottom: 30px;
             display: block;
             
@@ -99,13 +102,17 @@
     </style>
     <div class="texture-bg">
     </div>
-    <div class="login-page">
+    <div class="container-verify">
+    <div class="form-container-verify">
+      <div>
         <h3 class="title2">Email Verification Success ! </h3>
+      
     </div>
     <div><img class ="img-url"></div>
     <div class="center">Directing you to Dashboard in 5 4 3 2 1...</div>
     <!-- <div class="center"><a href="{{ url('/dashboard') }}">>> Go to Dashboard</a></div> -->
-
+    </div>
+    </div>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

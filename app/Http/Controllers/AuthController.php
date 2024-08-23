@@ -57,7 +57,7 @@ class AuthController extends Controller
 
         //error_log("checkUser : ". $checkUser.toString());
     
-        header("Refresh:5; url=http://127.0.0.1:8000/dashboard");
+     //   header("Refresh:5; url=http://127.0.0.1:8000/dashboard");
           return view ('session.verify');
          
        
