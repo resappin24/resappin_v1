@@ -68,16 +68,22 @@ class GoogleOauthController extends Controller
         }  else {
           // sudah terdaftar id googlenya, langsung direct ke dashboard,
 
-            $user = User::where('username', $userFromGoogle->getName())->first();
+            $user = User::where('email', $userFromGoogle->getEmail())->first();
 
-          //  Auth::user($newUser);
-            Auth::loginUsingId($user->id);
-            $data = Transaksi::get();
-
-            // update last_login.
-
-             return redirect('/dashboard');
-
+            // cek email verified at udah belom, klo belom msuk ke page verify email.
+            
+            if ($user->email_verified_at == null) {
+              return redirect('pending-verification');
+            } else {
+              Auth::loginUsingId($user->id);
+              $data = Transaksi::get();
+  
+              // update last_login.
+  
+               return redirect('/dashboard');
+  
+            }
+          
         }
         
     }

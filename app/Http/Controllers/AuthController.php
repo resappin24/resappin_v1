@@ -57,7 +57,7 @@ class AuthController extends Controller
 
         //error_log("checkUser : ". $checkUser.toString());
     
-     //   header("Refresh:5; url=http://127.0.0.1:8000/dashboard");
+        header("Refresh:5; url=http://127.0.0.1:8000/dashboard");
           return view ('session.verify');
          
        
@@ -134,6 +134,7 @@ class AuthController extends Controller
             if (Auth::user()) {
                 // cek email verified at..
                 $emailVerified = User::where('username', $request->username)->first();
+                $cekEmailRegistered = DB::table('users')->where('username',$request->username)->limit(1);
 
                 if ($emailVerified->email_verified_at == null) {
                     //jika masih null, arahkan ke page pendingverified, dan kirim email link verifikasi langsung.
@@ -147,6 +148,9 @@ class AuthController extends Controller
 
                 } else {
                     //jika sudah verified tidak null, mka direct ke dashboard.
+                    //update last_login
+                    $cekEmailRegistered->update(['last_login' => now()]);
+
                     return redirect('/dashboard');
                 }
               
