@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kerupuk;
 use App\Models\Transaksi;
 use App\Models\Kategori;
+use App\Models\BarangV1;
 use App\Models\Repack;
 use App\Models\Activity;
 use Carbon\Carbon;
@@ -28,7 +29,9 @@ class TransaksiController extends Controller
             'end_date.nullable' => 'Tentukan tanggal terlebih dahulu',
         ]);
         
-        $kerupuk = Kerupuk::get();
+       // $kerupuk = Kerupuk::get();
+
+        $kerupuk = BarangV1::get();
 
         $selectedDate = $request->input('date') ? Carbon::parse($request->input('date')) : null;
         $start = $request->input('start_date') ? Carbon::parse($request->input('start_date')) : null;
