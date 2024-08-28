@@ -105,9 +105,9 @@
                             <select name="kerupukID" id="kerupukSelect" class="form-control">
                                 <option>Pilih Barang</option>
                                 @foreach ($kerupuk as $item)
-                                    @if ($item->stok > 0)
-                                        <option value="{{ $item->kerupukID }}" data-harga="{{ $item->harga_jual }}" data-beli="{{ $item->harga_beli }}" data-stok="{{ $item->stok }}" data-barang="{{ $item->nama_barang }}">
-                                            {{ $item->nama_barang }} - {{ $item->stok }}
+                                    @if ($item->main_stok > 0)
+                                        <option value="{{ $item->kerupukID }}" data-harga="{{ $item->main_harga_jual }}" data-beli="{{ $item->harga_beli }}" data-stok="{{ $item->stok }}" data-barang="{{ $item->nama_barang }}">
+                                            {{ $item->nama_barang }} - {{ $item->main_stok }}
                                         </option>
                                     @elseif($item->stok == 0)
                                         <option value="{{ $item->nama_barang }}" data-harga="{{ $item->harga_jual }}" data-stok="{{ $item->stok }}" class="text-danger" disabled>

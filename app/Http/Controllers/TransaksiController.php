@@ -64,7 +64,7 @@ class TransaksiController extends Controller
     {
         $currentDate = Carbon::now()->toDateString();
 
-        $kerupuk = Kerupuk::get();
+        $kerupuk = BarangV1::get();
 
         $selectedDate = $request->input('date');
         $start = $request->input('start_date');
