@@ -96,7 +96,7 @@ class TransaksiController extends Controller
             'qty.gt' => 'Qty tidak boleh 0',
         ]);
 
-        $kerupuk = Kerupuk::find($request->kerupukID);
+        $kerupuk = BarangV1::find($request->kerupukID);
 
         if ($kerupuk && $kerupuk->stok >= $request->qty) {
             Transaksi::insert([

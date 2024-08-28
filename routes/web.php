@@ -26,6 +26,9 @@ Route::post('/', [AuthController::class, 'login']);
 // Route::post('/login', [AuthController::class, 'loginJson']);
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'storeRegister']);
+Route::get('/forgot-password', [AuthController::class, 'forget']);
+Route::post('/forgot-verify', [AuthController::class, 'forgetVerify']);
+
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/verify-email/{email}', [AuthController::class, 'verifyEmail']);
 Route::get('/failed-verification', [AuthController::class, 'failedVerification']);

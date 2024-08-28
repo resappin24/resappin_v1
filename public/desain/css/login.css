@@ -79,6 +79,21 @@
     opacity: 0.95;
 }
 
+.form-container-forgot {
+    /* width: 40%;
+    height: 80%; */
+    width: 450px;
+    height: 200px;
+    display: flex;
+    max-width: calc(100% - 20px);
+    flex-direction: column;
+    padding: 45px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(247, 248, 248);
+    opacity: 0.95;
+}
+
 .login-wrapper {
     display: flex;
     width: 80%;
@@ -116,9 +131,31 @@ input[type=password] {
     cursor: pointer;
 }
 
+.form-forgot button {
+    font-family: boldJosefin, sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #484bf5;
+    width: 60%;
+    border: 0;
+    padding: 5px;
+    color: #222121;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
 .form button:hover,
 .form button:active,
 .form button:focus {
+    background: #7a7cf4;
+    color : #d3d3d3;
+}
+
+.form-forgot button:hover,
+.form-forgot button:active,
+.form-forgot button:focus {
     background: #7a7cf4;
     color : #d3d3d3;
 }

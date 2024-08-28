@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\EmailVerification;
+use App\Mail\EmailResetPassword;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\DB;
@@ -87,6 +88,11 @@ class AuthController extends Controller
 
     }
 
+    public function forget(){
+
+        return view('session.forgot-password');
+    }
+
     public function failedVerification() {
 
         session()->put('failed', 'failed');
@@ -113,6 +119,38 @@ class AuthController extends Controller
     public function register()
     {
         return view('session.register2');
+    }
+
+    public function forgetVerify(Request $request)
+    {
+        //check email, jika sudah terdaftar, kirim email link ke reset password.
+        // kalo belom, notif 'Maaf, email belum terdaftar. silahkan lakukan register / signup.
+        $request->validate([
+            'email' => 'required|min:5|max:200',
+        ], [
+            'email.required' => 'Email tidak boleh kosong',
+        ]);
+
+        
+        $cekEmailRegistered = User::where('email', $request->email)->first();
+
+        if($cekEmailRegistered == null){
+            session()->put('failed', 'failed');
+
+            return view('session.forgot-verify');
+        } else {
+
+            session()->forget('failed');
+            session()->flush();
+          //  session()->put('pending', 'pending.');
+
+          Mail::to($request->email)
+          ->send(new EmailResetPassword($cekEmailRegistered));
+
+          return view('session.forgot-verify');
+        }
+      
+
     }
 
     public function login(Request $request)
