@@ -119,7 +119,7 @@
 
                 $(this).val(persen);
                 console.log(persen)
-                jual()
+              //  jual()
             })
 
             function jual() {
@@ -130,7 +130,7 @@
 
                 var jual = beli * persen / 100 + beli
                 $(this).val(jual);
-                $('#edit-harga-jual').val(jual);
+             //   $('#edit-harga-jual').val(jual);
             }
 
             $('#edit-stok').on('input', function() {

@@ -191,46 +191,61 @@ class AdminController extends Controller
     
     error_log('count item : '.$jmlItem);
     // validasi jika barang item per user sudah mencapai 10, tidak bisa lagi tambah.
-    if($jmlItem == 10) {
+    if($jmlItem >= 10) {
 
         return redirect()->back()->withErrors(['errors' => 'Sorry, you have reach the maximum number of adding master data.'])->withInput();
 
     } else {
-        if ($request->vendorID == 'Pilih Vendor') {
-            $IDvendor = null;
-        }else {
-            $IDvendor = $request->vendorID;
-        }
-    
-        $barang = BarangV1::create([
-            'vendor_id' => $IDvendor,
-            'nama_barang' => $request->nama_barang,
-            'main_harga_beli' => $request->harga_beli,
-            'main_harga_jual' => $request->harga_jual,
-            'main_stok' => $request->stok,
-            'new_harga_beli' => $request->harga_beli_new,
-            'gambar_barang' => $imgName,
-            'tanggal_beli' => $request->tgl_beli,
-            'created_date' => date('Y-m-d H:i:s'),
-            'created_user_id' => Auth::user()->id,
+        //if barang sudah ada per user created, error juga.
+
+        $itemExists =  DB::table('master_barang_v1')
+                    ->select('master_barang_v1.nama_barang')
+                    ->where('nama_barang', $request->nama_barang)
+                    ->where('created_user_id',Auth::user()->id)->count();
             
-        ]);
-    
-        $vendorId = $request->vendorID;
-        error_log('vendor id : '.$vendorId );
-    
-        if ($barang->wasRecentlyCreated) {
-            Activity::create([
-                'activity' => $request->activity,
-                'name_user' => Auth::user()->name,
-                'nama_barang' => $request->nama_barang,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
-           return redirect()->back()->with('success', 'Add new item success.');
-           
+            if($itemExists > 0) {
+
+                return redirect()->back()->withErrors(['errors' => 'Sorry, you cannot add duplicate items. '])->withInput();
+
             } else {
-                return redirect()->back()->withErrors(['errors' => 'Failed adding data.'])->withInput();
-            }
+
+
+                    if ($request->vendorID == 'Pilih Vendor') {
+                        $IDvendor = null;
+                    }else {
+                        $IDvendor = $request->vendorID;
+                    }
+                
+                    $barang = BarangV1::create([
+                        'vendor_id' => $IDvendor,
+                        'nama_barang' => $request->nama_barang,
+                        'main_harga_beli' => $request->harga_beli,
+                        'main_harga_jual' => $request->harga_jual,
+                        'main_stok' => $request->stok,
+                        'new_harga_beli' => $request->harga_beli_new,
+                        'gambar_barang' => $imgName,
+                        'tanggal_beli' => $request->tgl_beli,
+                        'created_date' => date('Y-m-d H:i:s'),
+                        'created_user_id' => Auth::user()->id,
+                        
+                    ]);
+                
+                    $vendorId = $request->vendorID;
+                    error_log('vendor id : '.$vendorId );
+                
+                    if ($barang->wasRecentlyCreated) {
+                        Activity::create([
+                            'activity' => $request->activity,
+                            'name_user' => Auth::user()->name,
+                            'nama_barang' => $request->nama_barang,
+                            'created_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    return redirect()->back()->with('success', 'Add new item success.');
+                    
+                        } else {
+                            return redirect()->back()->withErrors(['errors' => 'Failed adding data.'])->withInput();
+                        }
+                    }
 
     }
 
@@ -322,7 +337,8 @@ class AdminController extends Controller
             'gambar_barang.max' => 'Gambar_barang tidak boleh lebih besar dari 2048 kb.',
         ]);
 
-        $kerupuk = Kerupuk::find($request->id);
+       // $kerupuk = Kerupuk::find($request->id);
+       $kerupuk = BarangV1::find($request->id);
 
         if ($request->hasFile('gambar_barang')) {
             if ($request->hasFile('gambar_barang')) {
@@ -360,9 +376,9 @@ class AdminController extends Controller
         } else {
             $kerupuk->update([
                 'nama_barang' => $request->nama_barang,
-                'harga_beli' => $request->harga_beli,
+                'main_harga_beli' => $request->harga_beli,
                 'harga_jual' => $request->harga_jual,
-                'stok' => $request->stok,
+                'main_stok' => $request->stok,
                 'activity' => $request->activity,
                 'updated_at' => date('Y-m-d H:i:s')
             ]);

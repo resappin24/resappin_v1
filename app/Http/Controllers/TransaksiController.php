@@ -98,9 +98,13 @@ class TransaksiController extends Controller
 
         $kerupuk = BarangV1::find($request->kerupukID);
 
-        if ($kerupuk && $kerupuk->stok >= $request->qty) {
+        error_log("kerupuk : ". $kerupuk);
+        error_log("kerupukID : ". $request->id_barang);
+        
+
+        if ($kerupuk && $kerupuk->main_stok >= $request->qty) {
             Transaksi::insert([
-                'kerupukID' => $request->kerupukID,
+                'id_barang' => $request->kerupukID,
                 'nama_barang' => $request->nama_barang,
                 'qty' => $request->qty,
                 'modal' => $request->modal,
@@ -110,10 +114,21 @@ class TransaksiController extends Controller
                 'created_by' => Auth::user()->id,
             ]);
 
-            $kerupuk->stok -= $request->qty;
+            $kerupuk->main_stok -= $request->qty;
             $kerupuk->save();
 
+            //blom tambah ke activity
+             //insert ke log activity
+       
+            Activity::create([
+                'activity' => 'Add New Transaction',
+                'name_user' => Auth::user()->name,
+                'nama_barang' => $request->nama_barang,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
             return redirect()->back()->with('success', 'Data transaksi berhasil ditambahkan.');
+
         } else {
             return redirect()->back()->withErrors(['errors' => 'Data belum lengkap.'])->withInput();
         }
@@ -159,7 +174,13 @@ class TransaksiController extends Controller
     public function get_transaksi()
     {
         $data = Transaksi::get();
-        return response()->json($data);
+
+        $transaksi = DB::table('transaksi')
+        ->select('transaksi.*')
+        ->where('created_by',Auth::user()->id)
+        ->get();
+
+        return response()->json($transaksi);
     }
 
     public function get_kategori() {

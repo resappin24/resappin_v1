@@ -106,11 +106,11 @@
                                 <option>Pilih Barang</option>
                                 @foreach ($kerupuk as $item)
                                     @if ($item->main_stok > 0)
-                                        <option value="{{ $item->kerupukID }}" data-harga="{{ $item->main_harga_jual }}" data-beli="{{ $item->harga_beli }}" data-stok="{{ $item->stok }}" data-barang="{{ $item->nama_barang }}">
+                                        <option value="{{ $item->id_barang }}" data-harga="{{ $item->main_harga_jual }}" data-beli="{{ $item->main_harga_beli }}" data-stok="{{ $item->main_stok }}" data-barang="{{ $item->nama_barang }}">
                                             {{ $item->nama_barang }} - {{ $item->main_stok }}
                                         </option>
                                     @elseif($item->stok == 0)
-                                        <option value="{{ $item->nama_barang }}" data-harga="{{ $item->harga_jual }}" data-stok="{{ $item->stok }}" class="text-danger" disabled>
+                                        <option value="{{ $item->nama_barang }}" data-harga="{{ $item->main_harga_jual }}" data-stok="{{ $item->main_stok }}" class="text-danger" disabled>
                                             {{ $item->nama_barang }} - Habis
                                         </option>
                                     @endif
