@@ -15,6 +15,6 @@ class Activity extends Model
         'activity',
         'name_user',
         'nama_barang',
-        'tanggal',
+        'created_at',
     ];
 }

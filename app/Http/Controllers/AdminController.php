@@ -43,7 +43,14 @@ class AdminController extends Controller
 
     public function history($order = 'desc')
     {
-        $activity = Activity::orderBy('created_at', $order)->get();
+     //   $activity = Activity::orderBy('created_at', $order)->get();
+        
+        $activity = DB::table('activity')
+         ->select('activity.*')
+        ->where('name_user',Auth::user()->name)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
         return view('admin.activity', compact('activity'));
     }
 

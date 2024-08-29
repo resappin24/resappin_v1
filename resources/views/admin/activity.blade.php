@@ -10,7 +10,7 @@
 <div class="row m-1">
     <div class="card col-md-12 mt-1">
         <div class="card-header bg-light">
-            <h4>Log Activity</h4>
+            <h3>Activity Logs</h3>
         </div>
         <div class="card-body">
             <table id="example" class="table table-bordered table-striped text-center">

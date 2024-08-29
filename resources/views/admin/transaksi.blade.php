@@ -4,17 +4,25 @@
 
 @extends('layout.master')
 @section('konten')
+
+<style>
+
+.title-menu {
+            color:  #778899;
+        }
+
+</style>
     <div class="row m-1">
         <div class="card col-md-12 mt-1">
             <div class="card-header bg-light">
                 <div class="row">
                     <div class="col-md-6 text-start">
                         @if (!empty($selectedDate))
-                            <h4>Data Transaksi - {{ \Carbon\Carbon::parse($selectedDate)->format('d F Y') }}</h4>
+                            <h3 class="title-menu">Transaction Data - {{ \Carbon\Carbon::parse($selectedDate)->format('d F Y') }}</h3>
                         @elseif (!empty($start) && !empty($end))
-                            <h4>Data Transaksi ({{ \Carbon\Carbon::parse($start)->format('d F Y') }} - {{ \Carbon\Carbon::parse($end)->format('d F Y') }})</h4>
+                            <h3 class="title-menu">Transaction Data ({{ \Carbon\Carbon::parse($start)->format('d F Y') }} - {{ \Carbon\Carbon::parse($end)->format('d F Y') }})</h3>
                         @else
-                            <h4>Data Transaksi - Hari ini</h4>
+                             <h3 class="title-menu"><b>Todays Transaction</b></h3>
                         @endif
 
                     </div>

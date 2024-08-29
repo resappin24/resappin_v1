@@ -8,17 +8,16 @@
         .bg-header {
             width: 100%;
             height: 100%;
-            background-color: #FF6600;
+            background-color: #FFFFFF;
         }
         .bg-content {
             width: 100%;
             height: auto;
-            background-color: #ffac8e ;
+            background-color: white ;
         }
         .bg-table {
             width: 100%;
             height: 100%;
-            background-color: white;
         }
         .my-footer {
             text-align: center;
@@ -29,7 +28,7 @@
         }
 
         .title-menu {
-            color:  #FFD700;
+            color:  #008B8B;
         }
 
         .btn-close2{
@@ -69,9 +68,9 @@
 
 </style>
     <div class="row m-1">
-        <div class="card col-md-12 mt-1 bg-content">
-            <div class="card-header bg-content">
-                <div class="row  bg-header">
+        <div class="card col-md-12 mt-1">
+            <div class="card-header">
+                <div class="row">
                     <div class="col-md-6 text-start mt-4 mb-3">
                         <h3 class="title-menu"><b>PRODUCT CATEGORY</b></h3>
                     </div>
@@ -82,13 +81,14 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-content">
+            <div class="">
             <div class="card-body">
-                <table id="example" class="table table-bordered table-striped text-center bg-table">
+                <table id="example" class="table table-bordered table-striped text-center">
                     <thead>
                         <tr>
                             <th>Nama Barang</th>
                             <th>Kategori</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
