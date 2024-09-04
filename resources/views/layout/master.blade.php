@@ -32,6 +32,11 @@
             opacity: 0.99;
         }
 
+        .bg-demo{
+            background-image: url('{{ asset('desain/img/demo_opa.png') }}');
+            background-position: center;
+        }
+
         .nav-top {
             height: 50px;
             position: relative;
@@ -68,7 +73,7 @@
 
 </style>
 
-    <div class="side-navbar d-flex justify-content-between flex-wrap flex-column" style="z-index: 2" id="sidebar">
+    <div class="side-navbar d-flex justify-content-between flex-wrap flex-column bg-demo" style="z-index: 2" id="sidebar">
         <ul class="nav flex-column text-white w-100">
             <center>
                 <img src="{{ asset('desain/img/logo-v1-horizontal.png') }}" alt="logo" width="200px" height="80px" style="margin-top:20px; margin-bottom:20px; " >
@@ -91,7 +96,7 @@
                 class="nav-link text-white {{ request()->routeIs('/dashboard') ? 'active' : '' }}">
                 <li>
                     <iconify-icon icon="ion:home"></iconify-icon>
-                    <span class="mx-2">Home</span>
+                   <span class="mx-2">Home</span>
                 </li>
             </a>
             <li class="dropdown-submenu">

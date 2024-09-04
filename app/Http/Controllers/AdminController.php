@@ -186,7 +186,9 @@ class AdminController extends Controller
         : 'gambar-default.png';
 
     if ($request->hasFile('gambar_barang')) {
-        $request->gambar_barang->move(public_path('gambar_barang'), $imgName);
+        $path = public_path(). '/v1/gambar_barang/';
+        $request->gambar_barang->move( $path , $imgName);
+      //  $request->gambar_barang->move(public_path('gambar_barang'), $imgName);
     }
 
   //  error_log($request->vendorID);
