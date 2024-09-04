@@ -31,7 +31,9 @@ class TransaksiController extends Controller
         
        // $kerupuk = Kerupuk::get();
 
-        $kerupuk = BarangV1::get();
+       // $kerupuk = BarangV1::get();
+
+        $kerupuk = DB::table('master_barang_v1')->where('created_user_id',Auth::user()->id)->get();
 
         $selectedDate = $request->input('date') ? Carbon::parse($request->input('date')) : null;
         $start = $request->input('start_date') ? Carbon::parse($request->input('start_date')) : null;
@@ -104,7 +106,7 @@ class TransaksiController extends Controller
 
         if ($kerupuk && $kerupuk->main_stok >= $request->qty) {
             Transaksi::insert([
-                'id_barang' => $request->kerupukID,
+                'kerupukID' => $request->kerupukID,
                 'nama_barang' => $request->nama_barang,
                 'qty' => $request->qty,
                 'modal' => $request->modal,

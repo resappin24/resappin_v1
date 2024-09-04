@@ -186,9 +186,9 @@ class AdminController extends Controller
         : 'gambar-default.png';
 
     if ($request->hasFile('gambar_barang')) {
-        $path = public_path(). '/v1/gambar_barang/';
-        $request->gambar_barang->move( $path , $imgName);
-      //  $request->gambar_barang->move(public_path('gambar_barang'), $imgName);
+        // $path = public_path(). '/gambar_barang/';
+        // $request->gambar_barang->move( $path , $imgName);
+       $request->gambar_barang->move(public_path('gambar_barang'), $imgName);
     }
 
   //  error_log($request->vendorID);
@@ -202,7 +202,7 @@ class AdminController extends Controller
     // validasi jika barang item per user sudah mencapai 10, tidak bisa lagi tambah.
     if($jmlItem >= 10) {
 
-        return redirect()->back()->withErrors(['errors' => 'Sorry, you have reach the maximum number of adding master data.'])->withInput();
+        return redirect()->back()->withErrors(['errors' => 'Sorry, you have reach the maximum number of adding master product.'])->withInput();
 
     } else {
         //if barang sudah ada per user created, error juga.
