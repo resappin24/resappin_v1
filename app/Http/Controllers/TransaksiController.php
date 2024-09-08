@@ -39,7 +39,26 @@ class TransaksiController extends Controller
         $start = $request->input('start_date') ? Carbon::parse($request->input('start_date')) : null;
         $end = $request->input('end_date') ? Carbon::parse($request->input('end_date')) : null;
 
-        $transaksi = Transaksi::select('*')
+        error_log('end date'. $end);
+        // $transaksi = Transaksi::select('*')
+        // ->when($selectedDate, function ($query) use ($selectedDate) {
+        //     $query->whereDate('created_at', $selectedDate)
+        //     ->where('created_by',Auth::user()->id);
+        // })
+        // ->when($start && $end, function ($query) use ($start, $end) {
+        //     $query->where('created_at', '>=', $start)
+        //         ->where('created_at', '<', Carbon::parse($end)->addDay())
+        //         ->where('created_by',Auth::user()->id)
+        //         ->orderBy('created_at', 'asc');
+        // })
+        // ->when(!$selectedDate && !$start && !$end, function ($query) {
+        //     $query->whereDate('created_at', Carbon::now()->toDateString())
+        //             ->where('created_by',Auth::user()->id);
+        // })
+        // ->get();
+
+        $transaksi = DB::table('transaksi')
+        ->select('transaksi.nama_barang', 'transaksi.qty', 'transaksi.modal', 'transaksi.satuan','transaksi.subtotal','DATE(transaksi.created_at) as created_at', 'transaksi.updated_at', 'transaksi.transaksiID','transaksi.kerupukID')
         ->when($selectedDate, function ($query) use ($selectedDate) {
             $query->whereDate('created_at', $selectedDate)
             ->where('created_by',Auth::user()->id);
@@ -47,14 +66,14 @@ class TransaksiController extends Controller
         ->when($start && $end, function ($query) use ($start, $end) {
             $query->where('created_at', '>=', $start)
                 ->where('created_at', '<', Carbon::parse($end)->addDay())
-                ->where('created_by',Auth::user()->id);
+                ->where('created_by',Auth::user()->id)
+                ->orderBy('created_at', 'ASC');
         })
         ->when(!$selectedDate && !$start && !$end, function ($query) {
             $query->whereDate('created_at', Carbon::now()->toDateString())
                     ->where('created_by',Auth::user()->id);
         })
         ->get();
-
             
         // if (!$request->has('date') && (!$request->has('start_date') || !$request->has('end_date'))) {
         //     return redirect()->back()->withErrors(['errors' => 'Tanggal belum ditentukan.'])->withInput();

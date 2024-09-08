@@ -65,7 +65,8 @@
                             <th>Nama Barang</th>
                             <th>QTY</th>
                             <th>Subtotal</th>
-                            <th>Tanggal Transaksi</th>
+                            <th>Transaction Date</th>
+                            <th>Updated Transaction</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -75,8 +76,9 @@
                                 <td>{{ $item->nama_barang }}</td>
                                 <td>{{ $item->qty }}</td>
                                 <td>Rp. @currency($item->subtotal)</td>
+                                <td>{{ DateTime::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d F Y') }}</td>
                                 @if($item->updated_at == '')
-                                    <td>{{ DateTime::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d F Y') }}</td>
+                                    <td>-</td>
                                 @else
                                     <td>{{ DateTime::createFromFormat('Y-m-d H:i:s', $item->updated_at)->format('d F Y') }}</td>
                                 @endif
@@ -84,7 +86,7 @@
                                     <button class="btn btn-warning btn-edit" data-bs-toggle="modal"
                                         data-bs-target="#TransaksiEditModal" data-id="{{ $item->transaksiID }}" data-kerupuk="{{ $item->kerupukID }}"
                                         data-qty="{{ $item->qty }}" data-barang="{{ $item->nama_barang }}" 
-                                        data-satuan="{{ $item->satuan }}" data-stok="{{ $item->stok }}" data-modal="{{ $item->modal }}">
+                                        data-satuan="{{ $item->satuan }}" data-modal="{{ $item->modal }}">
                                         <iconify-icon icon="mingcute:edit-4-line"></iconify-icon>
                                     </button>
                                 </td>
@@ -331,7 +333,7 @@ $(document).ready(function() {
                 var day = ("0" + currentDate.getDate()).slice(-2);
                 var month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
                 var year = currentDate.getFullYear();
-                return 'PenjualanKerupuk_' + year + month + day;
+                return 'Data_Sales_' + year + month + day;
             },
             customizeData: function (excelData) {
                 for (var i = 0; i < excelData.body.length; i++) {
@@ -352,7 +354,7 @@ $(document).ready(function() {
                 var day = ("0" + currentDate.getDate()).slice(-2);
                 var month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
                 var year = currentDate.getFullYear();
-                return 'PenjualanKerupuk_' + year + month + day;
+                return 'Data_Sales_' + year + month + day;
             }
         },
             'colvis'
@@ -361,6 +363,7 @@ $(document).ready(function() {
             { "searchable": true },
             { "searchable": false },
             { "searchable": false },
+            { "searchable": true },
             { "searchable": false },
             { "searchable": false }
         ]
