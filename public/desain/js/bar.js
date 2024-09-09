@@ -29,7 +29,7 @@
                     });
 
                     const totalQty = matchingData.reduce((acc, entry) => acc + entry.qty, 0);
-
+                    console.log('total' + totalQty);
                     return totalQty;
                 });
 
