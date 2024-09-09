@@ -58,7 +58,7 @@ class TransaksiController extends Controller
         // ->get();
 
         $transaksi = DB::table('transaksi')
-        ->select('transaksi.nama_barang', 'transaksi.qty', 'transaksi.modal', 'transaksi.satuan','transaksi.subtotal','DATE(transaksi.created_at) as created_at', 'transaksi.updated_at', 'transaksi.transaksiID','transaksi.kerupukID')
+        ->select('transaksi.kerupukID','transaksi.nama_barang', 'transaksi.qty', 'transaksi.modal', 'transaksi.satuan','transaksi.subtotal','transaksi.created_at as created_at', 'transaksi.updated_at', 'transaksi.transaksiID','transaksi.kerupukID')
         ->when($selectedDate, function ($query) use ($selectedDate) {
             $query->whereDate('created_at', $selectedDate)
             ->where('created_by',Auth::user()->id);
@@ -199,6 +199,7 @@ class TransaksiController extends Controller
         $transaksi = DB::table('transaksi')
         ->select('transaksi.*')
         ->where('created_by',Auth::user()->id)
+        ->where('created_at','>=', now()->addDays(-6)->toDateTimeString())
         ->get();
 
         return response()->json($transaksi);
