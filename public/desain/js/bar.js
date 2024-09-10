@@ -39,7 +39,7 @@
                     new Chart(ctx, {
                         type: 'bar',
                         data: {
-                            labels: ['Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday'],
+                            labels: ['Wednesday','Thursday','Friday','Sunday','Saturday','Monday', 'Tuesday'],
                             datasets: [{
                                 label: 'Last 7 Days Sales',
                                 data: dataValues,

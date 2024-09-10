@@ -26,6 +26,21 @@
             </div>
         </div>
     </div>
+
+    <div class="row m-1">
+        <div class="card col-md-4 m-1" style="height: 70%">
+            <div class="card-header text-center bg-light">
+                <h3>Sales per Week</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="myLineChart"></canvas>
+             
+       
+            </div>
+            
+        </div>
+</div>
+</div>
 @endsection
 
 <!-- Modal Detail-->
@@ -47,3 +62,4 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ asset('desain') }}/js/bar.js"></script>
 <script src="{{ asset('desain') }}/js/pie.js"></script>
+<script src="{{ asset('desain') }}/js/line.js"></script>

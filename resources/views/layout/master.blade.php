@@ -22,10 +22,10 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: auto;
             background-image: url('{{ asset('desain/img/bg-v1.png') }}');
             background-size: cover;
-            background-position: center;
+            /* background-position: center; */
             /* z-index: 0; */
             /* background-color:blue; */
             /* filter: blur(3px); */

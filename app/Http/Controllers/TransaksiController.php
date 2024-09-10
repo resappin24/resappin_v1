@@ -199,7 +199,7 @@ class TransaksiController extends Controller
         $transaksi = DB::table('transaksi')
         ->select('transaksi.*')
         ->where('created_by',Auth::user()->id)
-        ->where('created_at','>=', now()->addDays(-6)->toDateTimeString())
+        ->where('created_at','>=', now()->addDays(-7)->toDateTimeString())
         ->get();
 
         return response()->json($transaksi);
