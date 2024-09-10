@@ -147,7 +147,7 @@ class AdminController extends Controller
                 'nama_barang' => $request->nama_barang,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-            return redirect()->back()->with('success', 'Add kerupuk success.');
+            return redirect()->back()->with('success', 'Add New item success.');
         } else {
             return redirect()->back()->withErrors(['errors' => 'Gagal menambahkan data.'])->withInput();
         }
@@ -381,7 +381,7 @@ class AdminController extends Controller
                 'created_at' => date('Y-m-d H:i:s')
             ]);
 
-            return redirect()->back()->with('success', 'Update kerupuk berhasil.');
+            return redirect()->back()->with('success', 'Update Item Success.');
         } else {
             $kerupuk->update([
                 'nama_barang' => $request->nama_barang,
@@ -399,7 +399,7 @@ class AdminController extends Controller
                 'created_at' => date('Y-m-d H:i:s')
             ]);
 
-            return redirect()->back()->with('success', 'Update kerupuk berhasil.');
+            return redirect()->back()->with('success', 'Update Item Success.');
         }
     }
 
@@ -409,12 +409,12 @@ class AdminController extends Controller
         $kerupuk = BarangV1::find($request->id);
 
         if (!$kerupuk) {
-            return redirect()->back()->with('error', 'Kerupuk tidak ditemukan.');
+            return redirect()->back()->with('error', 'Product Not Found!');
         }
 
         $imagePath = public_path('gambar_barang/' . $kerupuk->gambar_barang);
 
-        if ($kerupuk->stok == 0) {
+        if ($kerupuk->main_stok == 0) {
             if ($kerupuk->gambar_barang == 'gambar-default.png') {
                 $kerupuk->delete();
             } else if (file_exists($imagePath)) {
@@ -427,10 +427,10 @@ class AdminController extends Controller
                 'nama_barang' => $kerupuk->nama_barang,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
-            return redirect()->back()->with('success', 'Delete kerupuk berhasil.');
+            return redirect()->back()->with('success', 'Delete Item Success.');
 
         } else {
-            return redirect()->back()->withErrors(['errors' => 'Stok kerupuk masih tersedia.'])->withInput();
+            return redirect()->back()->withErrors(['errors' => 'Stok Item masih tersedia.'])->withInput();
         }
     }
 
@@ -439,7 +439,7 @@ class AdminController extends Controller
         $vendor = Vendor::find($request->id);
 
         if (!$vendor) {
-            return redirect()->back()->with('error', 'Vendor tidak ditemukan.');
+            return redirect()->back()->with('error', 'Vendor Not Found!');
         } else {
             $vendor->delete();
             

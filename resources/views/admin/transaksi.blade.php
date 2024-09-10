@@ -119,7 +119,7 @@
                                         <option value="{{ $item->id_barang }}" data-harga="{{ $item->main_harga_jual }}" data-beli="{{ $item->main_harga_beli }}" data-stok="{{ $item->main_stok }}" data-barang="{{ $item->nama_barang }}">
                                             {{ $item->nama_barang }} - {{ $item->main_stok }}
                                         </option>
-                                    @elseif($item->stok == 0)
+                                    @elseif($item->main_stok == 0)
                                         <option value="{{ $item->nama_barang }}" data-harga="{{ $item->main_harga_jual }}" data-stok="{{ $item->main_stok }}" class="text-danger" disabled>
                                             {{ $item->nama_barang }} - Habis
                                         </option>
