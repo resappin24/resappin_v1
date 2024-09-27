@@ -115,5 +115,8 @@ Route::middleware(['auth'])->group(
         //========repack ==========
         Route::get('/repack',[TransaksiController::class, 'getRepack']);
         Route::post('/add_repack',[TransaksiController::class, 'addRepack']);
+
+        // ===== profile =========
+        Route::get('/profile',[AdminController::class, 'profile']);
     }
 );

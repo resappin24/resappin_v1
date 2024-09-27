@@ -180,7 +180,6 @@ class AdminController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-      
         $imgName = $request->hasFile('gambar_barang')
         ? 'img' . time() . '.' . $request->gambar_barang->extension()
         : 'gambar-default.png';
@@ -255,9 +254,7 @@ class AdminController extends Controller
                             return redirect()->back()->withErrors(['errors' => 'Failed adding data.'])->withInput();
                         }
                     }
-
     }
-
 
     }
 
@@ -455,6 +452,11 @@ class AdminController extends Controller
         }
 
       
+    }
+
+    public function profile(){
+
+        return view('admin.profile');
     }
 
 }
