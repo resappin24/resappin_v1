@@ -22,7 +22,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: auto;
+            height: 100%;
             background-image: url('{{ asset('desain/img/bg-v1.png') }}');
             background-size: cover;
             /* background-position: center; */
