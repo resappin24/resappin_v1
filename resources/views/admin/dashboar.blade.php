@@ -9,7 +9,7 @@
             <div class="card-body">
                 <canvas id="myChart"></canvas>
                 <div class="text-end">
-                  <button type="button" class="btn btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#details-modal">
+                  <button type="button" class="btn btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#details-modal" data-id="1">
                       Show Detail
                   </button>
                 </div>
@@ -63,3 +63,31 @@
 <script src="{{ asset('desain') }}/js/bar.js"></script>
 <script src="{{ asset('desain') }}/js/pie.js"></script>
 <script src="{{ asset('desain') }}/js/line.js"></script>
+
+<script>
+  $(document).ready(function () {
+    // Saat tombol Show Detail ditekan
+    $('.btn-detail').on('click', function () {
+        var id = $(this).data('id'); // Ambil id dari tombol
+        var modal = $('#details-modal');
+
+        // Bersihkan konten modal
+        modal.find('.modal-body').html('');
+
+        // Lakukan AJAX request ke route yang sesuai
+        $.ajax({
+            url: '/sales/details/', // URL untuk mengambil detail data
+            method: 'GET',
+            success: function (response) {
+                // Masukkan response ke dalam modal-body
+                modal.find('.modal-body').html(response);
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText); // Menampilkan error di konsol jika terjadi kesalahan
+                modal.find('.modal-body').html('<p class="text-danger">Error retrieving details</p>');
+            }
+        });
+    });
+});
+
+</script>

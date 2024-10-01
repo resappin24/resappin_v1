@@ -205,6 +205,24 @@ class TransaksiController extends Controller
         return response()->json($transaksi);
     }
 
+    public function showDetails()
+{
+                       $data = Transaksi::get();
+
+                    $salesDetails = DB::table('transaksi')
+        ->select('transaksi.*')
+        ->where('created_by',Auth::user()->id)
+        ->where('created_at','>=', now()->addDays(-7)->toDateTimeString())
+        ->get();
+
+    if ($salesDetails->isEmpty()) {
+        return response()->json(['error' => 'No data found for the last 7 days'], 404);
+    }
+
+    // Kirim data ke view partial untuk menampilkan di modal
+    return view('sales.details', compact('salesDetails'))->render();
+}
+
     public function get_kategori() {
         $data = Kategori::get();
         return response()->json($data);

@@ -41,6 +41,8 @@ Route::get('/pending-verification', [AuthController::class, 'pendingVerification
 
 
 Route::get('/get_transaksi', [TransaksiController::class, 'get_transaksi']);
+Route::get('/sales/details', [TransaksiController::class, 'showDetails']);
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/email/verify/{id}/{hash}', 'AuthController@verifyEmail')->name('verification.verify');
