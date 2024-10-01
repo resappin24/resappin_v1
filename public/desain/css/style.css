@@ -2,46 +2,49 @@
     font-family: "CustomFont"; /* Name your font family */
     src: url("JosefinSans-Bold.ttf"); /* Locate the .ttf file within your directory*/
     /*font/JosefinSans-Bold.ttf */
- }
+}
 
- @font-face {
+@font-face {
     font-family: "regJosefin"; /* Name your font family */
     src: url("JosefinSans-Regular.ttf"); /* Locate the .ttf file within your directory*/
     /*font/JosefinSans-Bold.ttf */
- }
- 
+}
+
 .login-page {
     width: 360px;
     margin: auto;
 }
 
-.letakImg{
+.letakImg {
     display: flex;
     position: relative;
-    justify-content:center;
+    justify-content: center;
 }
 
-.regis{
+.regis {
     margin-top: 10px;
 }
 
 a {
-    text-decoration:none;
+    text-decoration: none;
 }
 
 .regis-text {
     font-size: 0.8em;
 }
 
-.kerupuk1, .kerupuk2, .kerupuk3, .kerupuk4 {
+.kerupuk1,
+.kerupuk2,
+.kerupuk3,
+.kerupuk4 {
     width: 100px;
     height: 100px;
-    margin-left:2px ;
-    margin-right:2px ;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .login-form {
-   margin-top: 20px;
+    margin-top: 20px;
     margin-left: -28px;
     max-width: 500px;
 }
@@ -54,7 +57,7 @@ a {
 .form {
     position: relative;
     z-index: 1;
-    background: #FFFFFF;
+    background: #ffffff;
     width: 360px;
     max-height: 500px;
     /* margin: 200 auto 100px; */
@@ -67,10 +70,10 @@ a {
 .form-reg {
     position: fixed;
     z-index: 1;
-    background: #FFFFFF;
+    background: #ffffff;
     max-width: 360px;
     max-height: 400px;
-    margin-top:80px;
+    margin-top: 80px;
     margin-bottom: 90px;
     /* margin: 200 auto 100px; */
     padding: 15px;
@@ -98,7 +101,7 @@ a {
     width: 100%;
     border: 0;
     padding: 15px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 14px;
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
@@ -131,7 +134,7 @@ a {
     width: 100%;
     border: 0;
     padding: 15px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 14px;
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
@@ -187,16 +190,16 @@ a {
 }
 
 .judul {
-    text-align: center; 
-    margin:auto;
-    color:rgb(48, 115, 241);
+    text-align: center;
+    margin: auto;
+    color: rgb(48, 115, 241);
     font-family: fantasy;
 }
 
 .subjudul {
-    text-align: center; 
-    margin:auto;
-    color:azure;
+    text-align: center;
+    margin: auto;
+    color: azure;
     font-family: system-ui;
 }
 
@@ -211,7 +214,7 @@ a {
 }
 
 .container .info span .fa {
-    color: #EF3B3A;
+    color: #ef3b3a;
 }
 
 .bg {
@@ -238,7 +241,7 @@ body {
     transition: 0.5s;
 }
 
-.nav-link{
+.nav-link {
     position: relative;
 }
 
@@ -262,13 +265,13 @@ body {
 .btn-detail {
     border-color: rgb(133, 175, 253);
     align-items: end;
-    color:#4d4d4d
+    color: #4d4d4d;
 }
 
 .btn-detail:hover {
     background-color: rgb(133, 175, 253);
     align-items: end;
-    color:#cfdbda
+    color: #cfdbda;
 }
 
 /* for main section */
@@ -280,7 +283,7 @@ body {
     background-color: #5b5dd8;
     color: #fff;
     margin-left: 20px;
-    margin-top:15px;
+    margin-top: 15px;
 }
 
 .my-container input {
@@ -319,11 +322,11 @@ select {
     margin-right: 2rem;
     padding: 1rem;
     padding-right: 2rem;
-  }
+}
 
-  @media (max-width: 995px) {
+@media (max-width: 995px) {
     .strong {
         /* display: none; */
         left: 200;
     }
-  }
+}

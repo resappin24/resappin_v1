@@ -67,7 +67,7 @@ class TransaksiController extends Controller
             $query->where('created_at', '>=', $start)
                 ->where('created_at', '<', Carbon::parse($end)->addDay())
                 ->where('created_by',Auth::user()->id)
-                ->orderBy('created_at', 'ASC');
+                ->orderBy('created_at', 'DESC');
         })
         ->when(!$selectedDate && !$start && !$end, function ($query) {
             $query->whereDate('created_at', Carbon::now()->toDateString())

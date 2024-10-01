@@ -47,9 +47,20 @@
        .strong { /* css dropdown top navbar */
         position: fixed;
             top: -5px;
-            left: 1030;
+            /* left: 1030; */
             z-index: 5;
         }
+
+        /*author: ROH KUDA*/
+        .usr-top-bar{
+            display: flex;
+            justify-content: right;
+        }
+        .topbar-detail{
+            align-items: center;
+            display: flex;
+        }
+        /*end ROH KUDA*/
 
         .dropdown-submenu {
             position: relative;
@@ -59,7 +70,7 @@
          .dropdown-submenu .dropdown-menu {
             position: relative;
             top: 1;
-            left: 20%;
+            left: 4%;
             color: white;
             width: 80%;
             border: 0;
@@ -148,7 +159,7 @@
                     <iconify-icon icon="ion:home" width="20px"></iconify-icon>
                 </li>
             </a>
-            <a href="{{ url('/master_barang') }}" class="nav-link text-white">
+            <a id="menu-master" class="nav-link text-white">
                 <li>
                     <iconify-icon icon="fluent:list-bar-20-filled" width="20px"></iconify-icon>
                 </li>
@@ -185,11 +196,11 @@
         <div>
         <nav class="top-navbar navbar-light nav-top">
             <a class="btn border-0" id="menu-btn"><i class="bx bx-menu"></i></a>
-            <span class="mx-2">
+            <span class="mx-2 usr-top-bar">
             <ul class="nav flex-column text-white w-10 strong">
                 <li class="dropdown-submenu">
-                <a class="test nav-link text-white" href="#"> <iconify-icon icon="ion:person-circle" width="30px" class="mt-2"></iconify-icon>
-                        <strong>
+                <a class="test nav-link text-white topbar-detail" href="#"> <iconify-icon icon="ion:person-circle" width="30px" class="mt-2"></iconify-icon>
+                        <strong class="mt-2">
                             Welcome {{ Auth::user()->name }}!
                         </strong>
                         </a>
