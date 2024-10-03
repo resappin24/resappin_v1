@@ -170,7 +170,7 @@
                     <iconify-icon icon="ep:sell" width="20px"></iconify-icon>
                 </li>
             </a>
-            <a href="{{ url('/vendor') }}"
+            <a href="{{ url('/prod_category') }}"
                 class="nav-link text-white {{ request()->routeIs('/activity') ? 'active' : '' }}">
                 <li>
                 <iconify-icon icon="healthicons:stock-out"  width="20px"></iconify-icon>

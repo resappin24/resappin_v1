@@ -213,6 +213,7 @@ class TransaksiController extends Controller
         ->select('transaksi.*')
         ->where('created_by',Auth::user()->id)
         ->where('created_at','>=', now()->addDays(-7)->toDateTimeString())
+        ->orderBy('created_at', 'DESC')
         ->get();
 
     if ($salesDetails->isEmpty()) {

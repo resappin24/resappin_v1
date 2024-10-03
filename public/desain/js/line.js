@@ -1,5 +1,7 @@
 function getDaysWeekdays() {
-    const weekdays = [
+    const days = [];
+    const today = new Date();
+    const dayNames = [
         "Sunday",
         "Monday",
         "Tuesday",
@@ -8,19 +10,27 @@ function getDaysWeekdays() {
         "Friday",
         "Saturday",
     ];
-    const DaysWeekdays = [];
 
     for (let i = 6; i >= 0; i--) {
-        const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - i);
-        const dayIndex = currentDate.getDay();
-        const formattedDate = currentDate.toLocaleDateString("id-ID", {
-            weekday: "long",
-        });
-        DaysWeekdays.push(formattedDate);
+        const day = new Date(today);
+        day.setDate(today.getDate() - i);
+        days.push(dayNames[day.getDay()]);
     }
 
-    return DaysWeekdays;
+    return days;
+}
+
+function cekHariIndonesia(arrayHari) {
+    const hariValid = [
+        "Minggu",
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu",
+    ];
+    return arrayHari.every((hari) => hariValid.includes(hari));
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -32,11 +42,26 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log(responseData);
 
             const labels = getDaysWeekdays();
-            const dataValues = getDaysWeekdays().map((day) => {
+            const translateHari = {
+                Minggu: "Sunday",
+                Senin: "Monday",
+                Selasa: "Tuesday",
+                Rabu: "Wednesday",
+                Kamis: "Thursday",
+                Jumat: "Friday",
+                Sabtu: "Saturday",
+            };
+
+            let hariInggris = [];
+            if (cekHariIndonesia(labels))
+                hariInggris = labels.map((hari) => translateHari[hari]);
+            else hariInggris = labels;
+
+            const dataValues = hariInggris.map((day) => {
                 const matchingData = responseData.filter((entry) => {
                     const entryDay = new Date(
                         entry.created_at
-                    ).toLocaleDateString("id-ID", { weekday: "long" });
+                    ).toLocaleDateString("en-US", { weekday: "long" });
                     return entryDay === day;
                 });
 
@@ -71,15 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [
-                            "Wednesday",
-                            "Thursday",
-                            "Friday",
-                            "Sunday",
-                            "Saturday",
-                            "Monday",
-                            "Tuesday",
-                        ],
+                        labels: hariInggris,
                         datasets: [
                             {
                                 label: "Last 7 Days Sales",

@@ -45,18 +45,24 @@
 
 <!-- Modal Detail-->
 <div id="details-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="details-modal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content detail-dashboard">
-      <div class="modal-header">
-        <h4 class="modal-title">Details</h4>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="modal-dialog custom-modal-size">
+      <div class="modal-content" style="width: 800px;">
+        <div class="modal-header">
+          <h4 class="modal-title">Details</h4>
+          {{-- <button type="button" class="btn-close" data-dismiss="modal">
+            &times;
+          </button> --}}
+        </div>
+        <div class="modal-body"></div>
+        <div class="text-end mt-3 p-4">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
-      <div class="modal-body"></div>
+      
     </div>
+   
   </div>
-</div>
+  
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -64,30 +70,41 @@
 <script src="{{ asset('desain') }}/js/pie.js"></script>
 <script src="{{ asset('desain') }}/js/line.js"></script>
 
+<style>
+    .custom-modal-size {
+    max-width: 850px !important;
+    max-height: 800px;
+}
+
+</style>
+
 <script>
   $(document).ready(function () {
-    // Saat tombol Show Detail ditekan
     $('.btn-detail').on('click', function () {
-        var id = $(this).data('id'); // Ambil id dari tombol
+        var id = $(this).data('id'); 
         var modal = $('#details-modal');
 
-        // Bersihkan konten modal
         modal.find('.modal-body').html('');
 
-        // Lakukan AJAX request ke route yang sesuai
         $.ajax({
-            url: '/sales/details/', // URL untuk mengambil detail data
+            url: '/sales/details/', 
             method: 'GET',
             success: function (response) {
-                // Masukkan response ke dalam modal-body
                 modal.find('.modal-body').html(response);
             },
             error: function (xhr) {
-                console.log(xhr.responseText); // Menampilkan error di konsol jika terjadi kesalahan
-                modal.find('.modal-body').html('<p class="text-danger">Error retrieving details</p>');
+                console.log(xhr.responseText); 
+                modal.find('.modal-body').html('<p class="text-danger">No Sales for Last 7 Days</p>');
             }
         });
     });
 });
 
 </script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.11.5/sorting/datetime-moment.js"></script>

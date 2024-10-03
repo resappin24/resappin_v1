@@ -359,13 +359,23 @@ $(document).ready(function() {
         },
             'colvis'
         ],
+        "order": [[ 3, "desc" ]], 
         "columns": [
-            { "searchable": true },
-            { "searchable": false },
-            { "searchable": false },
-            { "searchable": true },
-            { "searchable": false },
-            { "searchable": false }
+            { "orderable": true }, 
+            { "orderable": true }, 
+            { 
+                "orderable": true,
+                "type": "num-fmt"  
+            },
+            { 
+                "orderable": true,  
+                "type": "date"   
+            },
+            { 
+                "orderable": true,  
+                "type": "date"   
+            },
+            { "orderable": false } 
         ]
     });
 

@@ -15,7 +15,6 @@ menu_btn.addEventListener("click", () => {
 });
 
 menu_master.addEventListener("click", () => {
-    $("#menu-master").hide();
     $("#menu-btn").show();
     container.classList.toggle("active-cont");
     sidebar.classList.toggle("active-nav");
