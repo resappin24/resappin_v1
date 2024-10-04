@@ -456,7 +456,13 @@ class AdminController extends Controller
 
     public function profile(){
 
-        return view('admin.profile');
+        $profile =   User::where([
+            ['id','=',  Auth::user()->id]
+            ])->get()->first();
+
+      //  $profile = User::find(Auth::user()->id);
+
+        return view('admin.profile', compact('profile'));
     }
 
 }

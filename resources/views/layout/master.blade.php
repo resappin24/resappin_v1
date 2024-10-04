@@ -205,8 +205,8 @@
                         </strong>
                         </a>
                         <ul class="dropdown-menu">
-                        <a href="{{ url('/#') }}" class="nav-link text-white">  <li>Profile</li></a>
-                        <a href="{{ url('logout') }}" class="nav-link text-white">  <li> Logout </li></a>
+                            <a href="{{ url('/profile') }}" class="nav-link text-white">  <li>Profile</li></a>
+                            <a href="{{ url('logout') }}" class="nav-link text-white">  <li> Logout </li></a>
                         </ul>
         </li>
         </ul>

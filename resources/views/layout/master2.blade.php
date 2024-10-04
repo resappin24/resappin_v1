@@ -186,8 +186,8 @@
                         </strong>
                         </a>
                         <ul class="dropdown-menu">
-                        <a href="{{ url('/master_product') }}" class="nav-link text-white">  <li>Profile</li></a>
-                        <a href="{{ url('/vendor') }}" class="nav-link text-white">  <li> Logout </li></a>
+                        <a href="{{ url('/profile') }}" class="nav-link text-white">  <li>Profile</li></a>
+                        <a href="{{ url('logout') }}" class="nav-link text-white">  <li> Logout </li></a>
                         </ul>
         </li>
         </ul>
