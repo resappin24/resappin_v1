@@ -201,7 +201,8 @@
                     @endif
                     @csrf
                     <input type="text" name="username" placeholder="Username" class="mb-2" />
-                    <input type="password" name="password" placeholder="Password" class="mb-2" />
+                    <input type="password" name="password" placeholder="Password" id="password" class="mb-2" />
+                    <input type="checkbox" onclick="myFunction()">Show Password
                     <button class="mb-2">login</button>
                   
                 </form>
@@ -227,6 +228,16 @@
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
 </script>
 
+<script>
+    function myFunction() {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
 <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
