@@ -84,7 +84,7 @@
                                 @endif
                                 <td>
                                     <button class="btn btn-warning btn-edit" data-bs-toggle="modal"
-                                        data-bs-target="#TransaksiEditModal" data-id="{{ $item->transaksiID }}" data-kerupuk="{{ $item->kerupukID }}"
+                                        data-bs-target="#TransaksiEditModal" data-id="{{ $item->transaksiID }}" data-kerupuk="{{ $item->id_barang }}"
                                         data-qty="{{ $item->qty }}" data-barang="{{ $item->nama_barang }}" 
                                         data-satuan="{{ $item->satuan }}" data-modal="{{ $item->modal }}">
                                         <iconify-icon icon="mingcute:edit-4-line"></iconify-icon>
@@ -150,6 +150,13 @@
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
                             <input type="number" class="form-control" aria-describedby="basic-addon1" id="subtotal"
                                 name="subtotal" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tgl_trans" class="col-form-label">Backdate Transaksi</label> <input type="checkbox" id="basic-addon1" onchange="document.getElementById('backdate').disabled = !this.checked;"  >enabled
+                        <div class="input-group mb-3">
+                           
+                            <input type="date" class="form-control" aria-describedby="basic-addon1" id="backdate"  name="backdate" value="{{ \Carbon\Carbon::now()->toDateString() }}" disabled>
                         </div>
                     </div>
                 </div>

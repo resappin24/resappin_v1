@@ -58,7 +58,7 @@ class TransaksiController extends Controller
         // ->get();
 
         $transaksi = DB::table('transaksi')
-        ->select('transaksi.kerupukID','transaksi.nama_barang', 'transaksi.qty', 'transaksi.modal', 'transaksi.satuan','transaksi.subtotal','transaksi.created_at as created_at', 'transaksi.updated_at', 'transaksi.transaksiID','transaksi.kerupukID')
+        ->select('transaksi.id_barang','transaksi.nama_barang', 'transaksi.qty', 'transaksi.modal', 'transaksi.satuan','transaksi.subtotal','transaksi.created_at as created_at', 'transaksi.updated_at', 'transaksi.transaksiID','transaksi.id_barang')
         ->when($selectedDate, function ($query) use ($selectedDate) {
             $query->whereDate('created_at', $selectedDate)
             ->where('created_by',Auth::user()->id);
@@ -120,17 +120,19 @@ class TransaksiController extends Controller
         $kerupuk = BarangV1::find($request->kerupukID);
 
         error_log("kerupuk : ". $kerupuk);
-        error_log("kerupukID : ". $request->id_barang);
+        error_log("id_barang : ". $request->id_barang);
         
+        error_log("trans date : ".$request->input('backdate'));
 
         if ($kerupuk && $kerupuk->main_stok >= $request->qty) {
             Transaksi::insert([
-                'kerupukID' => $request->kerupukID,
+                'id_barang' => $request->kerupukID,
                 'nama_barang' => $request->nama_barang,
                 'qty' => $request->qty,
                 'modal' => $request->modal,
                 'satuan' => $request->satuan,
                 'subtotal' => $request->subtotal,
+                'transaction_date' => $request->input('backdate'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'created_by' => Auth::user()->id,
             ]);
