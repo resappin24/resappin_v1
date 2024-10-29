@@ -149,7 +149,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
                             <input type="number" class="form-control" aria-describedby="basic-addon1" id="subtotal"
-                                name="subtotal" readonly>
+                                name="subtotal2" readonly>
                         </div>
                     </div>
                     <div class="mb-3">

@@ -107,22 +107,39 @@ class TransaksiController extends Controller
 
     public function store_transaksi(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'qty' => ['required', 'numeric', 'gt:0'],
             'nama_barang' => 'required',
         ], [
             'nama_barang.required' => 'Pilih barang terlebih dahulu',
-            'qty.required' => 'Qty tidak boleh 0',
-            'qty.numeric' => 'Qty harus berupa angka',
-            'qty.gt' => 'Qty tidak boleh 0',
+                'qty.required' => 'Qty tidak boleh 0',
+                'qty.numeric' => 'Qty harus berupa angka',
+                'qty.gt' => 'Qty tidak boleh 0',
         ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
 
         $kerupuk = BarangV1::find($request->kerupukID);
 
         error_log("kerupuk : ". $kerupuk);
         error_log("id_barang : ". $request->id_barang);
-        
-        error_log("trans date : ".$request->input('backdate'));
+
+        //cek jika backdate kosong, set backdate hari ini.
+        if ($request->backdate == '') {
+            error_log('set request backdate = now');
+            $dateNow = date("Y-m-d");
+            error_log('dateNow : '. $dateNow);
+
+            $request->merge(['backdate' => $dateNow]);
+
+        } else {
+            error_log('diamkan request backdate. sudah terbaca.');
+        }
+
+        error_log("trans date : ".$request->backdate);
 
         if ($kerupuk && $kerupuk->main_stok >= $request->qty) {
             Transaksi::insert([
@@ -131,8 +148,8 @@ class TransaksiController extends Controller
                 'qty' => $request->qty,
                 'modal' => $request->modal,
                 'satuan' => $request->satuan,
-                'subtotal' => $request->subtotal,
-                'transaction_date' => $request->input('backdate'),
+                'subtotal' => $request->subtotal2,
+                'transaction_date' => $request->backdate,
                 'created_at' => date('Y-m-d H:i:s'),
                 'created_by' => Auth::user()->id,
             ]);
@@ -140,8 +157,8 @@ class TransaksiController extends Controller
             $kerupuk->main_stok -= $request->qty;
             $kerupuk->save();
 
-            //blom tambah ke activity
-             //insert ke log activity
+          
+             // -- insert ke log activity
        
             Activity::create([
                 'activity' => 'Add New Transaction',
@@ -208,23 +225,23 @@ class TransaksiController extends Controller
     }
 
     public function showDetails()
-{
-                       $data = Transaksi::get();
+    {
+        $data = Transaksi::get();
 
-                    $salesDetails = DB::table('transaksi')
+        $salesDetails = DB::table('transaksi')
         ->select('transaksi.*')
         ->where('created_by',Auth::user()->id)
         ->where('created_at','>=', now()->addDays(-7)->toDateTimeString())
         ->orderBy('created_at', 'DESC')
         ->get();
 
-    if ($salesDetails->isEmpty()) {
-        return response()->json(['error' => 'No data found for the last 7 days'], 404);
-    }
+        if ($salesDetails->isEmpty()) {
+            return response()->json(['error' => 'No data found for the last 7 days'], 404);
+        }
 
-    // Kirim data ke view partial untuk menampilkan di modal
-    return view('sales.details', compact('salesDetails'))->render();
-}
+        // Kirim data ke view partial untuk menampilkan di modal
+        return view('sales.details', compact('salesDetails'))->render();
+    }
 
     public function get_kategori() {
         $data = Kategori::get();
